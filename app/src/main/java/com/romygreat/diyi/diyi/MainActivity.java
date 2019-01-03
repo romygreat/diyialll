@@ -25,6 +25,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FragmentManager fragmentManager=MainActivity.this.getSupportFragmentManager();
+        webPageFragment webPageFragment=new webPageFragment();
+        FragmentTransaction transaction = fragmentManager.
+                beginTransaction();
+        transaction.replace(R.id.webviewmain, webPageFragment);//修改id问题
+        transaction.commit();
 
 //        mWebview = findViewById(R.id.webview);
 //        mtextView=findViewById(R.id.textView);

@@ -35,62 +35,16 @@ public class webPageFragment extends Fragment {
 //        mWebview.loadUrl("http://om.gddiyi.com/playad/");
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //        mWebview.loadUrl("https://www.baidu.com/");
 
         mWebview.loadUrl("http://om.gddiyi.com/");
         WebSettings settings = mWebview.getSettings();
         settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         settings.setLoadWithOverviewMode(true);
-        settings.setBuiltInZoomControls(true);
+//        settings.setBuiltInZoomControls(true);
         settings.setJavaScriptEnabled(true);
         settings.setUseWideViewPort(true);
-        settings.setSupportZoom(true);
+       // settings.setSupportZoom(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
 //        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         settings.setGeolocationEnabled(true);
