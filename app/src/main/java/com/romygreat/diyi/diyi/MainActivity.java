@@ -1,96 +1,88 @@
 package com.romygreat.diyi.diyi;
 
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import android.arch.lifecycle.ViewModelStoreOwner;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import com.tencent.smtt.sdk.QbSdk;
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
+import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.DefaultRenderersFactory;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.LoadControl;
+import com.google.android.exoplayer2.RenderersFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
+import com.google.android.exoplayer2.extractor.ExtractorsFactory;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 
-public class MainActivity extends AppCompatActivity {
-    private WebView mWebview;
-    String TAG="MYTest";
-    private int mTime;
-    TextView mtextView;
-    Button button;
+public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
+
+    private  String testUrl="http://119.84.101.207/videos/v0/20180101/9c/20/33369eec370be393dd555a5a20234c02.mp4?key=0ebb94883d2df6eeb873b2dd48a35f687&dis_k=2d8cd483e5d3cf71159fcdfddad137350&dis_t=1514877572&dis_dz=CT-QIYI_SHMinRun&dis_st=44&src=iqiyi.com&uuid=a795aea-5a4b3284-bd&m=v&qd_ip=65e30cfd&qd_p=65e30cfd&qd_k=ab6b3e8679e84cccd49bfc91d5975606&qd_src=02028001010000000000&ssl=1&ip=101.227.12.253&qd_vip=0&dis_src=vrs&qd_uid=0&qdv=1&qd_tm=1514877572862";
+    SimpleExoPlayer mPlayer;
+    SimpleExoPlayerView playerView;
+    String TAG="videotest";
+    int vollume=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        FragmentManager fragmentManager=MainActivity.this.getSupportFragmentManager();
-        webPageFragment webPageFragment=new webPageFragment();
-        FragmentTransaction transaction = fragmentManager.
-                beginTransaction();
-        transaction.replace(R.id.webviewmain, webPageFragment);//修改id问题
-        transaction.commit();
+        initExoPlayer();
+    }
 
-//        mWebview = findViewById(R.id.webview);
-//        mtextView=findViewById(R.id.textView);
-////        mWebview.loadUrl("http://119.23.63.140/shop");
-//        mWebview.setVisibility(View.INVISIBLE);
-        button=findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, "onClick: already execute");
-                FragmentManager fragmentManager=MainActivity.this.getSupportFragmentManager();
-                webPageFragment webPageFragment=new webPageFragment();
-                FragmentTransaction transaction = fragmentManager.
-                        beginTransaction();
-                transaction.replace(R.id.webviewmain, webPageFragment);//修改id问题
-                transaction.commit();
+    private void initExoPlayer() {
+        RenderersFactory renderersFactory=new DefaultRenderersFactory(this);
+        DefaultTrackSelector trackSelector=new DefaultTrackSelector();
+        LoadControl loadControl=new DefaultLoadControl();
+        mPlayer= ExoPlayerFactory.newSimpleInstance(renderersFactory, trackSelector,loadControl);
+        Log.i(TAG, "initExoPlayer: ");
+        playerView=new SimpleExoPlayerView(this);
+        playerView.setPlayer(mPlayer);
+//        playerView.setControllerAutoShow(false);
 
-            }
-        });
+        playerView.setUseController(false);
 
+        setContentView(playerView);
+        testUrl="file:///sdcard/zdiyi/test.mp4";
+        Uri mp4Uri=Uri.parse(testUrl);
+
+        DefaultDataSourceFactory dataSourceFactory=new DefaultDataSourceFactory(
+                this, Util.getUserAgent(this,"exoPlayerTest"));
+        ExtractorsFactory extractorsFactory=new DefaultExtractorsFactory();
+        MediaSource mediaSource=new ExtractorMediaSource(
+                mp4Uri,dataSourceFactory,extractorsFactory,null,null);
+        mPlayer.prepare(mediaSource);
+        Log.i(TAG, "initExoPlayer: play");
+        mPlayer.setPlayWhenReady(true);
+        playerView.setOnTouchListener(this);
+
+
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        mPlayer.release();
+        super.onDestroy();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-//        mWebview.loadUrl("http://om.gddiyi.com/playad/");
-////        mWebview.loadUrl("https://www.baidu.com/");
-//        WebSettings settings = mWebview.getSettings();
-//        settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-//        settings.setLoadWithOverviewMode(true);
-//        settings.setBuiltInZoomControls(true);
-//        settings.setJavaScriptEnabled(true);
-//        settings.setUseWideViewPort(true);
-//        settings.setSupportZoom(true);
-//        settings.setJavaScriptCanOpenWindowsAutomatically(true);
-////        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-//        settings.setGeolocationEnabled(true);
-//        settings.setDomStorageEnabled(true);
-//        settings.setDatabaseEnabled(true);
-////        mWebview.setWebViewClient(new WebViewClient(){
-////                                      @Override
-////                                      public void onPageFinished(WebView webView, String s) {
-////                                          super.onPageFinished(webView, s);
-////                                          mWebview.setVisibility(View.VISIBLE);
-////                                          mtextView.setVisibility(View.INVISIBLE);
-////                                      }
-////                                  }
-////        );
-//        mWebview.setWebChromeClient(new WebChromeClient(){
-//            @Override
-//            public void onProgressChanged(WebView webView, int i) {
-//                super.onProgressChanged(webView, i);
-//                if (i==100){
-//                    mWebview.setVisibility(View.VISIBLE);
-//                    mtextView.setVisibility(View.INVISIBLE);
-//                    Log.i(TAG, "onProgressChanged: "+i);
-//                }
-//            }
-//        });
+    public boolean onTouch(View v, MotionEvent event) {
+        Log.i(TAG, "onTouch: you  touch the playView");
+        vollume++;
+//        if (vollume%2!=0){
+//            mPlayer.stop();
+//            Toast.makeText(this,"stop bocheng",Toast.LENGTH_LONG).show();
+//        }else {
+//            mPlayer.setPlayWhenReady(true);
+//        }
+        return false;
     }
 }
-
-
