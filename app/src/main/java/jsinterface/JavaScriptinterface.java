@@ -17,7 +17,6 @@ public class JavaScriptinterface {
     public JavaScriptinterface(Context c) {
         mContext = c;
     }
-
     /**
      * 与js交互时用到的方法，在js里直接调用的
      */
