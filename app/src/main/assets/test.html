@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script>
+function showToast()
+{
+	 android.showToast("come form js");
+}
+function test()
+{
+     <!--var test= android.JScall1("test1 method")-->
+    document.getElementById('idh2').innerHTML="this is test";
+}
+function test1(str)
+{
+     android.showToast("come form test1"+str);
+     document.getElementById('idh').innerHTML="调用成功";
+
+}
+function test1()
+{
+    var test= android.JScall1("test1 method")
+    document.getElementById('idh2').innerHTML=test;
+}
+function test2()
+{
+     android.intentMain();
+}
+</script>
+ </head>
+ <body>
+  <h1 id="idh">this is HTML test</h1>
+  <button onclick="showToast()">intentjscall</button>
+ <button onclick="test()">JSCALL()</button>
+  <h1 id="idh2">this is JSCALL test</h1>
+  <button onclick="test2()"> android.intentMain()</button>
+ </body>
+</html>
