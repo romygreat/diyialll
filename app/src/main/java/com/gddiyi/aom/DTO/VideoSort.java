@@ -1,13 +1,35 @@
 package com.gddiyi.aom.DTO;
 
-class VideoSort {
-    String desc;
+public class VideoSort {
+
     String id;
     String shop_id;
+    String sort;
 
-    public String getDesc() {
-        return desc;
+
+
+    public VideoSort(String id, String shop_id, String sort) {
+        this.id = id;
+        this.shop_id = shop_id;
+
+        this.sort = sort;
     }
+
+    public void setSort(String sort) {
+
+        this.sort = sort;
+    }
+
+    public String getSort() {
+
+        return sort;
+    }
+
+    public VideoSort() {
+
+    }
+
+
 
     public String getId() {
         return id;
@@ -17,9 +39,6 @@ class VideoSort {
         return shop_id;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
 
     public void setId(String id) {
         this.id = id;

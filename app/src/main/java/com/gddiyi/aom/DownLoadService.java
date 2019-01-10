@@ -4,16 +4,22 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.gddiyi.aom.DTO.PostVideoDataDto;
 import com.gddiyi.aom.DTO.PostSnResultDto;
 
+import com.gddiyi.aom.DTO.PostVideoResult;
+import com.gddiyi.aom.DTO.VideoSort;
 import com.gddiyi.aom.presenter.RetrofitPresenter;
 
 
+import java.io.IOException;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
@@ -21,6 +27,7 @@ import rx.schedulers.Schedulers;
 public class DownLoadService extends IntentService {
     String TAG="MyTest";
     RetrofitPresenter mPrensenter;
+    String token;
 
 
     /**
@@ -59,19 +66,26 @@ public class DownLoadService extends IntentService {
                         public void call(Subscriber<? super String> subscriber) {
                             PostSnResultDto r=response.body();
                              String sn=r.getData().getSn();
-                             String token=r.getData().getToken();
+                             token=r.getData().getToken();
                             subscriber.onNext(sn);
                             subscriber.onNext(token);
+                            subscriber.onCompleted();
                         }
                     }).observeOn(Schedulers.io())
                             .subscribe(new Subscriber<String>() {
                         @Override
                         public void onCompleted() {
-
+                            Log.i(TAG, "onCompleted:begin "+token);
+                            if (token!=null){
+                                getVideo();
+                               
+                            }
+                            Log.i(TAG, "onCompleted: response");
                         }
 
                         @Override
                         public void onError(Throwable e) {
+                            Log.i(TAG, "onError: response");
 
                         }
                         @Override
@@ -85,9 +99,9 @@ public class DownLoadService extends IntentService {
                     Log.i(TAG, "onFailure: test");
                 }
             });
-            PostVideoDataDto postVideoDataDto =new PostVideoDataDto();
-            postVideoDataDto.setSn("sn88888888");
-            mPrensenter.retrofitPost(url,mPrensenter.postJsonString(postVideoDataDto));
+            PostVideoDataDto postDataDto =new PostVideoDataDto();
+            postDataDto.setSn("sn88888888");
+            mPrensenter.retrofitPost(url,mPrensenter.postJsonString(postDataDto));
 //            mPrensenter.retrofitPost(url,json);
 
         } catch (Exception e) {
@@ -102,7 +116,59 @@ public class DownLoadService extends IntentService {
         super.onCreate();
 
     }
+public void getVideo(){
+    Log.i(TAG, "getVideo: ");
+    try {
+        PostVideoDataDto postVideoDataDto=new PostVideoDataDto();
+        VideoSort videoSort=new VideoSort();
+        videoSort.setId("asc");
+        videoSort.setSort("desc");
+        videoSort.setShop_id("desc");
+        postVideoDataDto.setSn("sn88888888");
+        postVideoDataDto.setToken(token);
+//        postVideoDataDto.setSort(videoSort);
+//        mPrensenter.setCallbackVideo(new Callback<PostVideoResult>() {
+//            @Override
+//            public void onResponse(Call<PostVideoResult> call, Response<PostVideoResult> response) {
+//                Log.i(TAG, "onResponse:getVideo: "+response.code());
+//                Log.i(TAG, "onResponse: getVideo"+response.message());
+//                Log.i(TAG, "onResponse:getVideo "+response.body().getMessage());
+//            }
+//            @Override
+//            public void onFailure(Call<PostVideoResult> call, Throwable t) {
+//                Log.i(TAG, "onFailure:getVideo "+t.toString());
+//            }
+//        });
 
+
+        mPrensenter.setCallBackResponsebody(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//               PostVideoResult t=(PostVideoResult) response;
+                Log.i(TAG, "onResponse: "+response.code());
+                Log.i(TAG, "onResponse: "+response.message());
+                try {
+                    Log.i(TAG, "onResponse: "+response.body().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i(TAG, "onFailure: t"+t.toString());
+            }
+        });
+
+        String url="http://service.gddiyi.com/";
+//        mPrensenter.retrofitPostVideo(url,mPrensenter.postJsonString(postVideoDataDto));
+        mPrensenter.retrofitPostResponsebody(url,mPrensenter.postJsonString(postVideoDataDto));
+    } catch (Exception e) {
+        e.printStackTrace();
+        Log.i(TAG, "getVideo: response Ex=="+e.toString());
+    }
+
+}
 
 
 }

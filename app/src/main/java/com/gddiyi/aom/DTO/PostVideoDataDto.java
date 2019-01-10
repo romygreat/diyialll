@@ -3,8 +3,28 @@ package com.gddiyi.aom.DTO;
 public class PostVideoDataDto {
 
     String token;
-    String machmine;
-    VideoSort videoSort;
+    String machine;
+    VideoSort sort;
+
+    public void setMachine(String machine) {
+        this.machine = machine;
+    }
+
+    public String getMachine() {
+
+        return machine;
+    }
+
+    public VideoSort getSort() {
+
+        return sort;
+    }
+
+    public void setSort(VideoSort sort) {
+
+        this.sort = sort;
+    }
+
     String sn;
 
 
@@ -12,13 +32,8 @@ public class PostVideoDataDto {
         return token;
     }
 
-    public String getMachmine() {
-        return machmine;
-    }
 
-    public VideoSort getVideoSort() {
-        return videoSort;
-    }
+
 
     public String getSn() {
         return sn;
@@ -30,13 +45,9 @@ public class PostVideoDataDto {
         this.token = token;
     }
 
-    public void setMachmine(String machmine) {
-        this.machmine = machmine;
-    }
 
-    public void setVideoSort(VideoSort videoSort) {
-        this.videoSort = videoSort;
-    }
+
+
 
     public void setSn(String sn) {
         this.sn = sn;
