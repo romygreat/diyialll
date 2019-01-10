@@ -1,6 +1,6 @@
 package com.gddiyi.aom.NetUtils;
 
-import com.gddiyi.aom.com.javaBean.PostResultJavaBean;
+import com.gddiyi.aom.DTO.PostSnResultDto;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -16,7 +16,7 @@ public interface PostService {
 
     @POST("device/Verify/checkDevice")
     @Headers({"Content-Type: application/json;charset=UTF-8"})
-    Call<PostResultJavaBean>getSnResult(@Body RequestBody rb);
+    Call<PostSnResultDto>getSnResult(@Body RequestBody rb);
 
 
 }

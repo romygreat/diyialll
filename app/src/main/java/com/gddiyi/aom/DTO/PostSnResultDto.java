@@ -1,12 +1,12 @@
-package com.gddiyi.aom.com.javaBean;
+package com.gddiyi.aom.DTO;
 
-public class PostResultJavaBean {
+public class PostSnResultDto {
     int code;
     String message;
     Data data;
 
 
-    public PostResultJavaBean(Data data) {
+    public PostSnResultDto(Data data) {
         this.data = data;
     }
 
@@ -33,8 +33,8 @@ public class PostResultJavaBean {
     public void setData(Data data) {
         this.data = data;
     }
-    static PostResultJavaBean getInstance(){
-         PostResultJavaBean sn=new PostResultJavaBean(new Data());
+    static PostSnResultDto getInstance(){
+         PostSnResultDto sn=new PostSnResultDto(new Data());
         return sn ;
 
     }

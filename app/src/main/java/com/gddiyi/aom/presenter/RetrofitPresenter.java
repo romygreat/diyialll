@@ -2,7 +2,9 @@ package com.gddiyi.aom.presenter;
 
 
 import com.gddiyi.aom.NetUtils.PostService;
-import com.gddiyi.aom.com.javaBean.PostResultJavaBean;
+import com.gddiyi.aom.DTO.PostVideoDataDto;
+import com.gddiyi.aom.DTO.PostSnResultDto;
+import com.google.gson.Gson;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -14,7 +16,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitPresenter {
     String TAG="RetrofitPresenter";
-    Callback<PostResultJavaBean> callback;
+    Callback<PostSnResultDto> callback;
+    static Gson instanceGson;
     public Retrofit createRetrofit(String url){
         Retrofit retrofit2 = new Retrofit.Builder()
                 .baseUrl(url)
@@ -33,18 +36,29 @@ public class RetrofitPresenter {
 
         PostService postService = createRetrofit(url).create(PostService.class);
         RequestBody requestBody=createRequestBody(content);
-        retrofit2.Call<PostResultJavaBean>  snResultJavaBean= postService.getSnResult(requestBody);
+        retrofit2.Call<PostSnResultDto>  snResultJavaBean= postService.getSnResult(requestBody);
         snResultJavaBean.enqueue(getCallback());
 
     }
 
 
-    public void setCallback(Callback<PostResultJavaBean> callback) {
+    public void setCallback(Callback<PostSnResultDto> callback) {
         this.callback = callback;
     }
 
-    public Callback<PostResultJavaBean> getCallback() {
+    public Callback<PostSnResultDto> getCallback() {
 
         return callback;
+    }
+    public static Gson getInstanceGson() {
+        if (instanceGson==null){
+            instanceGson=new Gson();
+        }
+        return instanceGson;
+    }
+    public  String  postJsonString(PostVideoDataDto postVideoDataDto){
+        String jsonString=  getInstanceGson().toJson(postVideoDataDto);
+        return jsonString;
+
     }
 }

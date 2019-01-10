@@ -71,6 +71,10 @@ public class JcallActivity extends Activity implements View.OnTouchListener {
                     }
                 });
                 break;
+            case R.id.timer:
+
+                break;
+                default:break;
         }
 
     }
@@ -79,10 +83,13 @@ public class JcallActivity extends Activity implements View.OnTouchListener {
         Log.i(TAG, "onTouch:  JcallActivity");
         return false;
     }
+
+
     public void requestPermission(){
+
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-            ActivityCompat.requestPermissions(this,
-                    PERMISSIONS_STORAGE,10);
+        {ActivityCompat.requestPermissions(this,
+                    PERMISSIONS_STORAGE,10);}
     }
 }

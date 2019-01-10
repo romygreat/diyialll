@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.gddiyi.aom.com.javaBean.PostResultJavaBean;
+import com.gddiyi.aom.DTO.PostVideoDataDto;
+import com.gddiyi.aom.DTO.PostSnResultDto;
+
 import com.gddiyi.aom.presenter.RetrofitPresenter;
 
 
@@ -40,21 +42,22 @@ public class DownLoadService extends IntentService {
         Log.i(TAG, "onHandleIntent: ");
         try {
             String json;
-            json=" {\"sn\": \"sn88888888\"}";//原因是缺少{}导致的问题,注意这个问题，这个就报错"sn": "sn88888888"
+            //原因是缺少{}导致的问题,注意这个问题，这个就报错"sn": "sn88888888"
+            json=" {\"sn\": \"sn88888888\"}";
 
             String url="http://service.gddiyi.com/";
 
             mPrensenter=new RetrofitPresenter();
 
-            //使用rxjava，对于下载的迪溢视频的线程切换到IO线程
+            //使用Rxjava，对于下载的迪溢视频的线程切换到IO线程
 
-            mPrensenter.setCallback(new Callback<PostResultJavaBean>() {
+            mPrensenter.setCallback(new Callback<PostSnResultDto>() {
                 @Override
-                public void onResponse(Call<PostResultJavaBean> call,final retrofit2.Response<PostResultJavaBean> response) {
+                public void onResponse(Call<PostSnResultDto> call, final retrofit2.Response<PostSnResultDto> response) {
                     Observable.create(new Observable.OnSubscribe<String>() {
                         @Override
                         public void call(Subscriber<? super String> subscriber) {
-                            PostResultJavaBean r=response.body();
+                            PostSnResultDto r=response.body();
                              String sn=r.getData().getSn();
                              String token=r.getData().getToken();
                             subscriber.onNext(sn);
@@ -78,11 +81,14 @@ public class DownLoadService extends IntentService {
                     });
                 }
                 @Override
-                public void onFailure(Call<PostResultJavaBean> call, Throwable t) {
+                public void onFailure(Call<PostSnResultDto> call, Throwable t) {
                     Log.i(TAG, "onFailure: test");
                 }
             });
-            mPrensenter.retrofitPost(url,json);
+            PostVideoDataDto postVideoDataDto =new PostVideoDataDto();
+            postVideoDataDto.setSn("sn88888888");
+            mPrensenter.retrofitPost(url,mPrensenter.postJsonString(postVideoDataDto));
+//            mPrensenter.retrofitPost(url,json);
 
         } catch (Exception e) {
             e.printStackTrace();

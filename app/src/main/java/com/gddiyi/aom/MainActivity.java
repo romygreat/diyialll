@@ -19,6 +19,7 @@ import com.tencent.smtt.sdk.WebViewClient;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ScheduledExecutorService;
 
 import jsinterface.JavaScriptinterface;
 
@@ -205,6 +206,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         // 初始化计时器
         task = new MyTask();
         timer = new Timer();
+
     }
 
     @Override

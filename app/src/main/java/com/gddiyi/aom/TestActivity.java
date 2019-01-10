@@ -13,6 +13,9 @@ import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 import jsinterface.JavaScriptinterface;
 
 public class TestActivity extends Activity {
@@ -27,13 +30,15 @@ public class TestActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);// 隐藏标题
+        // 隐藏标题
+        // 设置全屏
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);// 设置全屏
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
         mWebview = findViewById(R.id.webview);
-//        mWebview.loadUrl("http://119.23.63.140/shop");
+
         javaScriptinterface=new JavaScriptinterface(this);
         mButton=findViewById(R.id.calljs);
         mButton.setOnClickListener(new View.OnClickListener() {
@@ -41,8 +46,7 @@ public class TestActivity extends Activity {
             public void onClick(View v) {
                 Log.i(TAG, "onClick: test()");
                 mWebview.loadUrl("javascript:test1('\" + msg + \"')");
-//                mWebview.loadUrl("javascript:javacalljswithargs(\"params\")");
-//                Log.i(TAG, "onClick:test()1");
+
             }
         });
         mWebview.evaluateJavascript("javascript:test()", new ValueCallback<String>() {
@@ -74,6 +78,9 @@ public class TestActivity extends Activity {
         settings.setGeolocationEnabled(true);
         settings.setDomStorageEnabled(true);
         settings.setDatabaseEnabled(true);
+
+
+
     }
 
 

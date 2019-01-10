@@ -1,4 +1,4 @@
-package com.gddiyi.aom.com.javaBean;
+package com.gddiyi.aom.DTO;
 
 import android.os.Parcel;
 import android.os.Parcelable;
