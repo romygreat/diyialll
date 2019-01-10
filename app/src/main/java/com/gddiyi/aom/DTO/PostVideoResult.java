@@ -3,6 +3,7 @@ package com.gddiyi.aom.DTO;
 public class PostVideoResult {
     int code;
     String  message;
+    VideoData data;
 
     public int getCode() {
         return code;
@@ -16,7 +17,7 @@ public class PostVideoResult {
         return data;
     }
 
-    VideoData data;
+
 
     public void setCode(int code) {
         this.code = code;

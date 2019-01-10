@@ -1,6 +1,7 @@
 package com.gddiyi.aom.presenter;
 
 
+import com.gddiyi.aom.DTO.PostVideoResult;
 import com.gddiyi.aom.NetUtils.PostService;
 import com.gddiyi.aom.DTO.PostVideoDataDto;
 import com.gddiyi.aom.DTO.PostSnResultDto;
@@ -17,6 +18,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitPresenter {
     String TAG="RetrofitPresenter";
     Callback<PostSnResultDto> callback;
+    Callback<PostVideoResult> callbackVideo;
+
+    public void setCallbackVideo(Callback<PostVideoResult> callbackVideo) {
+        this.callbackVideo = callbackVideo;
+    }
+
+    public Callback<PostVideoResult> getCallbackVideo() {
+
+        return callbackVideo;
+    }
+
     static Gson instanceGson;
     public Retrofit createRetrofit(String url){
         Retrofit retrofit2 = new Retrofit.Builder()

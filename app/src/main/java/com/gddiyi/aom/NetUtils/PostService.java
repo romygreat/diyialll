@@ -18,5 +18,9 @@ public interface PostService {
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     Call<PostSnResultDto>getSnResult(@Body RequestBody rb);
 
+    @POST("advert/Ad/playAd")
+    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    Call<PostSnResultDto>getvideoResult(@Body RequestBody rb);
+
 
 }
