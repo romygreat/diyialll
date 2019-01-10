@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Toast;
 
 
+import com.gddiyi.aom.NetUtils.DownloadUtil;
+
 import java.io.File;
 import java.io.IOException;
 

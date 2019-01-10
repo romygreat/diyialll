@@ -1,4 +1,4 @@
-package com.gddiyi.aom;
+package com.gddiyi.aom.NetUtils;
 
 import android.os.Environment;
 import android.support.annotation.NonNull;
