@@ -1,10 +1,11 @@
 package com.gddiyi.aom.presenter;
 
 
-import com.gddiyi.aom.DTO.ResponseJsonSn;
-import com.gddiyi.aom.DTO.RequestJsonVideo;
-import com.gddiyi.aom.NetUtils.PostService;
-import com.gddiyi.aom.DTO.RequestJsonSn;
+import com.gddiyi.aom.dto.ResponseJsonSn;
+import com.gddiyi.aom.dto.RequestJsonVideo;
+import com.gddiyi.aom.dto.ResponseJsonVideo;
+import com.gddiyi.aom.netutils.PostService;
+import com.gddiyi.aom.dto.RequestJsonSn;
 import com.google.gson.Gson;
 
 import okhttp3.MediaType;
@@ -19,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitPresenter {
     String TAG="RetrofitPresenter";
     Callback<ResponseJsonSn> callback;
-    Callback<ResponseJsonSn> callbackVideo;
+    Callback<ResponseJsonVideo> callbackVideo;
     Callback<ResponseBody> callBackResponsebody;
 
     public void setTAG(String TAG) {
@@ -39,11 +40,11 @@ public class RetrofitPresenter {
         return callBackResponsebody;
     }
 
-    public void setCallbackVideo(Callback<ResponseJsonSn> callbackVideo) {
+    public void setCallbackVideo(Callback<ResponseJsonVideo> callbackVideo) {
         this.callbackVideo = callbackVideo;
     }
 
-    public Callback<ResponseJsonSn> getCallbackVideo() {
+    public Callback<ResponseJsonVideo> getCallbackVideo() {
 
         return callbackVideo;
     }
@@ -52,7 +53,7 @@ public class RetrofitPresenter {
 
         PostService postService = createRetrofit(url).create(PostService.class);
         RequestBody requestBody=createRequestBody(content);
-        retrofit2.Call<ResponseJsonSn>  snResultJavaBean= postService.getVideoResult(requestBody);
+        retrofit2.Call<ResponseJsonVideo>  snResultJavaBean= postService.getVideoResult(requestBody);
         snResultJavaBean.enqueue(getCallbackVideo());
 
     }
@@ -107,6 +108,10 @@ public class RetrofitPresenter {
         snResultJavaBean.enqueue(getCallBackResponsebody());
     }
     public  String  postJsonString(RequestJsonVideo postVideoDataDto){
+        String jsonString=  getInstanceGson().toJson(postVideoDataDto);
+        return jsonString;
+    }
+    public String postJsonString(String postVideoDataDto){
         String jsonString=  getInstanceGson().toJson(postVideoDataDto);
         return jsonString;
     }

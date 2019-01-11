@@ -1,22 +1,7 @@
 package com.gddiyi.aom.constant;
 
 public class VSConstances {
-//      "id": 31,
-//              "title": "手动阀手动阀2",
-//              "path": "ad/9e810023b8e689be648c657cf50d5c43.mp4",
-//              "type": "video/mp4",
-//              "prov": 440000,
-//              "city": 441300,
-//              "zone": 441303,
-//              "shop_id": 62,
-//              "terminal_type": 1,
-//              "sort": 222,
-//              "update_time": "1970-01-01 08:32:50",
-//              "delete_time": 0,
-//              "create_time": "1970-01-01 08:32:50",
-//              "start_time": 1546843624,
-//              "end_time": 1546930209,
-//              "status": 1
+
  public static final int id=0;
  public static final int title=1;
  public static final int path=2;

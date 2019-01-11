@@ -1,12 +1,12 @@
-package jsinterface;
+package com.gddiyi.aom.jsinterface;
 
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
-import com.gddiyi.aom.JcallActivity;
-import com.gddiyi.aom.MainActivity;
+
+import com.gddiyi.aom.view.MainActivity;
 
 
 public class JavaScriptinterface {
@@ -22,9 +22,7 @@ public class JavaScriptinterface {
      */
     @JavascriptInterface
     public void showToast(String s) {
-        Intent intent=new Intent(mContext,JcallActivity.class);
-        mContext.startActivity(intent);
-//        Toast.makeText(mContext, s, Toast.LENGTH_LONG).show();
+
     }
     @JavascriptInterface
     public String  JScall1(String string){

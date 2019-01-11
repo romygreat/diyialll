@@ -1,4 +1,4 @@
-package com.gddiyi.aom.NetUtils;
+package com.gddiyi.aom.netutils;
 
 import java.io.File;
 import java.util.List;

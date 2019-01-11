@@ -1,4 +1,4 @@
-package com.gddiyi.aom.DTO;
+package com.gddiyi.aom.dto;
 
 public class RequestJsonVideo {
 

@@ -1,8 +1,8 @@
-package com.gddiyi.aom.DTO;
+package com.gddiyi.aom.dto;
 
 import java.util.List;
 
-public class ResponseJsonVideo implements ResponseInterface {
+public class ResponseJsonVideo {
 
     /**
      * code : 1
@@ -226,6 +226,28 @@ public class ResponseJsonVideo implements ResponseInterface {
 
             public void setStatus(int status) {
                 this.status = status;
+            }
+
+            @Override
+            public String toString() {
+                return "ListBean{" +
+                        "id=" + id +
+                        ", title='" + title + '\'' +
+                        ", path='" + path + '\'' +
+                        ", type='" + type + '\'' +
+                        ", prov=" + prov +
+                        ", city=" + city +
+                        ", zone=" + zone +
+                        ", shop_id=" + shop_id +
+                        ", terminal_type=" + terminal_type +
+                        ", sort=" + sort +
+                        ", update_time='" + update_time + '\'' +
+                        ", delete_time=" + delete_time +
+                        ", create_time='" + create_time + '\'' +
+                        ", start_time=" + start_time +
+                        ", end_time=" + end_time +
+                        ", status=" + status +
+                        '}';
             }
         }
     }

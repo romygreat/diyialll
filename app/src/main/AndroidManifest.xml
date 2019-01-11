@@ -18,7 +18,7 @@ android:roundIcon="@mipmap/ic_launcher_round"
 android:supportsRtl="true"
 
 android:theme="@style/AppTheme">
-<activity android:name=".TestActivity"
+<activity android:name=".view.MainActivity"
     android:hardwareAccelerated="true"
     android:launchMode="singleInstance"
     android:screenOrientation="landscape">
@@ -27,16 +27,10 @@ android:theme="@style/AppTheme">
         <category android:name="android.intent.category.LAUNCHER" />
     </intent-filter>
 </activity>
-    <activity android:name=".JcallActivity"/>
-    <!--<activity android:name=".TestActivity"/>-->
 
-    <activity android:name=".MainActivity"
-        android:hardwareAccelerated="true"
-        android:launchMode="singleInstance"
-        />
-    <activity android:name=".VideoActivity"
+    <activity android:name=".view.VideoActivity"
 
         />
-    <service android:name=".DownLoadService"/>
+    <service android:name=".service.DownLoadService"/>
 </application>
 </manifest>

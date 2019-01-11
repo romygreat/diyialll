@@ -1,4 +1,4 @@
-package com.gddiyi.aom;
+package com.gddiyi.aom.view;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,15 +13,16 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.gddiyi.aom.R;
+import com.gddiyi.aom.service.DownLoadService;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.ScheduledExecutorService;
 
-import jsinterface.JavaScriptinterface;
+import com.gddiyi.aom.jsinterface.JavaScriptinterface;
 
 public class MainActivity extends Activity implements View.OnTouchListener {
     private WebView mWebview;
@@ -32,7 +33,6 @@ public class MainActivity extends Activity implements View.OnTouchListener {
     Handler mHandler;
     int mCount=0;
     String vedioURL;
-    VideoFragment videoFragment;
     private Timer timer;
     private TimerTask task;
     private int currentTime = 0;
@@ -50,13 +50,15 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         mWebview.setOnTouchListener(this);
         Diyi_setWebSettings();
         initTimer();
-        startDownloadService();
+
+
     }
 
     private void fullScreen() {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);// 隐藏标题
+        // 隐藏标题
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);// 设置全屏
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
     }
 
@@ -74,14 +76,13 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         mWebview.loadUrl("http://om.gddiyi.com/");
         mWebview.addJavascriptInterface(javaScriptinterface,
                 "android");
-//        mWebview.loadUrl("file:///android_asset/test.html");
-//        mWebview.loadUrl("https://www.baidu.com/");
+
         WebSettings settings = mWebview.getSettings();
         settings.setLoadWithOverviewMode(true);
-//        settings.setBuiltInZoomControls(true);
+
         settings.setJavaScriptEnabled(true);
         settings.setUseWideViewPort(true);
-//        settings.setSupportZoom(true);
+
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         settings.setGeolocationEnabled(true);
@@ -120,32 +121,24 @@ public class MainActivity extends Activity implements View.OnTouchListener {
     @Override
     protected void onStart() {
         super.onStart();
-//         file:///sdcard/test.mp4
-//        vedioURL=" file:///sdcard/zdiyi/test.mp4";
-//        mWebview.loadUrl(vedioURL);
         mHandler=new Handler(getMainLooper()){
             @Override
             public void handleMessage(Message msg) {
                 switch (msg.what){
                     case 1:
-                        Intent intent=new Intent(MainActivity.this,VideoActivity.class);
+                        Intent intent=new
+                                Intent(MainActivity.this,VideoActivity.class);
                         startActivity(intent);
 
-                     //   finish();//添加finish()
                         break;
-//                        FragmentManager fragmentManager=getFragmentManager();
-//                        videoFragment=new VideoFragment ();
-//                        FragmentTransaction transaction = fragmentManager.
-//                                beginTransaction();
-//                        transaction.replace(R.id.mainActivityId , videoFragment);//修改id问题
-//                        transaction.commit();
+                    case 2:startDownloadService();
+                        break;
                     default:break;
                 }
-                //super.handleMessage(msg);
-                // mWebview.loadUrl("http://119.23.63.140/shop");
 
             }
         };
+        mHandler.sendEmptyMessageDelayed(2,1000*30);
     }
 
     @Override

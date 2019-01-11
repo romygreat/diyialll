@@ -1,15 +1,18 @@
-package com.gddiyi.aom;
+package com.gddiyi.aom.view;
 
-import android.app.Fragment;
-import android.content.Context;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
@@ -32,7 +35,13 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
-public class VideoFragment extends Fragment {
+public class VideoActivity extends AppCompatActivity implements View.OnTouchListener {
+    private static String[] PERMISSIONS_STORAGE = {
+            "android.permission.READ_EXTERNAL_STORAGE",
+            "android.permission.WRITE_EXTERNAL_STORAGE"
+//            ,
+//            "android.permission.ACCESS_FINE_LOCATION"
+    };
     private  String testUrl="http://119.84.101.207/videos/v0/20180101/9c/20/33369eec370be393dd555a5a20234c02.mp4?key=0ebb94883d2df6eeb873b2dd48a35f687&dis_k=2d8cd483e5d3cf71159fcdfddad137350&dis_t=1514877572&dis_dz=CT-QIYI_SHMinRun&dis_st=44&src=iqiyi.com&uuid=a795aea-5a4b3284-bd&m=v&qd_ip=65e30cfd&qd_p=65e30cfd&qd_k=ab6b3e8679e84cccd49bfc91d5975606&qd_src=02028001010000000000&ssl=1&ip=101.227.12.253&qd_vip=0&dis_src=vrs&qd_uid=0&qdv=1&qd_tm=1514877572862";
     SimpleExoPlayer mPlayer;
     SimpleExoPlayerView playerView;
@@ -41,47 +50,42 @@ public class VideoFragment extends Fragment {
     Uri mp4Uri;
     ExtractorsFactory extractorsFactory;
     DefaultDataSourceFactory dataSourceFactory;
-    Context mContext;
-
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mContext=context;
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-         super.onCreateView(inflater, container, savedInstanceState);
-        playerView=new SimpleExoPlayerView(mContext);
         initExoPlayer();
-        return playerView;
     }
 
-    void initExoPlayer() {
-        RenderersFactory renderersFactory=new DefaultRenderersFactory(mContext);
+    private void initExoPlayer() {
+        RenderersFactory renderersFactory=new DefaultRenderersFactory(this);
         DefaultTrackSelector trackSelector=new DefaultTrackSelector();
         LoadControl loadControl=new DefaultLoadControl();
         mPlayer= ExoPlayerFactory.newSimpleInstance(renderersFactory, trackSelector,loadControl);
         Log.i(TAG, "initExoPlayer: ");
-        playerView=new SimpleExoPlayerView(mContext);
+        playerView=new SimpleExoPlayerView(this);
+        playerView.setLayoutParams(new WindowManager.LayoutParams(WindowManager.LayoutParams.FILL_PARENT,WindowManager.LayoutParams.FILL_PARENT));
         playerView.setPlayer(mPlayer);
 //        playerView.setControllerAutoShow(false);
 
-        playerView.setUseController(false);
-
-      //  setContentView(playerView);
-        testUrl="file:///sdcard/zdiyi/test.mp4";
+        playerView.setUseController(true);
+        setContentView(playerView);
+        testUrl="file:///sdcard/ad/9e810023b8e689be648c657cf50d5c43.mp4";
         mp4Uri=Uri.parse(testUrl);
-
         dataSourceFactory=new DefaultDataSourceFactory(
-                mContext, Util.getUserAgent(mContext,"exoPlayerTest"));
+                this, Util.getUserAgent(this,"exoPlayerTest"));
         extractorsFactory=new DefaultExtractorsFactory();
         MediaSource mediaSource=new ExtractorMediaSource(
                 mp4Uri,dataSourceFactory,extractorsFactory,null,null);
         mPlayer.prepare(mediaSource);
         Log.i(TAG, "initExoPlayer: play");
         mPlayer.setPlayWhenReady(true);
-        playerView.setOnTouchListener((View.OnTouchListener) mContext);//可能需要修改
+        playerView.setOnTouchListener(this);
+
+
         mPlayer.addListener(new Player.EventListener() {
             @Override
             public void onTimelineChanged(Timeline timeline, Object manifest) {
@@ -139,4 +143,47 @@ public class VideoFragment extends Fragment {
 
 
     }
+
+
+    @Override
+    protected void onDestroy() {
+        mPlayer.release();
+        super.onDestroy();
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+//        Log.i(TAG, "onTouch: you  touch the playView");
+//        vollume++;
+//        if (vollume%2!=0){
+//            Log.i(TAG, "onTouch: ");
+//            mPlayer.stop();
+//
+//            //Toast.makeText(this,"stop bocheng",Toast.LENGTH_LONG).show();
+//        }else {
+//            ExtractorsFactory extractorsFactory=new DefaultExtractorsFactory();
+//            MediaSource mediaSource=new ExtractorMediaSource(
+//                    mp4Uri,dataSourceFactory,extractorsFactory,null,null);
+//            mPlayer.prepare(mediaSource);
+//            mPlayer.setPlayWhenReady(true);
+//            Log.i(TAG, "onTouch: true");
+//        }
+//        finish();
+//        Intent intent=new Intent(this,MainActivity.class);
+//        startActivity(intent);
+        finish();
+        return false;
+    }
+    public void requestPermission(){
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+        {  ActivityCompat.requestPermissions(this,
+                    PERMISSIONS_STORAGE,10);}
+    }
+
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        return super.dispatchTouchEvent(ev);
+//    }
 }
+

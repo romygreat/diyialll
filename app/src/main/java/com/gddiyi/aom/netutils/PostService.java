@@ -1,6 +1,7 @@
-package com.gddiyi.aom.NetUtils;
+package com.gddiyi.aom.netutils;
 
-import com.gddiyi.aom.DTO.ResponseJsonSn;
+import com.gddiyi.aom.dto.ResponseJsonSn;
+import com.gddiyi.aom.dto.ResponseJsonVideo;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -20,7 +21,7 @@ public interface PostService {
 
     @POST("advert/Ad/playAd")
     @Headers({"Content-Type: application/json;charset=UTF-8"})
-    Call<ResponseJsonSn>getVideoResult(@Body RequestBody rb);
+    Call<ResponseJsonVideo>getVideoResult(@Body RequestBody rb);
 
     @POST("advert/Ad/playAd")
     @Headers({"Content-Type: application/json;charset=UTF-8"})

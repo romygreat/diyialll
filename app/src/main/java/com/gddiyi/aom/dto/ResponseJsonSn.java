@@ -1,6 +1,6 @@
-package com.gddiyi.aom.DTO;
+package com.gddiyi.aom.dto;
 
-public class ResponseJsonSn implements  ResponseInterface{
+public class ResponseJsonSn {
     /**
      * code : 1
      * message : 操作成功

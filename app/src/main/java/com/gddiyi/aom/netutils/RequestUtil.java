@@ -1,4 +1,4 @@
-package com.gddiyi.aom.NetUtils;
+package com.gddiyi.aom.netutils;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -42,7 +42,7 @@ class RequestUtil {
     private OkHttpClient mOkHttpClient;//OKhttpClient对象
     private Request mOkHttpRequest;//请求对象
     private Request.Builder mRequestBuilder;//请求对象的构建者
-  private String TAG=getClass().getSimpleName();
+  private  static  String TAG="RequestUtils";
 
     RequestUtil(String methodType, String url, Map<String, String> paramsMap, Map<String, String> headerMap, CallBackUtil callBack) {
         this(methodType,url,null,null,null,null,null,null,paramsMap,headerMap,callBack);
@@ -336,7 +336,7 @@ class RequestUtil {
         }
     }
 
-    synchronized  String   okhttpPost(String url, String json) throws IOException {
+    synchronized static String   okhttpPost(String url, String json) throws IOException {
         Log.i(TAG, "okhttpPost: ");
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 //        MediaType JSON = MediaType.parse("video/mp4; charset=utf-8");
@@ -355,7 +355,7 @@ class RequestUtil {
 
                 .build();
         Response response = client.newCall(request).execute();
-//        response.close();
+
 
         Log.i(TAG, "okhttpPost: end");
         return response.body().string();
