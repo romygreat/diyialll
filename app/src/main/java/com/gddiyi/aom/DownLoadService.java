@@ -4,17 +4,13 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.gddiyi.aom.DTO.PostVideoDataDto;
-import com.gddiyi.aom.DTO.PostSnResultDto;
+import com.gddiyi.aom.DTO.ResponseJsonSn;
+import com.gddiyi.aom.DTO.RequestJsonVideo;
+import com.gddiyi.aom.DTO.RequestJsonSn;
 
-import com.gddiyi.aom.DTO.PostVideoResult;
-import com.gddiyi.aom.DTO.VideoSort;
 import com.gddiyi.aom.presenter.RetrofitPresenter;
 
-
-import java.io.IOException;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -58,13 +54,13 @@ public class DownLoadService extends IntentService {
 
             //使用Rxjava，对于下载的迪溢视频的线程切换到IO线程
 
-            mPrensenter.setCallback(new Callback<PostSnResultDto>() {
+            mPrensenter.setCallback(new Callback<ResponseJsonSn>() {
                 @Override
-                public void onResponse(Call<PostSnResultDto> call, final retrofit2.Response<PostSnResultDto> response) {
+                public void onResponse(Call<ResponseJsonSn> call, final retrofit2.Response<ResponseJsonSn> response) {
                     Observable.create(new Observable.OnSubscribe<String>() {
                         @Override
                         public void call(Subscriber<? super String> subscriber) {
-                            PostSnResultDto r=response.body();
+                            ResponseJsonSn r=response.body();
                              String sn=r.getData().getSn();
                              token=r.getData().getToken();
                             subscriber.onNext(sn);
@@ -95,11 +91,11 @@ public class DownLoadService extends IntentService {
                     });
                 }
                 @Override
-                public void onFailure(Call<PostSnResultDto> call, Throwable t) {
+                public void onFailure(Call<ResponseJsonSn> call, Throwable t) {
                     Log.i(TAG, "onFailure: test");
                 }
             });
-            PostVideoDataDto postDataDto =new PostVideoDataDto();
+            RequestJsonSn postDataDto =new RequestJsonSn();
             postDataDto.setSn("sn88888888");
             mPrensenter.retrofitPost(url,mPrensenter.postJsonString(postDataDto));
 //            mPrensenter.retrofitPost(url,json);
@@ -119,23 +115,32 @@ public class DownLoadService extends IntentService {
 public void getVideo(){
     Log.i(TAG, "getVideo: ");
     try {
-        PostVideoDataDto postVideoDataDto=new PostVideoDataDto();
-        VideoSort videoSort=new VideoSort();
-        videoSort.setId("asc");
-        videoSort.setSort("desc");
-        videoSort.setShop_id("desc");
-        postVideoDataDto.setSn("sn88888888");
-        postVideoDataDto.setToken(token);
-//        postVideoDataDto.setSort(videoSort);
-//        mPrensenter.setCallbackVideo(new Callback<PostVideoResult>() {
+
+
+        RequestJsonVideo requestJsonVideo=new RequestJsonVideo();
+//        requestJsonVideo.setSort("desc");
+        requestJsonVideo.setToken(token);
+        requestJsonVideo.setMachine("machine");
+        RequestJsonVideo.SortBean sortBean=new RequestJsonVideo.SortBean();
+        sortBean.setId("asc");
+        sortBean.setShop_id("desc");
+        sortBean.setSort("desc");
+        requestJsonVideo.setSort(sortBean);
+
+
+
+
+
+
+//        mPrensenter.setCallbackVideo(new Callback<ResponseJsonSn>() {
 //            @Override
-//            public void onResponse(Call<PostVideoResult> call, Response<PostVideoResult> response) {
+//            public void onResponse(Call<ResponseJsonSn> call, Response<ResponseJsonSn> response) {
 //                Log.i(TAG, "onResponse:getVideo: "+response.code());
 //                Log.i(TAG, "onResponse: getVideo"+response.message());
 //                Log.i(TAG, "onResponse:getVideo "+response.body().getMessage());
 //            }
 //            @Override
-//            public void onFailure(Call<PostVideoResult> call, Throwable t) {
+//            public void onFailure(Call<ResponseJsonSn> call, Throwable t) {
 //                Log.i(TAG, "onFailure:getVideo "+t.toString());
 //            }
 //        });
@@ -144,12 +149,12 @@ public void getVideo(){
         mPrensenter.setCallBackResponsebody(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//               PostVideoResult t=(PostVideoResult) response;
+//               ResponseJsonSn t=(ResponseJsonSn) response;
                 Log.i(TAG, "onResponse: "+response.code());
                 Log.i(TAG, "onResponse: "+response.message());
                 try {
                     Log.i(TAG, "onResponse: "+response.body().string());
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -162,7 +167,8 @@ public void getVideo(){
 
         String url="http://service.gddiyi.com/";
 //        mPrensenter.retrofitPostVideo(url,mPrensenter.postJsonString(postVideoDataDto));
-        mPrensenter.retrofitPostResponsebody(url,mPrensenter.postJsonString(postVideoDataDto));
+        mPrensenter.retrofitPostResponsebody(url,mPrensenter.postJsonString(requestJsonVideo));
+//        mPrensenter.retrofitPostResponsebody(url,mPrensenter.postJsonString(postVideoDataDto));
     } catch (Exception e) {
         e.printStackTrace();
         Log.i(TAG, "getVideo: response Ex=="+e.toString());

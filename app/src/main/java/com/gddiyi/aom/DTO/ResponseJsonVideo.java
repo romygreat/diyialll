@@ -2,7 +2,7 @@ package com.gddiyi.aom.DTO;
 
 import java.util.List;
 
-public class ResponseJsonVideo {
+public class ResponseJsonVideo implements ResponseInterface {
 
     /**
      * code : 1

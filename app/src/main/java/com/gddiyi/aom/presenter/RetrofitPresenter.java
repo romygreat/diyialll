@@ -1,14 +1,12 @@
 package com.gddiyi.aom.presenter;
 
 
-import com.gddiyi.aom.DTO.PostVideoResult;
-import com.gddiyi.aom.NetUtils.CallBackUtil;
+import com.gddiyi.aom.DTO.ResponseJsonSn;
+import com.gddiyi.aom.DTO.RequestJsonVideo;
 import com.gddiyi.aom.NetUtils.PostService;
-import com.gddiyi.aom.DTO.PostVideoDataDto;
-import com.gddiyi.aom.DTO.PostSnResultDto;
+import com.gddiyi.aom.DTO.RequestJsonSn;
 import com.google.gson.Gson;
 
-import okhttp3.Call;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
@@ -20,8 +18,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitPresenter {
     String TAG="RetrofitPresenter";
-    Callback<PostSnResultDto> callback;
-    Callback<PostVideoResult> callbackVideo;
+    Callback<ResponseJsonSn> callback;
+    Callback<ResponseJsonSn> callbackVideo;
     Callback<ResponseBody> callBackResponsebody;
 
     public void setTAG(String TAG) {
@@ -41,11 +39,11 @@ public class RetrofitPresenter {
         return callBackResponsebody;
     }
 
-    public void setCallbackVideo(Callback<PostVideoResult> callbackVideo) {
+    public void setCallbackVideo(Callback<ResponseJsonSn> callbackVideo) {
         this.callbackVideo = callbackVideo;
     }
 
-    public Callback<PostVideoResult> getCallbackVideo() {
+    public Callback<ResponseJsonSn> getCallbackVideo() {
 
         return callbackVideo;
     }
@@ -54,7 +52,7 @@ public class RetrofitPresenter {
 
         PostService postService = createRetrofit(url).create(PostService.class);
         RequestBody requestBody=createRequestBody(content);
-        retrofit2.Call<PostVideoResult>  snResultJavaBean= postService.getVideoResult(requestBody);
+        retrofit2.Call<ResponseJsonSn>  snResultJavaBean= postService.getVideoResult(requestBody);
         snResultJavaBean.enqueue(getCallbackVideo());
 
     }
@@ -79,17 +77,16 @@ public class RetrofitPresenter {
 
         PostService postService = createRetrofit(url).create(PostService.class);
         RequestBody requestBody=createRequestBody(content);
-        retrofit2.Call<PostSnResultDto>  snResultJavaBean= postService.getSnResult(requestBody);
+        retrofit2.Call<ResponseJsonSn>  snResultJavaBean= postService.getSnResult(requestBody);
         snResultJavaBean.enqueue(getCallback());
 
     }
 
-
-    public void setCallback(Callback<PostSnResultDto> callback) {
+    public void setCallback(Callback<ResponseJsonSn> callback) {
         this.callback = callback;
     }
 
-    public Callback<PostSnResultDto> getCallback() {
+    public Callback<ResponseJsonSn> getCallback() {
 
         return callback;
     }
@@ -99,8 +96,8 @@ public class RetrofitPresenter {
         }
         return instanceGson;
     }
-    public  String  postJsonString(PostVideoDataDto postVideoDataDto){
-        String jsonString=  getInstanceGson().toJson(postVideoDataDto);
+    public  String  postJsonString(RequestJsonSn requestJsonSn){
+        String jsonString=  getInstanceGson().toJson(requestJsonSn);
         return jsonString;
     }
     public synchronized void retrofitPostResponsebody(String url,String content ){
@@ -108,5 +105,9 @@ public class RetrofitPresenter {
         RequestBody requestBody=createRequestBody(content);
         retrofit2.Call<ResponseBody>  snResultJavaBean= postService.getVideoTest(requestBody);
         snResultJavaBean.enqueue(getCallBackResponsebody());
+    }
+    public  String  postJsonString(RequestJsonVideo postVideoDataDto){
+        String jsonString=  getInstanceGson().toJson(postVideoDataDto);
+        return jsonString;
     }
 }

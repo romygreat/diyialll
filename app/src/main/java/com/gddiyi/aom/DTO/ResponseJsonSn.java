@@ -1,6 +1,6 @@
 package com.gddiyi.aom.DTO;
 
-public class ResponseJsonSn {
+public class ResponseJsonSn implements  ResponseInterface{
     /**
      * code : 1
      * message : 操作成功
@@ -230,82 +230,5 @@ public class ResponseJsonSn {
             this.token = token;
         }
     }
-//    int code;
-//    String  message;
-//    VideoData data;
-//
-//    public int getCode() {
-//        return code;
-//    }
-//
-//    public String getMessage() {
-//        return message;
-//    }
-//
-//    public VideoData getData() {
-//        return data;
-//    }
-//
-//
-//
-//    public void setCode(int code) {
-//        this.code = code;
-//    }
-//
-//    public void setMessage(String message) {
-//        this.message = message;
-//    }
-//
-//    public void setData(VideoData data) {
-//        this.data = data;
-//    }
-//}
-// class VideoSort {
-//
-//    String id;
-//    String shop_id;
-//    String sort;
-//
-//
-//
-//    public VideoSort(String id, String shop_id, String sort) {
-//        this.id = id;
-//        this.shop_id = shop_id;
-//
-//        this.sort = sort;
-//    }
-//
-//    public void setSort(String sort) {
-//
-//        this.sort = sort;
-//    }
-//
-//    public String getSort() {
-//
-//        return sort;
-//    }
-//
-//    public VideoSort() {
-//
-//    }
-//
-//
-//
-//    public String getId() {
-//        return id;
-//    }
-//
-//    public String getShop_id() {
-//        return shop_id;
-//    }
-//
-//
-//    public void setId(String id) {
-//        this.id = id;
-//    }
-//
-//    public void setShop_id(String shop_id) {
-//        this.shop_id = shop_id;
-//    }
 
 }
