@@ -6,6 +6,8 @@ import android.os.IBinder;
 import android.util.Log;
 
 
+import com.gddiyi.aom.model.PlayData;
+import com.gddiyi.aom.model.VideoPlayAll;
 import com.gddiyi.aom.model.dto.RequestJsonSn;
 import com.gddiyi.aom.model.dto.RequestJsonVideo;
 import com.gddiyi.aom.model.dto.ResponseJsonSn;
@@ -29,7 +31,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
 
-public class DownLoadService extends IntentService implements Callback<ResponseJsonVideo> {
+public class DownLoadService extends IntentService implements Callback<ResponseJsonVideo>,VideoPresenter.DownloadVideoReady {
     String TAG = "MyTest";
     RetrofitPresenter mPrensenter;
     VideoPresenter mVideoPrensenter;
@@ -55,6 +57,7 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
     @Override
     protected void onHandleIntent(Intent intent) {
         mVideoPrensenter=new VideoPresenter();
+        mVideoPrensenter.setDownloadVideReady(this);
         try {
             final String json;
 
@@ -171,18 +174,17 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
     //获取所有的视频信息,真实路径
     @Override
     public void onResponse(Call<ResponseJsonVideo> call, Response<ResponseJsonVideo> response) {
-        String path = response.body().getData().getList().get(2).getPath();
-        Log.i(TAG, "onResponse:path= " + response.body().getData().getList().get(2).getPath());
-        realVideoPath = "http://" + doMainName + "/" + path;
         mVideoPrensenter.saveVideoPrsenter(response.body().getData());
-        Log.i(TAG, "onResponse: "+response.body().getData().getList());
-        Log.i(TAG, "onResponse: downLoadVedio==" + realVideoPath);
-        executorService = Executors.newFixedThreadPool(20);
-        executorService.execute(new DownLoadVideoUtils(realVideoPath, null));
     }
 
     @Override
     public void onFailure(Call<ResponseJsonVideo> call, Throwable t) {
         Log.i(TAG, "onFailure:getVideo " + t.toString());
+    }
+
+
+    @Override
+    public void noticefyDownLoadReady(VideoPlayAll<PlayData> sparseArray) {
+        Log.i(TAG, "noticefyDownLoadReady: "+sparseArray.getAllNetvideoPath().length);
     }
 }

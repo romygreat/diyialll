@@ -1,11 +1,11 @@
 package com.gddiyi.aom.presenter;
 
 
-import com.gddiyi.aom.dto.ResponseJsonSn;
-import com.gddiyi.aom.dto.RequestJsonVideo;
-import com.gddiyi.aom.dto.ResponseJsonVideo;
+import com.gddiyi.aom.model.dto.ResponseJsonSn;
+import com.gddiyi.aom.model.dto.RequestJsonVideo;
+import com.gddiyi.aom.model.dto.ResponseJsonVideo;
 import com.gddiyi.aom.netutils.PostService;
-import com.gddiyi.aom.dto.RequestJsonSn;
+import com.gddiyi.aom.model.dto.RequestJsonSn;
 import com.google.gson.Gson;
 
 import okhttp3.MediaType;
@@ -64,7 +64,6 @@ public class RetrofitPresenter {
         Retrofit retrofit2 = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
-//                .addConverterFactory(ScalarsConverterFactory.create())
                 .client(new OkHttpClient())
                 .build();
         return retrofit2;

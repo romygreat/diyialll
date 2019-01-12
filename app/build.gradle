@@ -36,5 +36,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
     implementation files('libs/tbs_sdk_thirdapp_v3.2.0.1104_43200_sharewithdownload_withfilereader_withoutGame_obfs_20170609_115346.jar')
     implementation 'io.reactivex:rxjava:1.1.0'
+    implementation 'javax.annotation:javax.annotation-api:1.2'
+//    implementation'org.projectlombok:lombok:1.16.6'
 
 }
