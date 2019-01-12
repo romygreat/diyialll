@@ -9,10 +9,16 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
 
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
         }
+
     }
     buildTypes {
         release {
@@ -37,6 +43,6 @@ dependencies {
     implementation files('libs/tbs_sdk_thirdapp_v3.2.0.1104_43200_sharewithdownload_withfilereader_withoutGame_obfs_20170609_115346.jar')
     implementation 'io.reactivex:rxjava:1.1.0'
     implementation 'javax.annotation:javax.annotation-api:1.2'
-//    implementation'org.projectlombok:lombok:1.16.6'
+    implementation'org.projectlombok:lombok:1.14.8'
 
 }

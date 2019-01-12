@@ -2,6 +2,11 @@ package com.gddiyi.aom.model.dto;
 
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class ResponseJsonVideo {
 
     /**
@@ -14,30 +19,9 @@ public class ResponseJsonVideo {
     private String message;
     private DataBean data;
 
-    public int getCode() {
-        return code;
-    }
 
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public DataBean getData() {
-        return data;
-    }
-
-    public void setData(DataBean data) {
-        this.data = data;
-    }
-
+    @Setter
+    @Getter
     public static class DataBean {
         /**
          * count : 18
@@ -46,23 +30,8 @@ public class ResponseJsonVideo {
 
         private int count;
         private List<ListBean> list;
-
-        public int getCount() {
-            return count;
-        }
-
-        public void setCount(int count) {
-            this.count = count;
-        }
-
-        public List<ListBean> getList() {
-            return list;
-        }
-
-        public void setList(List<ListBean> list) {
-            this.list = list;
-        }
-
+        @Setter
+        @Getter
         public static class ListBean {
             /**
              * id : 31
@@ -100,155 +69,6 @@ public class ResponseJsonVideo {
             private int end_time;
             private int status;
 
-            public int getId() {
-                return id;
-            }
-
-            public void setId(int id) {
-                this.id = id;
-            }
-
-            public String getTitle() {
-                return title;
-            }
-
-            public void setTitle(String title) {
-                this.title = title;
-            }
-
-            public String getPath() {
-                return path;
-            }
-
-            public void setPath(String path) {
-                this.path = path;
-            }
-
-            public String getType() {
-                return type;
-            }
-
-            public void setType(String type) {
-                this.type = type;
-            }
-
-            public int getProv() {
-                return prov;
-            }
-
-            public void setProv(int prov) {
-                this.prov = prov;
-            }
-
-            public int getCity() {
-                return city;
-            }
-
-            public void setCity(int city) {
-                this.city = city;
-            }
-
-            public int getZone() {
-                return zone;
-            }
-
-            public void setZone(int zone) {
-                this.zone = zone;
-            }
-
-            public int getShop_id() {
-                return shop_id;
-            }
-
-            public void setShop_id(int shop_id) {
-                this.shop_id = shop_id;
-            }
-
-            public int getTerminal_type() {
-                return terminal_type;
-            }
-
-            public void setTerminal_type(int terminal_type) {
-                this.terminal_type = terminal_type;
-            }
-
-            public int getSort() {
-                return sort;
-            }
-
-            public void setSort(int sort) {
-                this.sort = sort;
-            }
-
-            public String getUpdate_time() {
-                return update_time;
-            }
-
-            public void setUpdate_time(String update_time) {
-                this.update_time = update_time;
-            }
-
-            public int getDelete_time() {
-                return delete_time;
-            }
-
-            public void setDelete_time(int delete_time) {
-                this.delete_time = delete_time;
-            }
-
-            public String getCreate_time() {
-                return create_time;
-            }
-
-            public void setCreate_time(String create_time) {
-                this.create_time = create_time;
-            }
-
-            public int getStart_time() {
-                return start_time;
-            }
-
-            public void setStart_time(int start_time) {
-                this.start_time = start_time;
-            }
-
-            public int getEnd_time() {
-                return end_time;
-            }
-
-            public void setEnd_time(int end_time) {
-                this.end_time = end_time;
-            }
-
-            public int getStatus() {
-                return status;
-            }
-
-            public void setStatus(int status) {
-                this.status = status;
-            }
-
-            @Override
-            public String toString() {
-                return "ListBean{" +
-                        "id=" + id +
-                        ", title='" + title + '\'' +
-                        ", path='" + path + '\'' +
-                        ", type='" + type + '\'' +
-                        ", prov=" + prov +
-                        ", city=" + city +
-                        ", zone=" + zone +
-                        ", shop_id=" + shop_id +
-                        ", terminal_type=" + terminal_type +
-                        ", sort=" + sort +
-                        ", update_time='" + update_time + '\'' +
-                        ", delete_time=" + delete_time +
-                        ", create_time='" + create_time + '\'' +
-                        ", start_time=" + start_time +
-                        ", end_time=" + end_time +
-                        ", status=" + status +
-                        '}';
-            }
         }
     }
 }
