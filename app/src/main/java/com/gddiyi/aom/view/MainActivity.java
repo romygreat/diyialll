@@ -24,6 +24,9 @@ import java.util.TimerTask;
 
 import com.gddiyi.aom.jsinterface.JavaScriptinterface;
 
+/**
+ * 程序入口启动类进入onreate()
+ */
 public class MainActivity extends Activity implements View.OnTouchListener {
     private WebView mWebview;
     String TAG="MYTest";
@@ -46,7 +49,6 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         fullScreen();
         setContentView(R.layout.layout_test);
         mWebview = findViewById(R.id.webview);
-//        mWebview.loadUrl("http://119.23.63.140/shop");
         mWebview.setOnTouchListener(this);
         Diyi_setWebSettings();
         initTimer();
@@ -138,7 +140,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
 
             }
         };
-        mHandler.sendEmptyMessageDelayed(2,1000*30);
+        mHandler.sendEmptyMessageDelayed(2,1000*5);
     }
 
     @Override
@@ -163,7 +165,6 @@ public class MainActivity extends Activity implements View.OnTouchListener {
                 break;
         }
 
-//        mHandler.sendEmptyMessageDelayed(1,20000);
         return false;
     }
     private void startTimer() {
@@ -175,11 +176,11 @@ public class MainActivity extends Activity implements View.OnTouchListener {
          */
         initTimer();
         try {
-            timer.schedule(task, 1000*20, 10000);
+            timer.schedule(task, 1000*10, 10000);
         } catch (IllegalStateException e) {
             e.printStackTrace();
             initTimer();
-            timer.schedule(task, 1000*30, Long.MAX_VALUE);
+            timer.schedule(task, 1000*10, Long.MAX_VALUE);
         }
         Log.i(TAG, "startTimer: onTouch");
     }
@@ -190,9 +191,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         }
         currentTime = 0;
 
-//        if (timeTv != null) {
-//            timeTv.setText(String.valueOf(currentTime));
-//        }
+
 
 }
     private void initTimer() {

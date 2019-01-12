@@ -1,4 +1,4 @@
-package com.gddiyi.aom.dto;
+package com.gddiyi.aom.model.dto;
 
 import java.util.List;
 

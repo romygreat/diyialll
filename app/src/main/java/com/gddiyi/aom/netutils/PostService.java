@@ -1,7 +1,7 @@
 package com.gddiyi.aom.netutils;
 
-import com.gddiyi.aom.dto.ResponseJsonSn;
-import com.gddiyi.aom.dto.ResponseJsonVideo;
+import com.gddiyi.aom.model.dto.ResponseJsonSn;
+import com.gddiyi.aom.model.dto.ResponseJsonVideo;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -11,9 +11,6 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public interface PostService {
-    @POST("device/Verify/checkDevice")
-    @Headers({"Content-Type: application/json;charset=UTF-8"})
-    Call<ResponseBody> getSn(@Body RequestBody info);
 
     @POST("device/Verify/checkDevice")
     @Headers({"Content-Type: application/json;charset=UTF-8"})

@@ -339,9 +339,7 @@ class RequestUtil {
     synchronized static String   okhttpPost(String url, String json) throws IOException {
         Log.i(TAG, "okhttpPost: ");
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-//        MediaType JSON = MediaType.parse("video/mp4; charset=utf-8");
         RequestBody body = RequestBody.create(JSON, json);
-
         OkHttpClient client = new OkHttpClient();
         FormBody formBody = new FormBody.Builder()
                 .add("sn","sn88888888")
@@ -351,13 +349,8 @@ class RequestUtil {
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
-//                .post(requestBody)
-
                 .build();
         Response response = client.newCall(request).execute();
-
-
-        Log.i(TAG, "okhttpPost: end");
         return response.body().string();
     }
 
