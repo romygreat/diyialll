@@ -44,7 +44,6 @@ public class VideoActivity extends AppCompatActivity implements View.OnTouchList
     SimpleExoPlayer mPlayer;
     SimpleExoPlayerView playerView;
     String TAG="videoActivity";
-    int vollume=0;
     Uri mp4Uri;
     ExtractorsFactory extractorsFactory;
     DefaultDataSourceFactory dataSourceFactory;
