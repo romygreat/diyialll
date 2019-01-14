@@ -87,7 +87,7 @@ public class VideoPlayAll<E> {
     public String[] getAllLocalVideoPath() {
         String[] localPathStringArray = new String[getCount()];
         for (int i = 0; i < getCount() - 1; i++) {
-            localPathStringArray[i] = getNetVideoPath(i);
+            localPathStringArray[i] = getLocalVideoPath(i);
         }
         return localPathStringArray;
     }

@@ -145,6 +145,7 @@ public class VideoPresenter {
         JsonArray jsonArrayLocalPath=new JsonArray();
         JsonArray jsonArrayNetPath=new JsonArray();
 //        jsonArray.add();
+        Log.i("test", "save2LocalFile: "+sparseArray.getCount());
         for (int i=0;i<sparseArray.getCount()-1;i++){
             jsonArrayLocalPath.add(sparseArray.get(i).getLocalPath());
             jsonArrayNetPath.add(sparseArray.get(i).getNetVideoPath());
@@ -177,14 +178,14 @@ public class VideoPresenter {
             Log.i("checkString", "checkUpdate:exception ");
         }
         try {
-
             org.json.JSONArray localPathArray1=(org.json.JSONArray)jsonObject1.get("localPath");
             tmpPathName=new String[localPathArray1.length()];
             for (int i=0;i<localPathArray1.length()-1;i++){
                 tmpPathName[i]=(String)localPathArray1.get(i);
             }
-
-            Log.i("checkString", "checkUpdate:local "+tmpPathName[0]);
+            Log.i("checkString", "checkUpdate:local 16"+tmpPathName[16]);
+            Log.i("checkString", "checkUpdate:local 15"+tmpPathName[15]);
+            Log.i("checkString", "checkUpdate:local 10"+tmpPathName[10]);
             Log.i("tmpPathName.length", "checkUpdate: "+tmpPathName.length);
         } catch (Exception e){
             e.printStackTrace();
@@ -192,7 +193,9 @@ public class VideoPresenter {
         }
         String[] notsavePathAName=sparseArray.getAllLocalVideoPath();
         boolean isCheckUpdatae=  Arrays.equals(tmpPathName,notsavePathAName);
-        Log.i("checkString", "checkUpdate: notsavePathAName"+notsavePathAName[0]);
+        Log.i("checkString", "checkUpdate: notsavePathAName16"+notsavePathAName[16]);
+        Log.i("checkString", "checkUpdate: notsavePathAName17"+notsavePathAName[17]);
+        Log.i("checkString", "checkUpdate: notsavePathAName10"+notsavePathAName[10]);
         Log.i("checkString", "checkUpdate: isCheckUpdatae"+isCheckUpdatae);
         Log.i("tmpPathName.length", "checkUpdate:count "+notsavePathAName.length);
         return isCheckUpdatae;
