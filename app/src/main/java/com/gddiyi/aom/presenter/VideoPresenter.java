@@ -14,8 +14,12 @@ import com.gddiyi.aom.netutils.DownloadUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -60,8 +64,6 @@ public class VideoPresenter {
     }
     public VideoPresenter(Context context) {
         mContext=context;
-
-
     }
     //将在请求视频回来的数据保存到VideoPlayAll类中，方便管理
     public  VideoPlayAll<PlayData> saveVideoPrsenter(ResponseJsonVideo.DataBean dataBeans){
@@ -146,6 +148,7 @@ public class VideoPresenter {
         for (int i=0;i<sparseArray.getCount()-1;i++){
             jsonArrayLocalPath.add(sparseArray.get(i).getLocalPath());
             jsonArrayNetPath.add(sparseArray.get(i).getNetVideoPath());
+            Log.i("testi", "save2LocalFile: "+i);
         }
         jsonObject.add("localPath",jsonArrayLocalPath);
         jsonObject.add("netPath",jsonArrayNetPath);
@@ -162,5 +165,36 @@ public class VideoPresenter {
         Log.i("readJsonFile123", "readJsonFile: ");
         return stringjson;
     }
+    public boolean checkUpdate(){
+        String localName= readJsonFile();
+        Log.i("test123", "checkUpdate: "+localName);
+        String[] tmpPathName=null;
+        org.json.JSONObject jsonObject1= null;
+        try {
+            jsonObject1 = new JSONObject(localName);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.i("checkString", "checkUpdate:exception ");
+        }
+        try {
 
+            org.json.JSONArray localPathArray1=(org.json.JSONArray)jsonObject1.get("localPath");
+            tmpPathName=new String[localPathArray1.length()];
+            for (int i=0;i<localPathArray1.length()-1;i++){
+                tmpPathName[i]=(String)localPathArray1.get(i);
+            }
+
+            Log.i("checkString", "checkUpdate:local "+tmpPathName[0]);
+            Log.i("tmpPathName.length", "checkUpdate: "+tmpPathName.length);
+        } catch (Exception e){
+            e.printStackTrace();
+            Log.i("e.print", "checkUpdate: "+e.toString());
+        }
+        String[] notsavePathAName=sparseArray.getAllLocalVideoPath();
+        boolean isCheckUpdatae=  Arrays.equals(tmpPathName,notsavePathAName);
+        Log.i("checkString", "checkUpdate: notsavePathAName"+notsavePathAName[0]);
+        Log.i("checkString", "checkUpdate: isCheckUpdatae"+isCheckUpdatae);
+        Log.i("tmpPathName.length", "checkUpdate:count "+notsavePathAName.length);
+        return isCheckUpdatae;
+    }
 }

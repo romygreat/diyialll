@@ -182,6 +182,7 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
     //获取所有的视频信息,真实路径
     @Override
     public void onResponse(Call<ResponseJsonVideo> call, Response<ResponseJsonVideo> response) {
+        Log.i(TAG, "onResponse: test1234");
         mVideoPrensenter.saveVideoPrsenter(response.body().getData());
     }
 
@@ -195,8 +196,8 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
         Log.i(TAG, "noticefyDownLoadReady: "+sparseArray.getAllNetvideoPath().length);
         Log.i(TAG, "noticefyDownLoadReady: "+sparseArray);
         boolean isFirstBoot=sharedPreferences.getBoolean("firstBoot", true);
-//        if (isFirstBoot)
-        {
+        if (isFirstBoot)
+        {   setSharePreference();
             mVideoPrensenter.save2LocalFile(sparseArray);
             File file = mVideoPrensenter.createFile(VSConstances.JSONFILEPATH);
             Log.i(TAG, "noticefyDownLoadReady: 123" + mVideoPrensenter.readJsonFile());
@@ -219,12 +220,15 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
                 });
             }
         }
+        else {
+            mVideoPrensenter.checkUpdate();
+        }
         Log.i(TAG, "noticefyDownLoadReady:isFirstBoot "+isFirstBoot);
     }
     public void  setSharePreference(){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         //测试时候修改该参数为true
-        editor.putBoolean("firstBoot", true);
+        editor.putBoolean("firstBoot", false);
         editor.commit();//提交修改
     }
 }
