@@ -181,22 +181,34 @@ public class VideoPresenter {
         try {
             org.json.JSONArray localPathArray1=(org.json.JSONArray)jsonObject1.get("localPath");
             tmpPathName=new String[localPathArray1.length()];
-            for (int i=0;i<localPathArray1.length()-1;i++){
-                tmpPathName[i]=(String)localPathArray1.get(i);
-            }
-            Log.i("checkString", "checkUpdate:local 16"+tmpPathName[16]);
-            Log.i("checkString", "checkUpdate:local 15"+tmpPathName[15]);
-            Log.i("checkString", "checkUpdate:local 10"+tmpPathName[10]);
-            Log.i("tmpPathName.length", "checkUpdate: "+tmpPathName.length);
+//            for (int i=0;i<localPathArray1.length()-1;i++){
+//                tmpPathName[i]=(String)localPathArray1.get(i);
+//
+//            }
+
         } catch (Exception e){
             e.printStackTrace();
             Log.i("e.print", "checkUpdate: "+e.toString());
         }
         String[] notsavePathAName=sparseArray.getAllLocalVideoPath();
         boolean isCheckUpdatae=  Arrays.equals(tmpPathName,notsavePathAName);
-        Log.i("checkString", "checkUpdate: notsavePathAName16"+notsavePathAName[16]);
-        Log.i("checkString", "checkUpdate: notsavePathAName17"+notsavePathAName[17]);
-        Log.i("checkString", "checkUpdate: notsavePathAName10"+notsavePathAName[10]);
+        try {
+            org.json.JSONArray localPathArray1=(org.json.JSONArray)jsonObject1.get("localPath");
+            tmpPathName=new String[localPathArray1.length()];
+            for (int i=0;i<localPathArray1.length();i++){
+                tmpPathName[i]=(String)localPathArray1.get(i);
+                if (tmpPathName[i].equals(notsavePathAName[i])){
+                    Log.i("testone", "checkUpdate: true=="+i);
+                }
+//                Log.i("testoone", "checkUpdate: "+i+tmpPathName[i]);
+//                Log.i("testoone", "checkUpdate: "+i+notsavePathAName[i]);
+
+
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            Log.i("e.print", "checkUpdate: "+e.toString());
+        }
         Log.i("checkString", "checkUpdate: isCheckUpdatae"+isCheckUpdatae);
         Log.i("tmpPathName.length", "checkUpdate:count "+notsavePathAName.length);
         return isCheckUpdatae;
