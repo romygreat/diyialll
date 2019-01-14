@@ -18,5 +18,7 @@ public class VSConstances {
  public static final int start_time=13;
  public static final int end_time=14;
  public static final int status=15;
+ public static  final String JSONFILEPATH="sdcard/jsonFile.txt";
+ public static  final String   SDdir="sdcard/ad/";
 
 }

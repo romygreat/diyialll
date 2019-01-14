@@ -45,6 +45,7 @@ public class VideoPlayAll<E> {
         if (getSaveData().get(sortIndex) != null) {
             videoPath = this.getSaveData().get(sortIndex).getNetVideoPath();
         }
+
         return videoPath;
     }
 

@@ -1,11 +1,15 @@
 package com.gddiyi.aom.view;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PersistableBundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,6 +32,10 @@ import com.gddiyi.aom.jsinterface.JavaScriptinterface;
  * 程序入口启动类进入onreate()
  */
 public class MainActivity extends Activity implements View.OnTouchListener {
+    private static String[] PERMISSIONS_STORAGE = {
+            "android.permission.READ_EXTERNAL_STORAGE",
+            "android.permission.WRITE_EXTERNAL_STORAGE"
+    };
     private WebView mWebview;
     String TAG="MYTest";
     private int mTime;
@@ -52,6 +60,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         mWebview.setOnTouchListener(this);
         Diyi_setWebSettings();
         initTimer();
+        requestPermission();
 
 
     }
@@ -176,11 +185,11 @@ public class MainActivity extends Activity implements View.OnTouchListener {
          */
         initTimer();
         try {
-            timer.schedule(task, 1000*10, 10000);
+            timer.schedule(task, 1000*20, 10000);
         } catch (IllegalStateException e) {
             e.printStackTrace();
             initTimer();
-            timer.schedule(task, 1000*10, Long.MAX_VALUE);
+            timer.schedule(task, 1000*50, Long.MAX_VALUE);
         }
         Log.i(TAG, "startTimer: onTouch");
     }
@@ -216,6 +225,12 @@ public class MainActivity extends Activity implements View.OnTouchListener {
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onRestoreInstanceState(savedInstanceState, persistentState);
+    }
+    public void requestPermission(){
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+        {  ActivityCompat.requestPermissions(this,
+                PERMISSIONS_STORAGE,10);}
     }
 }
 

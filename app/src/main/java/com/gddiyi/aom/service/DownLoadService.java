@@ -1,11 +1,14 @@
 package com.gddiyi.aom.service;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.util.Log;
 
 
+import com.gddiyi.aom.constant.VSConstances;
 import com.gddiyi.aom.model.PlayData;
 import com.gddiyi.aom.model.VideoPlayAll;
 import com.gddiyi.aom.model.dto.RequestJsonSn;
@@ -14,6 +17,7 @@ import com.gddiyi.aom.model.dto.ResponseJsonSn;
 import com.gddiyi.aom.model.dto.ResponseJsonVideo;
 import com.gddiyi.aom.netutils.CallBackUtil;
 import com.gddiyi.aom.netutils.DownLoadVideoUtils;
+import com.gddiyi.aom.netutils.DownloadUtil;
 import com.gddiyi.aom.netutils.OkhttpUtil;
 import com.gddiyi.aom.presenter.RetrofitPresenter;
 import com.gddiyi.aom.presenter.VideoPresenter;
@@ -21,6 +25,7 @@ import com.gddiyi.aom.presenter.VideoPresenter;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -39,6 +44,8 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
     String doMainName;
     String realVideoPath;
     ExecutorService executorService;
+    int downloadSuccess;
+    SharedPreferences sharedPreferences;
 
 
 
@@ -56,8 +63,9 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        mVideoPrensenter=new VideoPresenter();
+        mVideoPrensenter=new VideoPresenter(this);
         mVideoPrensenter.setDownloadVideReady(this);
+        sharedPreferences =getSharedPreferences("diyi", Context.MODE_PRIVATE);
         try {
             final String json;
 
@@ -182,9 +190,41 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
         Log.i(TAG, "onFailure:getVideo " + t.toString());
     }
 
-
     @Override
     public void noticefyDownLoadReady(VideoPlayAll<PlayData> sparseArray) {
         Log.i(TAG, "noticefyDownLoadReady: "+sparseArray.getAllNetvideoPath().length);
+        Log.i(TAG, "noticefyDownLoadReady: "+sparseArray);
+        boolean isFirstBoot=sharedPreferences.getBoolean("firstBoot", true);
+//        if (isFirstBoot)
+        {
+            mVideoPrensenter.save2LocalFile(sparseArray);
+            File file = mVideoPrensenter.createFile(VSConstances.JSONFILEPATH);
+            Log.i(TAG, "noticefyDownLoadReady: 123" + mVideoPrensenter.readJsonFile());
+            for (int i = 0; i < sparseArray.getCount() - 1; i++) {
+                DownloadUtil.get().download(sparseArray.get(i).getNetVideoPath(), "ad", new DownloadUtil.OnDownloadListener() {
+                    @Override
+                    public void onDownloadSuccess() {
+                        Log.i(TAG, "onDownloadSuccess: " + downloadSuccess++);
+                    }
+
+                    @Override
+                    public void onDownloading(int progress) {
+
+                    }
+
+                    @Override
+                    public void onDownloadFailed() {
+
+                    }
+                });
+            }
+        }
+        Log.i(TAG, "noticefyDownLoadReady:isFirstBoot "+isFirstBoot);
+    }
+    public void  setSharePreference(){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        //测试时候修改该参数为true
+        editor.putBoolean("firstBoot", true);
+        editor.commit();//提交修改
     }
 }
