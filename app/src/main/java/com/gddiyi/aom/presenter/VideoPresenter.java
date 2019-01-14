@@ -71,8 +71,9 @@ public class VideoPresenter {
      Log.i("Response", "saveVideoPrsenter: count"+count);
      List< ResponseJsonVideo.DataBean.ListBean> listBean=dataBeans.getList();
      sparseArray=getInstance();
+        Log.i("dataBenscount", "saveVideoPrsenter: "+dataBeans.getCount());
      sparseArray.setCount(count);
-     for (int i=0;i<dataBeans.getCount()-1;i++){
+     for (int i=0;i<dataBeans.getCount();i++){
          String netPath;
          path=listBean.get(i).getPath();
          netPath="http://"+getDoMain()+"/"+path;
@@ -82,7 +83,7 @@ public class VideoPresenter {
          playData.setLocalPath(videoName);
          Log.i("localPath", "saveVideoPrsenter: "+playData.getLocalPath());
          sparseArray.getSaveData().put(i,playData);
-
+         Log.i("savei", "saveVideoPrsenter: "+i);
      }
         Log.i("response", "saveVideoPrsenter: "+sparseArray.getLocalVideoPath(3));
        printSavedata(sparseArray);
