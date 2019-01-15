@@ -23,4 +23,5 @@ public class ExampleInstrumentedTest {
 
         assertEquals("com.appcation.diyi.diyiproject", appContext.getPackageName());
     }
+
 }

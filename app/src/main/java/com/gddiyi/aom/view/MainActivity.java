@@ -1,11 +1,15 @@
-package com.gddiyi.aom;
+package com.gddiyi.aom.view;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PersistableBundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,6 +17,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.gddiyi.aom.R;
+import com.gddiyi.aom.netutils.ADFilterUtil;
+import com.gddiyi.aom.service.DownLoadService;
+import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
+import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
@@ -20,9 +29,16 @@ import com.tencent.smtt.sdk.WebViewClient;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import jsinterface.JavaScriptinterface;
+import com.gddiyi.interfacemanager.jsinterface.JavaScriptinterface;
 
+/**
+ * 程序入口启动类进入onreate()
+ */
 public class MainActivity extends Activity implements View.OnTouchListener {
+    private static String[] PERMISSIONS_STORAGE = {
+            "android.permission.READ_EXTERNAL_STORAGE",
+            "android.permission.WRITE_EXTERNAL_STORAGE"
+    };
     private WebView mWebview;
     String TAG="MYTest";
     private int mTime;
@@ -31,7 +47,6 @@ public class MainActivity extends Activity implements View.OnTouchListener {
     Handler mHandler;
     int mCount=0;
     String vedioURL;
-    VideoFragment videoFragment;
     private Timer timer;
     private TimerTask task;
     private int currentTime = 0;
@@ -45,22 +60,58 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         fullScreen();
         setContentView(R.layout.layout_test);
         mWebview = findViewById(R.id.webview);
-//        mWebview.loadUrl("http://119.23.63.140/shop");
         mWebview.setOnTouchListener(this);
         Diyi_setWebSettings();
         initTimer();
-        startDownloadService();
+        mHandler=new Handler(getMainLooper()){
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what){
+                    case 1:
+                        Intent intent=new
+                                Intent(MainActivity.this,VideoActivity.class);
+                        startActivity(intent);
+
+                        break;
+                    case 2:startDownloadService();
+                        break;
+                    default:break;
+                }
+
+            }
+        };
+        requestPermission();
+
     }
 
     private void fullScreen() {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);// 隐藏标题
+        // 隐藏标题
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);// 设置全屏
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
     }
 
     private void Diyi_setWebSettings() {
         mWebview.setWebViewClient(new WebViewClient(){
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView webView, WebResourceRequest webResourceRequest, Bundle bundle) {
+                Log.i(TAG, "shouldInterceptRequest: "+webResourceRequest.getUrl());
+                if (webResourceRequest.getUrl().toString().contains("om.gddiyi.com"))
+                {  if (ADFilterUtil.booleanhasAd(MainActivity.this,webResourceRequest.getUrl().toString()))
+                    return super.shouldInterceptRequest(webView, webResourceRequest, bundle);
+                else return super.shouldInterceptRequest(null,null, null);
+                }
+                else {
+                    return super.shouldInterceptRequest(null,null, null);
+                }
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView webView, String s) {
+                Log.i(TAG, "shouldOverrideUrlLoading: "+s);
+                return super.shouldOverrideUrlLoading(webView, s);
+            }
             @Override
             public void onPageFinished(WebView webView, String s) {
                 super.onPageFinished(webView, s);
@@ -73,14 +124,11 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         mWebview.loadUrl("http://om.gddiyi.com/");
         mWebview.addJavascriptInterface(javaScriptinterface,
                 "android");
-//        mWebview.loadUrl("file:///android_asset/test.html");
-//        mWebview.loadUrl("https://www.baidu.com/");
+
         WebSettings settings = mWebview.getSettings();
         settings.setLoadWithOverviewMode(true);
-//        settings.setBuiltInZoomControls(true);
         settings.setJavaScriptEnabled(true);
         settings.setUseWideViewPort(true);
-//        settings.setSupportZoom(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         settings.setGeolocationEnabled(true);
@@ -119,32 +167,8 @@ public class MainActivity extends Activity implements View.OnTouchListener {
     @Override
     protected void onStart() {
         super.onStart();
-//         file:///sdcard/test.mp4
-//        vedioURL=" file:///sdcard/zdiyi/test.mp4";
-//        mWebview.loadUrl(vedioURL);
-        mHandler=new Handler(getMainLooper()){
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what){
-                    case 1:
-                        Intent intent=new Intent(MainActivity.this,VideoActivity.class);
-                        startActivity(intent);
 
-                     //   finish();//添加finish()
-                        break;
-//                        FragmentManager fragmentManager=getFragmentManager();
-//                        videoFragment=new VideoFragment ();
-//                        FragmentTransaction transaction = fragmentManager.
-//                                beginTransaction();
-//                        transaction.replace(R.id.mainActivityId , videoFragment);//修改id问题
-//                        transaction.commit();
-                    default:break;
-                }
-                //super.handleMessage(msg);
-                // mWebview.loadUrl("http://119.23.63.140/shop");
 
-            }
-        };
     }
 
     @Override
@@ -169,7 +193,6 @@ public class MainActivity extends Activity implements View.OnTouchListener {
                 break;
         }
 
-//        mHandler.sendEmptyMessageDelayed(1,20000);
         return false;
     }
     private void startTimer() {
@@ -185,7 +208,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         } catch (IllegalStateException e) {
             e.printStackTrace();
             initTimer();
-            timer.schedule(task, 1000*30, Long.MAX_VALUE);
+            timer.schedule(task, 1000*50, Long.MAX_VALUE);
         }
         Log.i(TAG, "startTimer: onTouch");
     }
@@ -196,15 +219,14 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         }
         currentTime = 0;
 
-//        if (timeTv != null) {
-//            timeTv.setText(String.valueOf(currentTime));
-//        }
+
 
 }
     private void initTimer() {
         // 初始化计时器
         task = new MyTask();
         timer = new Timer();
+
     }
 
     @Override
@@ -222,6 +244,30 @@ public class MainActivity extends Activity implements View.OnTouchListener {
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onRestoreInstanceState(savedInstanceState, persistentState);
+    }
+    public void requestPermission(){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+        {
+            mWebview.setVisibility(View.INVISIBLE);
+            ActivityCompat.requestPermissions(this,
+                PERMISSIONS_STORAGE,10);}
+                else {
+            mHandler.sendEmptyMessageDelayed(2,1000*5);
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,  String[] permissions,  int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+           mWebview.setVisibility(View.VISIBLE);
+           launcherMainActvity();
+    }
+    public void launcherMainActvity(){
+        Intent intent=new Intent(this,MainActivity.class);
+        startActivity(intent);
+        Log.i(TAG, "onRequestPermissionsResult: ");
+        //延迟5秒启动DownLoadService
+        mHandler.sendEmptyMessageDelayed(2,1000*5);
+        finish();
     }
 }
 

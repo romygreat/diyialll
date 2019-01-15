@@ -1,11 +1,11 @@
-package com.gddiyi.aom.NetUtils;
+package com.gddiyi.aom.netutils;
 
 import java.io.File;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Created by fighting on 2017/4/7.
+ * Created by fighting on 2018/1/3.
  */
 
 public class OkhttpUtil {
