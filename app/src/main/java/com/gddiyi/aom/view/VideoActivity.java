@@ -207,8 +207,7 @@ public class VideoActivity extends Activity  {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        mPlayer.release();
-        mPlayer=null;
+        
         finish();
         if(ev.getAction()==MotionEvent.ACTION_DOWN)
         { Log.i(TAG, "dispatchTouchEvent: ");
