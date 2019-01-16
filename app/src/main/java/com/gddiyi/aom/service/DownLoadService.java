@@ -240,7 +240,6 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
             DownloadUtil.get().download( sparseArray.get((int)list.get(i)).getNetVideoPath(), "ad", new DownloadUtil.OnDownloadListener() {
                 @Override
                 public void onDownloadSuccess() {
-
                     Log.i("noticefyUpdate:", "onDownloadSuccess: "+name);
                 }
 
