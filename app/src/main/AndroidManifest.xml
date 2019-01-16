@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gddiyi.aom">
+    package="com.gddiyi.aomwify">
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 <uses-permission android:name="android.permission.INTERNET" />
-<!--<uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
+<uses-permission android:name="android.permission.READ_PHONE_STATE" />
  <!--<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />-->
 
 <application
-android:name=".YidiApplication"
+android:name="com.gddiyi.aomwify.YidiApplication"
 android:allowBackup="true"
 android:icon="@mipmap/ic_launcher"
 android:label="@string/app_name"
@@ -19,7 +19,7 @@ android:supportsRtl="true"
 
 android:theme="@style/AppTheme"
     >
-<activity android:name=".view.MainActivity"
+<activity android:name="com.gddiyi.aomwify.view.MainActivity"
     android:hardwareAccelerated="true"
     android:screenOrientation="landscape">
     <intent-filter>
@@ -27,8 +27,8 @@ android:theme="@style/AppTheme"
         <category android:name="android.intent.category.LAUNCHER" />
     </intent-filter>
 </activity>
-    <activity android:name=".view.VideoActivity"/>
-    <service android:name=".service.DownLoadService"/>
+    <activity android:name="com.gddiyi.aomwify.view.VideoActivity"/>
+    <service android:name="com.gddiyi.aomwify.service.DownLoadService"/>
 
 </application>
 </manifest>

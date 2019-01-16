@@ -1,4 +1,4 @@
-package com.gddiyi.interfacemanager.jsinterface;
+package com.gddiyi.aomwify.jsinterface;
 
 import android.content.Context;
 import android.content.Intent;
