@@ -32,5 +32,4 @@ public class FirstBootActivity extends Activity {
                     PERMISSIONS_STORAGE,10);}
     }
 
-
 }

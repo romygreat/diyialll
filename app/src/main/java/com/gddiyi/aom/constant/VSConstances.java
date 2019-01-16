@@ -22,4 +22,5 @@ public class VSConstances {
  public static  final String   SDdir="sdcard/ad/";
  public static  final String  LOCALPATH="localPath";
 
+
 }

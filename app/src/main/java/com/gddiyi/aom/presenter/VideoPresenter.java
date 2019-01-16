@@ -37,11 +37,11 @@ import static com.gddiyi.aom.model.VideoPlayAll.getInstance;
  * 保存与操作下载网络视频的类
  */
 public class VideoPresenter {
+    @Getter
     int count;
     String doMain;
     String path;
     String videoName;
-    Context mContext;
     String TAG = "VideoTAG";
     //该类很重要，通过该类的访问得到视频路径，本地路径等信息
     VideoPlayAll<PlayData> sparseArray;
@@ -70,8 +70,8 @@ public class VideoPresenter {
         return doMain;
     }
 
-    public VideoPresenter(Context context) {
-        mContext = context;
+    public VideoPresenter() {
+
     }
 
     //将在请求视频回来的数据保存到VideoPlayAll类中，方便管理
@@ -94,7 +94,6 @@ public class VideoPresenter {
             sparseArray.getSaveData().put(i, playData);
             Log.i("savei", "saveVideoPrsenter: " + i);
         }
-//        Log.i("response", "saveVideoPrsenter: "+sparseArray.getLocalVideoPath(3));
         printSavedata(sparseArray);
         if (downloadVideReady != null) {
             downloadVideReady.noticefyDownLoadReady(sparseArray);

@@ -46,10 +46,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class VideoActivity extends Activity  {
-    private static String[] PERMISSIONS_STORAGE = {
-            "android.permission.READ_EXTERNAL_STORAGE",
-            "android.permission.WRITE_EXTERNAL_STORAGE"
-    };
     private String testUrl = null;
     SimpleExoPlayer mPlayer;
     SimpleExoPlayerView playerView;
@@ -59,8 +55,10 @@ public class VideoActivity extends Activity  {
     DefaultDataSourceFactory dataSourceFactory;
     VideoPresenter mVideoPresenter;
     int currentplay = 0;
+    int videoPlayCount;
     org.json.JSONArray localPathArray = null;
     static final String localPath = "localPath";
+    String playAllVideoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +66,9 @@ public class VideoActivity extends Activity  {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        mVideoPresenter = new VideoPresenter(this);
+        mVideoPresenter = new VideoPresenter();
+        videoPlayCount=mVideoPresenter.getCount();
+        playAllVideoPath= mVideoPresenter.readJsonFile();
         initExoPlayer();
 
 //        mVideoPresenter.createFile("");
@@ -81,14 +81,13 @@ public class VideoActivity extends Activity  {
         mPlayer = ExoPlayerFactory.newSimpleInstance(renderersFactory, trackSelector, loadControl);
         Log.i(TAG, "initExoPlayer: ");
         playerView = new SimpleExoPlayerView(this);
-        //playerView.setLayoutParams(new WindowManager.LayoutParams(WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.FILL_PARENT));
+
         playerView.setPlayer(mPlayer);
         playerView.setUseController(false);
         setContentView(playerView);
-        testUrl = "file:///sdcard/ad/9e810023b8e689be648c657cf50d5c43.mp4";
+        testUrl = "file:///sdcard/ad/xxx.mp4";
         testUrl = getPlayVideoUrl(currentplay);
         playVideostart(testUrl);
-        requestPermission();
         mPlayer.addListener(new Player.EventListener() {
             @Override
             public void onTimelineChanged(Timeline timeline, Object manifest) {
@@ -108,12 +107,12 @@ public class VideoActivity extends Activity  {
             @Override
             public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
                 // playbackState 播放视频完成的状态
-                Log.i(TAG, "onPlayerStateChanged: playWhenReady" + playWhenReady + "===playbackState" + playbackState);
+                Log.i(TAG, "onPlayerStateChanged: playWhenReady" + playWhenReady + "==playbackState==" + playbackState);
                 if (playbackState == 4) {
                     currentplay++;
                     playVideostart(getPlayVideoUrl(currentplay));
                     Log.i(TAG, "onPlayerStateChanged:ok== " + getPlayVideoUrl(currentplay));
-                    if (currentplay == 50) {
+                    if (currentplay == videoPlayCount) {
                         currentplay = 0;
                     }
 
@@ -169,34 +168,27 @@ public class VideoActivity extends Activity  {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
     protected void onDestroy() {
         mPlayer.release();
         super.onDestroy();
     }
 
-//    @Override
-//    public boolean onTouch(View v, MotionEvent event) {
-//        finish();
-//        return false;
-//    }
 
-    public void requestPermission() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    PERMISSIONS_STORAGE, 10);
-        }
-    }
 
     public String getPlayVideoUrl(int index) {
         Log.i(TAG, "getPlayVideoUrl: index" + index);
-        String playAllVideoPath = mVideoPresenter.readJsonFile();
+
         String url = null;
         try {
             JSONObject jsonObject = new JSONObject(playAllVideoPath);
-            localPathArray = (org.json.JSONArray) jsonObject.get(localPath);
+            localPathArray = (org.json.JSONArray) jsonObject.get(VSConstances.LOCALPATH);
 
-//        org.json.JSONArray netPathArray=( org.json.JSONArray)jsonObject.get("netPath");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -215,8 +207,13 @@ public class VideoActivity extends Activity  {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
+        mPlayer.release();
+        mPlayer=null;
         finish();
-        Log.i(TAG, "dispatchTouchEvent: ok");
+        if(ev.getAction()==MotionEvent.ACTION_DOWN)
+        { Log.i(TAG, "dispatchTouchEvent: ");
+            finish();
+        }
         return true;
     }
 }

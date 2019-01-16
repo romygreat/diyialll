@@ -64,7 +64,7 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        mVideoPrensenter = new VideoPresenter(this);
+        mVideoPrensenter = new VideoPresenter();
         mVideoPrensenter.setDownloadVideReady(this);
         sharedPreferences = getSharedPreferences("diyi", Context.MODE_PRIVATE);
         try {
