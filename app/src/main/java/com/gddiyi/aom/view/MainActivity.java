@@ -58,7 +58,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fullScreen();
-        setContentView(R.layout.layout_test);
+        setContentView(R.layout.activity_main);
         mWebview = findViewById(R.id.webview);
         mWebview.setOnTouchListener(this);
         Diyi_setWebSettings();

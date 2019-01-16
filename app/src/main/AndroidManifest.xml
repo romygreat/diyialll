@@ -29,11 +29,6 @@ android:theme="@style/AppTheme"
 </activity>
     <activity android:name=".view.VideoActivity"/>
     <service android:name=".service.DownLoadService"/>
-    <activity android:name=".view.RequestPermissionActivity"
-        android:screenOrientation="landscape">
-        >
-
-    </activity>
 
 </application>
 </manifest>

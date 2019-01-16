@@ -45,7 +45,7 @@ import org.json.JSONException;
 //需要导入的包不能搞错
 import org.json.JSONObject;
 
-public class VideoActivity extends Activity implements View.OnTouchListener {
+public class VideoActivity extends Activity  {
     private static String[] PERMISSIONS_STORAGE = {
             "android.permission.READ_EXTERNAL_STORAGE",
             "android.permission.WRITE_EXTERNAL_STORAGE"
@@ -81,7 +81,7 @@ public class VideoActivity extends Activity implements View.OnTouchListener {
         mPlayer = ExoPlayerFactory.newSimpleInstance(renderersFactory, trackSelector, loadControl);
         Log.i(TAG, "initExoPlayer: ");
         playerView = new SimpleExoPlayerView(this);
-        playerView.setLayoutParams(new WindowManager.LayoutParams(WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.FILL_PARENT));
+        //playerView.setLayoutParams(new WindowManager.LayoutParams(WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.FILL_PARENT));
         playerView.setPlayer(mPlayer);
         playerView.setUseController(false);
         setContentView(playerView);
@@ -165,7 +165,7 @@ public class VideoActivity extends Activity implements View.OnTouchListener {
         mPlayer.prepare(mediaSource);
         playerView.setBackgroundColor(Color.BLACK);
         mPlayer.setPlayWhenReady(true);
-        playerView.setOnTouchListener(this);
+//        playerView.setOnTouchListener(this);
     }
 
     @Override
@@ -174,11 +174,11 @@ public class VideoActivity extends Activity implements View.OnTouchListener {
         super.onDestroy();
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        finish();
-        return false;
-    }
+//    @Override
+//    public boolean onTouch(View v, MotionEvent event) {
+//        finish();
+//        return false;
+//    }
 
     public void requestPermission() {
         if (ContextCompat.checkSelfPermission(this,
@@ -211,6 +211,13 @@ public class VideoActivity extends Activity implements View.OnTouchListener {
             e.printStackTrace();
         }
         return url;
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        finish();
+        Log.i(TAG, "dispatchTouchEvent: ok");
+        return true;
     }
 }
 

@@ -47,6 +47,7 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
     ExecutorService executorService;
     int downloadSuccess;
     SharedPreferences sharedPreferences;
+    int updateSuccess;
 
 
     /**
@@ -192,7 +193,7 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
     }
      //第一次安装使用下载视频使用时走的方法
     @Override
-    public void noticefyDownLoadReady(VideoPlayAll<PlayData> sparseArray) {
+    public void noticefyDownLoadReady(final VideoPlayAll<PlayData> sparseArray) {
         Log.i(TAG, "noticefyDownLoadReady: " + sparseArray.getAllNetvideoPath().length);
         Log.i(TAG, "noticefyDownLoadReady: " + sparseArray);
         boolean isFirstBoot = sharedPreferences.getBoolean("firstBoot", true);
@@ -207,6 +208,15 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
                     @Override
                     public void onDownloadSuccess() {
                         Log.i(TAG, "onDownloadSuccess: " + downloadSuccess++);
+                        if (sparseArray.getCount()==downloadSuccess){
+                            //服务停止代码
+                            downloadSuccess=0;
+
+                        }
+                    }
+
+                    private void stopMyservice(int count) {
+
                     }
 
                     @Override
@@ -237,10 +247,17 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
         mVideoPrensenter.deleteSDadVideo();
         for (int  i = 0; i < list.size(); i++) {
             final String name= sparseArray.get((int)list.get(i)).getVideoName();
+            final int downLoadNum=list.size();
+
             DownloadUtil.get().download( sparseArray.get((int)list.get(i)).getNetVideoPath(), "ad", new DownloadUtil.OnDownloadListener() {
                 @Override
                 public void onDownloadSuccess() {
                     Log.i("noticefyUpdate:", "onDownloadSuccess: "+name);
+                   updateSuccess++;
+                   if (updateSuccess==downLoadNum){
+                       //这里停止写掉服务代码
+                       updateSuccess=0;
+                   }
                 }
 
                 @Override
