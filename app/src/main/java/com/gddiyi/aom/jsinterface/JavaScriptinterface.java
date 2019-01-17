@@ -1,4 +1,4 @@
-package com.gddiyi.interfacemanager.jsinterface;
+package com.gddiyi.aom.jsinterface;
 
 import android.content.Context;
 import android.content.Intent;
@@ -34,5 +34,10 @@ public class JavaScriptinterface {
         Intent intent=new Intent(mContext,MainActivity.class);
         mContext.startActivity(intent);
         Log.i(TAG, "showToast: jscall");
+    }
+    @JavascriptInterface
+    public String getSN(){
+
+        return "12345678";
     }
 }

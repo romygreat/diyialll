@@ -45,5 +45,6 @@ dependencies {
     implementation 'io.reactivex:rxjava:1.1.0'
     implementation 'javax.annotation:javax.annotation-api:1.2'
     implementation'org.projectlombok:lombok:1.14.8'
+//    compile project(path: ':wify')
 
 }
