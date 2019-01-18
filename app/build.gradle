@@ -44,7 +44,7 @@ dependencies {
     implementation files('libs/tbs_sdk_thirdapp_v3.2.0.1104_43200_sharewithdownload_withfilereader_withoutGame_obfs_20170609_115346.jar')
     implementation 'io.reactivex:rxjava:1.1.0'
     implementation 'javax.annotation:javax.annotation-api:1.2'
-    implementation'org.projectlombok:lombok:1.14.8'
-//    compile project(path: ':wify')
-
+    implementation 'org.projectlombok:lombok:1.14.8'
+    //    compile project(path: ':wify')
+    implementation 'com.android.support:support-v4:28.0.0'
 }

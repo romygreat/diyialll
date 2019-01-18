@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Diyiproject</string>
+    <string name="wify_menu">WIFY连接列表</string>
+    <string name="fresh">刷新</string>
+    <string name="freshTip">正在刷新中</string>
+    <string name="connected">已连接WIFY :</string>
+    <string name="connectedwify">已连接WIFY:无</string>
+    <string name="availablewify">可连接WIFY：</string>
 </resources>

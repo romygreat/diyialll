@@ -12,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.View;
 
 import com.gddiyi.aom.R;
 import com.gddiyi.aom.wifypresenter.WifyPresenterImpl;
@@ -33,9 +34,7 @@ public class WifyActivity extends AppCompatActivity {
         Log.i(TAG, "onCreate:SSID ="+wifiInfo.getSSID());
         Log.i(TAG, "onCreate: IP="+wifiInfo.getIpAddress());
 
-
-
-
     }
+
 
 }

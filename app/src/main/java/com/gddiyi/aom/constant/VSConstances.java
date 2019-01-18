@@ -26,4 +26,5 @@ public class VSConstances {
 
 
  public static final int NA =1000 ;
+ public static final int CONNECTED_SUCEESS=1001;
 }

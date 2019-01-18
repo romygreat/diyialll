@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_height="40dp"
+            android:layout_width="0dp"
+            android:layout_weight="8"
+            android:text="@string/wify_menu"
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack"
+            android:id="@+id/wifymenu"
+            >
+        </TextView>
+        <Switch
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:textSize="20sp"
+            android:text="wify开关"
+            android:textAlignment="textEnd"
+            android:layout_height="match_parent"
+            android:id="@+id/openOrClose"
+            />
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="30dp">
+            <TextView
+                android:layout_height="30dp"
+                android:layout_width="match_parent"
+                android:text="@string/connectedwify"
+                android:id="@+id/connected"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/availablewify"
+            android:id="@+id/availableWify"
+            />
+    <ListView
+        android:id="@+id/wifyList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textAlignment="center"
+        >
+    </ListView>
+    </LinearLayout>
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:text="@string/fresh"
+    android:clickable="true"
+    android:id="@+id/fresh"
+    android:onClick="freshClick"
+    android:layout_alignParentBottom="true"
+    android:textSize="30dp"
+    android:textAlignment="center"
+    />
+</RelativeLayout>
