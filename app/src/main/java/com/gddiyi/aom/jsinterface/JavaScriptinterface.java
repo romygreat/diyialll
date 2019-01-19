@@ -36,8 +36,8 @@ public class JavaScriptinterface {
         Log.i(TAG, "showToast: jscall");
     }
     @JavascriptInterface
-    public String getSN(){
-
-        return "12345678";
+    public String getSn(){
+        Log.i(TAG, "getSn: Yes");
+        return "sn88888888";
     }
 }

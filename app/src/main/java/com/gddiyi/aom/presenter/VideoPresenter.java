@@ -7,7 +7,7 @@ import com.gddiyi.aom.model.PlayData;
 import com.gddiyi.aom.model.VideoPlayAll;
 import com.gddiyi.aom.model.dto.ResponseJsonVideo;
 import com.gddiyi.aom.netutils.DownloadUtil;
-import com.gddiyi.interfacemanager.VideoInterface;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -38,15 +38,11 @@ public class VideoPresenter {
     String TAG = "VideoTAG";
     //该类很重要，通过该类的访问得到视频路径，本地路径等信息
     VideoPlayAll<PlayData> sparseArray;
-    @Setter
-    @Getter
-    VideoInterface videoInterface;
 
 
     public void setDownloadVideReady(DownloadVideoReady downloadVideReady) {
         this.downloadVideReady = downloadVideReady;
     }
-
     int downLoadVideoCount;
 
     public DownloadVideoReady getDownloadVideReady() {

@@ -5,5 +5,7 @@
     <string name="freshTip">正在刷新中</string>
     <string name="connected">已连接WIFY :</string>
     <string name="connectedwify">已连接WIFY:无</string>
-    <string name="availablewify">可连接WIFY：</string>
+    <string name="availablewify">附近WIFY：</string>
+    <string name="diyi">diyi</string>
+    <string name="SSID">SSID</string>
 </resources>

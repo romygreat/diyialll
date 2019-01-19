@@ -46,7 +46,7 @@ public class VideoActivity extends Activity  {
     ExtractorsFactory extractorsFactory;
     DefaultDataSourceFactory dataSourceFactory;
     VideoPresenter mVideoPresenter;
-    int currentplay = 17;
+    int currentplay = 0;
     int videoPlayCount;
     org.json.JSONArray localPathArray = null;
     String playAllVideoPath;

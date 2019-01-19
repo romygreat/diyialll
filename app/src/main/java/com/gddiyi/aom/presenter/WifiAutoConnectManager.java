@@ -153,7 +153,6 @@ public class WifiAutoConnectManager {
                     } catch (InterruptedException ie) {
                     }
                 }
-
                 WifiConfiguration wifiConfig = createWifiInfo(ssid, password, type);
                 //
                 if (wifiConfig == null) {

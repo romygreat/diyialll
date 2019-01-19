@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 
+import com.gddiyi.aom.R;
 import com.gddiyi.aom.constant.VSConstances;
 import com.gddiyi.aom.model.PlayData;
 import com.gddiyi.aom.model.VideoPlayAll;
@@ -64,11 +65,11 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
     protected void onHandleIntent(Intent intent) {
         mVideoPrensenter = new VideoPresenter();
         mVideoPrensenter.setDownloadVideReady(this);
-        sharedPreferences = getSharedPreferences("diyi", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(getString(R.string.diyi), Context.MODE_PRIVATE);
         try {
             final String json;
 
-            String url = "http://service.gddiyi.com/";
+            String url = VSConstances.MAIN_URL;
 
             mPrensenter = new RetrofitPresenter();
             //response sn
@@ -81,7 +82,7 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
                             ResponseJsonSn r = response.body();
                             token = r.getData().getToken();
                             subscriber.onNext(token);
-                            String url = "http://service.gddiyi.com/qiniu/Upload/getDomain";
+                            String url = VSConstances.REQUEST_DOMAINURL;
                             String jsontoken = "{\"token\":" + "\"" + token + "\"}";
                             OkhttpUtil.okHttpPostJson(url, jsontoken, new CallBackUtil() {
                                 @Override
@@ -143,7 +144,7 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
             });
             //fist step,get the sn from server,in order to get the unique token
             RequestJsonSn requestJsonSn = new RequestJsonSn();
-            requestJsonSn.setSn("sn88888888");
+            requestJsonSn.setSn(VSConstances.TEST_SN);
             mPrensenter.retrofitPost(url, mPrensenter.postJsonString(requestJsonSn));
         } catch (Exception e) {
             e.printStackTrace();
@@ -169,7 +170,7 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
             sortBean.setSort("desc");
             requestJsonVideo.setSort(sortBean);
             mPrensenter.setCallbackVideo(this);
-            String url = "http://service.gddiyi.com/";
+            String url = VSConstances.MAIN_URL;
             mPrensenter.retrofitPostVideo(url, mPrensenter.postJsonString(requestJsonVideo));
         } catch (Exception e) {
             e.printStackTrace();
@@ -200,7 +201,6 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
             setSharePreference(VSConstances.NA);
             mVideoPrensenter.save2LocalFile(sparseArray);
             File file = mVideoPrensenter.createFile(VSConstances.JSONFILEPATH);
-//            Log.i(TAG, "noticefyDownLoadReady: 123" + mVideoPrensenter.readJsonFile());
             Log.i(TAG, "noticefyDownLoadReady:for " + sparseArray.get(17).getVideoName());
             for (int i = 0; i < sparseArray.getCount(); i++) {
                 DownloadUtil.get().download(sparseArray.get(i).getNetVideoPath(), "ad", new DownloadUtil.OnDownloadListener() {

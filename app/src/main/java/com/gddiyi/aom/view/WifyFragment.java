@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
@@ -63,12 +64,14 @@ public class WifyFragment extends Fragment implements
     TextView connectedTextView,availableWifyTextView;
     String[] wifyList;
     ArrayAdapter<String> adapter;
+    SharedPreferences mSharedPreferences;
     int l=0;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+        mSharedPreferences=mContext.getSharedPreferences(getString(R.string.diyi),Context.MODE_PRIVATE);
         mWifiManager = (WifiManager) mContext.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wac = new WifiAutoConnectManager(mWifiManager);
         wifiInfo = mWifiManager.getConnectionInfo();
@@ -78,6 +81,7 @@ public class WifyFragment extends Fragment implements
         MyWifyBrocastReceiver myWifyBrocastReceiver = new MyWifyBrocastReceiver();
         IntentFilter intentFilter = new IntentFilter();
         mContext.registerReceiver(myWifyBrocastReceiver, intentFilter);
+
         wac.mHandler = new Handler(mContext.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
@@ -88,7 +92,7 @@ public class WifyFragment extends Fragment implements
                         wifiListAdapter = (ArrayList<ScanResult>) mWifiManager.getScanResults();
                         wifyList = new String[wifiListAdapter.size()];
                         for (ScanResult scanResult : wifiListAdapter) {
-                            Log.i(TAG, "handleMessage 123" + scanResult.SSID);
+                            Log.i(TAG, "handleMessage SSID" + scanResult.SSID);
                             wifyList[l++] = scanResult.SSID;
                         }
                         l=0;
@@ -100,6 +104,7 @@ public class WifyFragment extends Fragment implements
                             connectedTextView.setText(getString(R.string.connected)+"       "+connectedWIfy);}
                         }
                         break;
+
                     case VSConstances.CONNECTED_SUCEESS:
                         Intent intent=new Intent(mContext,MainActivity.class);
                         startActivity(intent);
@@ -147,6 +152,8 @@ public class WifyFragment extends Fragment implements
             availableWifyTextView.setVisibility(View.VISIBLE);
             textView.setText("刷新");
             wac.mHandler.sendEmptyMessageDelayed(UPDATE_WIFY,2000);
+            //有时候2秒时间加载的wify已连接显示为无，需要再一次刷新
+            wac.mHandler.sendEmptyMessageDelayed(UPDATE_WIFY,6000);
             Log.i(TAG, "onCheckedChanged:is check ");
         } else {
             mWifiManager.setWifiEnabled(false);
@@ -191,8 +198,9 @@ public class WifyFragment extends Fragment implements
             if (action.equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)) {
 //             wifi已成功扫描到可用wifi。
                 List<ScanResult> scanResults = wifiManager.getScanResults();
+//                Log.i(TAG, "onReceive: "+);
             }
-            Log.i(TAG, "onReceive:SSID " + wifiListAdapter.get(0).SSID);
+
         }
     }
     public void inputPassWord(final int wifyPosition) {
@@ -208,6 +216,8 @@ public class WifyFragment extends Fragment implements
             public void onClick(DialogInterface dialogInterface, int i) {
                 String editTextString = inputedit.getText().toString();
                 String SSID=wifyList[wifyPosition];
+                //轻量级数据存储
+                setSharePreference(SSID);
                 if (!editTextString.equals("")) {
                     try{
                         wac.connect(SSID, editTextString,
@@ -248,4 +258,10 @@ public class WifyFragment extends Fragment implements
      }
      return false;
  }
+    public void setSharePreference(String SSID) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        if (SSID!=null){
+            editor.putString(getString(R.string.SSID),SSID);}
+        editor.commit();//提交修改
+    }
 }

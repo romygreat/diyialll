@@ -18,6 +18,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.gddiyi.aom.R;
+import com.gddiyi.aom.constant.VSConstances;
+import com.gddiyi.aom.jsinterface.JavaScriptinterface;
 import com.gddiyi.aom.netutils.ADFilterUtil;
 import com.gddiyi.aom.service.DownLoadService;
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
@@ -29,7 +31,7 @@ import com.tencent.smtt.sdk.WebViewClient;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.gddiyi.interfacemanager.jsinterface.JavaScriptinterface;
+
 
 /**
  * 程序入口启动类进入onreate()
@@ -43,7 +45,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
     private WebView mWebview;
     String TAG="MYTest";
     private int mTime;
-    private  JavaScriptinterface javaScriptinterface;
+    private JavaScriptinterface javaScriptinterface;
     private Button mButton;
     Handler mHandler;
     int mCount=0;
@@ -92,7 +94,6 @@ public class MainActivity extends Activity implements View.OnTouchListener {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
     }
-
     private void Diyi_setWebSettings() {
         mWebview.setWebViewClient(new WebViewClient(){
             @Override
@@ -121,14 +122,17 @@ public class MainActivity extends Activity implements View.OnTouchListener {
             }
         });
 
-        javaScriptinterface=new JavaScriptinterface(this);
-        mWebview.loadUrl("http://om.gddiyi.com/");
-        mWebview.addJavascriptInterface(javaScriptinterface,
-                "android");
+
 
         WebSettings settings = mWebview.getSettings();
         settings.setLoadWithOverviewMode(true);
+
+        //注册javascript接口
+        javaScriptinterface=new JavaScriptinterface(this);
         settings.setJavaScriptEnabled(true);
+        mWebview.addJavascriptInterface(javaScriptinterface,
+                "android");
+
         settings.setUseWideViewPort(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
@@ -142,8 +146,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         String appCachePath = getApplicationContext().getCacheDir().getPath()+ "/webcache";
         settings.setAppCachePath(appCachePath);
         settings.setDatabasePath(appCachePath);
-        vedioURL=
-                "https://vdse.bdstatic.com//c28e7e9a5730e0dae8cc6b0fc5b85d00?authorization=bce-auth-v1%2Ffb297a5cc0fb434c971b8fa103e8dd7b%2F2017-05-11T09%3A02%3A31Z%2F-1%2F%2F6528af5e55ac29260b145e2080e9e2867dbd3026b21cebdd7196740a48ea7b49";
+        mWebview.loadUrl(VSConstances.MAIN_URL);
     }
     private void startDownloadService() {
         Intent downLoadIntent=new Intent(this,DownLoadService.class);

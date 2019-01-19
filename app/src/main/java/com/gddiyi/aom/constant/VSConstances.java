@@ -18,13 +18,19 @@ public class VSConstances {
  public static final int start_time=13;
  public static final int end_time=14;
  public static final int status=15;
+
  public static  final String JSONFILEPATH="sdcard/jsonFile.txt";
  public static  final String   SDdir="sdcard/ad/";
  public static  final String  LOCALPATH="localPath";
  public static  final int  PLAYVIDEOFINISH=4;
  public static  final String  VIDEOCOUNT="videoCount";
-
-
  public static final int NA =1000 ;
  public static final int CONNECTED_SUCEESS=1001;
+ public static final int FIRSTBOOT_ACTIVITY=1002;
+ public static  final String MAIN_URL="http://om.gddiyi.com/";
+//         "http://192.168.2.111:8080";
+
+ public static final String REQUEST_DOMAINURL = "http://service.gddiyi.com/qiniu/Upload/getDomain";
+ public static final String TEST_SN = "sn88888888";
+
 }
