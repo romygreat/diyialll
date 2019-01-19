@@ -172,7 +172,6 @@ public class WifyFragment extends Fragment implements
         mWifiManager.startScan();
         wac.mHandler.sendEmptyMessageDelayed(UPDATE_WIFY,3000);
         Toast.makeText(mContext.getApplicationContext(),getString(R.string.freshTip),Toast.LENGTH_LONG).show();
-
     }
 
     @Override

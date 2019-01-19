@@ -16,10 +16,6 @@ import android.widget.Toast;
 import com.gddiyi.aom.R;
 import com.hdy.hdylights.LedAndChargeManager;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 
 /**
