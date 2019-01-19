@@ -7,6 +7,7 @@ import android.webkit.JavascriptInterface;
 
 
 import com.gddiyi.aom.view.MainActivity;
+import com.hdy.hdylights.LedAndChargeManager;
 
 
 public class JavaScriptinterface {
@@ -38,6 +39,10 @@ public class JavaScriptinterface {
     @JavascriptInterface
     public String getSn(){
         Log.i(TAG, "getSn: Yes");
-        return "sn88888888";
+        return "sn99999999";
+    }
+    @JavascriptInterface
+    public boolean switchCharge(int charge) {
+        return LedAndChargeManager.switchCharge(charge);
     }
 }

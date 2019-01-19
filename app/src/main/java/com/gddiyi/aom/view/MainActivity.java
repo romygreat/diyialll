@@ -2,7 +2,10 @@ package com.gddiyi.aom.view;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -171,10 +174,12 @@ public class MainActivity extends Activity implements View.OnTouchListener {
     @Override
     protected void onStart() {
         super.onStart();
-
-
+        //注册广播
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+        intentFilter.addAction(Intent.ACTION_POWER_CONNECTED);
+        registerReceiver(chargeBroadCast,intentFilter);
     }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -273,6 +278,20 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         mHandler.sendEmptyMessageDelayed(2,1000*5);
         finish();
     }
+
+    BroadcastReceiver chargeBroadCast=new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String acttion= intent.getAction();
+            if (acttion.equals(Intent.ACTION_POWER_CONNECTED)){
+//                printMytips("手机已连接，正在充电");
+            }
+            else if (acttion.equals(Intent.ACTION_POWER_DISCONNECTED)){
+//                printMytips("手机拔出充电开关，请注意");
+            }
+
+        }
+    };
 }
 
 

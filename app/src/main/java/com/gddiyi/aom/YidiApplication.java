@@ -3,6 +3,7 @@ package com.gddiyi.aom;
 import android.app.Application;
 import android.util.Log;
 
+import com.hdy.hdylights.LedAndChargeManager;
 import com.tencent.smtt.export.external.TbsCoreSettings;
 import com.tencent.smtt.sdk.QbSdk;
 
@@ -16,7 +17,8 @@ public class YidiApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance=this;
-       mTime=(int) System.currentTimeMillis();
+        mTime=(int) System.currentTimeMillis();
+        LedAndChargeManager.init();
         HashMap map = new HashMap();
         map.put(TbsCoreSettings. TBS_SETTINGS_USE_PRIVATE_CLASSLOADER,true);
         QbSdk.initTbsSettings(map);

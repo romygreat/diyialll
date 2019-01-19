@@ -10,7 +10,7 @@ import com.gddiyi.aom.view.FirstBootActivity;
 public class BootBroadcastReceiver extends BroadcastReceiver {
     static final String TAG = "BootBroadcastReceiver";
     static final String action_boot = "android.intent.action.BOOT_COMPLETED";
-    
+
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction().toString();
