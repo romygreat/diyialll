@@ -33,7 +33,10 @@ import com.tencent.smtt.sdk.WebViewClient;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -56,6 +59,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
     private Timer timer;
     private TimerTask task;
     private int currentTime = 0;
+    ScheduledExecutorService executorService;
 
     //this project is X5 frameWork is OK
     //正常加载x5内核
@@ -68,7 +72,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         mWebview = findViewById(R.id.webview);
         mWebview.setOnTouchListener(this);
         Diyi_setWebSettings();
-        initTimer();
+//        initTimer();
         mHandler=new Handler(getMainLooper()){
             @Override
             public void handleMessage(Message msg) {
@@ -80,7 +84,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
 
                         break;
                     case 2:startDownloadService();
-                        break;
+
                     default:break;
                 }
 
@@ -179,6 +183,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         intentFilter.addAction(Intent.ACTION_POWER_DISCONNECTED);
         intentFilter.addAction(Intent.ACTION_POWER_CONNECTED);
         registerReceiver(chargeBroadCast,intentFilter);
+
     }
     @Override
     protected void onResume() {
@@ -193,13 +198,13 @@ public class MainActivity extends Activity implements View.OnTouchListener {
             case MotionEvent.ACTION_DOWN:
                 //有按下动作时取消定时
                 stopTimer();
-                Log.i(TAG, "onTouch: stopTimer");
                 break;
             case MotionEvent.ACTION_UP:
                 //抬起时启动定时
                 startTimer();
-                Log.i(TAG, "onTouch: startTimer");
+
                 break;
+                default:break;
         }
 
         return false;
@@ -221,15 +226,11 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         }
         Log.i(TAG, "startTimer: onTouch");
     }
-
     private void stopTimer() {
         if (timer != null) {
             timer.cancel();
         }
         currentTime = 0;
-
-
-
 }
     private void initTimer() {
         // 初始化计时器
@@ -278,7 +279,6 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         mHandler.sendEmptyMessageDelayed(2,1000*5);
         finish();
     }
-
     BroadcastReceiver chargeBroadCast=new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -289,9 +289,13 @@ public class MainActivity extends Activity implements View.OnTouchListener {
             else if (acttion.equals(Intent.ACTION_POWER_DISCONNECTED)){
 //                printMytips("手机拔出充电开关，请注意");
             }
-
         }
     };
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(chargeBroadCast);
+    }
 }
 
 

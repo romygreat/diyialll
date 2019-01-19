@@ -16,6 +16,11 @@ import android.widget.Toast;
 import com.gddiyi.aom.R;
 import com.hdy.hdylights.LedAndChargeManager;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 
 /**
  * @author romygreat
@@ -33,6 +38,7 @@ public class ChargeActvity extends Activity {
         intentFilter.addAction(Intent.ACTION_POWER_DISCONNECTED);
         intentFilter.addAction(Intent.ACTION_POWER_CONNECTED);
         registerReceiver(chargeBroadCast,intentFilter);
+
     }
     private void dialogMessage(String titles, String messages) {
                //LayoutInflater的作用：对于一个没有被载入或者想要动态载入的界面，都需要LayoutInflater.inflate()来载入，LayoutInflater是用来找res/layout/下的xml布局文件，并且实例化
