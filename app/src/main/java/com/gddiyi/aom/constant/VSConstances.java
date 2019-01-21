@@ -28,9 +28,8 @@ public class VSConstances {
  public static final int CONNECTED_SUCEESS=1001;
  public static final int FIRSTBOOT_ACTIVITY=1002;
  public static  final String MAIN_URL="http://om.gddiyi.com/";
-//         "http://192.168.2.111:8080";
-
- public static final String REQUEST_DOMAINURL = "http://service.gddiyi.com/qiniu/Upload/getDomain";
+ public static final String  URL_SN="http://service.gddiyi.com/device/Verify/checkDevice/";
+ public static final String REQUEST_DOMAINURL = "http://service.gddiyi.com/qiniu/Upload/getDomain/";
  public static final String TEST_SN = "sn88888888";
 
 }

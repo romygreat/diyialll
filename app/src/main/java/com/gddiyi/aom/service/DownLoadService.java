@@ -48,7 +48,6 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
     SharedPreferences sharedPreferences;
     int updateSuccess;
 
-
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      */
@@ -70,7 +69,7 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
             final String json;
 
             String url = VSConstances.MAIN_URL;
-
+            Log.i(TAG, "onHandleIntent: ");
             mPrensenter = new RetrofitPresenter();
             //response sn
             mPrensenter.setCallback(new Callback<ResponseJsonSn>() {
@@ -79,6 +78,7 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
                     Observable.create(new Observable.OnSubscribe<String>() {
                         @Override
                         public void call(final Subscriber<? super String> subscriber) {
+                            Log.i(TAG, "call: response sn");
                             ResponseJsonSn r = response.body();
                             token = r.getData().getToken();
                             subscriber.onNext(token);
@@ -145,7 +145,8 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
             //fist step,get the sn from server,in order to get the unique token
             RequestJsonSn requestJsonSn = new RequestJsonSn();
             requestJsonSn.setSn(VSConstances.TEST_SN);
-            mPrensenter.retrofitPost(url, mPrensenter.postJsonString(requestJsonSn));
+            String urlSN=VSConstances.URL_SN;
+            mPrensenter.retrofitPost(urlSN, mPrensenter.postJsonString(requestJsonSn));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -171,6 +172,7 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
             requestJsonVideo.setSort(sortBean);
             mPrensenter.setCallbackVideo(this);
             String url = VSConstances.MAIN_URL;
+            url=VSConstances.REQUEST_DOMAINURL;
             mPrensenter.retrofitPostVideo(url, mPrensenter.postJsonString(requestJsonVideo));
         } catch (Exception e) {
             e.printStackTrace();

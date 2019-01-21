@@ -25,12 +25,15 @@ import com.gddiyi.aom.constant.VSConstances;
 import com.gddiyi.aom.jsinterface.JavaScriptinterface;
 import com.gddiyi.aom.netutils.ADFilterUtil;
 import com.gddiyi.aom.service.DownLoadService;
+import com.tencent.smtt.export.external.TbsCoreSettings;
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
 import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
+import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
@@ -40,7 +43,9 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
+ *
  * 程序入口启动类进入onreate()
+ *
  */
 public class MainActivity extends Activity implements View.OnTouchListener {
     private static String[] PERMISSIONS_STORAGE = {
@@ -116,11 +121,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
                 }
             }
 
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView webView, String s) {
-                Log.i(TAG, "shouldOverrideUrlLoading: "+s);
-                return super.shouldOverrideUrlLoading(webView, s);
-            }
+
             @Override
             public void onPageFinished(WebView webView, String s) {
                 super.onPageFinished(webView, s);
@@ -146,6 +147,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         settings.setGeolocationEnabled(true);
         settings.setDomStorageEnabled(true);
         settings.setDatabaseEnabled(true);
+        
         //白屏调优代码
         mWebview.requestFocus();
         settings.setAppCacheEnabled(true);
@@ -153,9 +155,15 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         String appCachePath = getApplicationContext().getCacheDir().getPath()+ "/webcache";
         settings.setAppCachePath(appCachePath);
         settings.setDatabasePath(appCachePath);
+
+        mWebview.clearCache(true);
+        mWebview.clearHistory();
+
         mWebview.loadUrl(VSConstances.MAIN_URL);
     }
+    //启动服务
     private void startDownloadService() {
+        Log.i(TAG, "startDownloadService: ");
         Intent downLoadIntent=new Intent(this,DownLoadService.class);
         startService(downLoadIntent);
     }

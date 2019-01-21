@@ -1,6 +1,8 @@
 package com.gddiyi.aom.presenter;
 
 
+import android.util.Log;
+
 import com.gddiyi.aom.model.dto.ResponseJsonSn;
 import com.gddiyi.aom.model.dto.RequestJsonVideo;
 import com.gddiyi.aom.model.dto.ResponseJsonVideo;
@@ -97,6 +99,7 @@ public class RetrofitPresenter {
         return instanceGson;
     }
     public  String  postJsonString(RequestJsonSn requestJsonSn){
+        Log.i(TAG, "postJsonString: ");
         String jsonString=  getInstanceGson().toJson(requestJsonSn);
         return jsonString;
     }

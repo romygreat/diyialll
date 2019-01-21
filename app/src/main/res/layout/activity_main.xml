@@ -7,11 +7,13 @@
     tools:context=".view.MainActivity"
     android:id="@+id/mainActivityId"
     >
-
+    <include layout="@layout/webview_started"></include>
+    <include layout="@layout/webview_error"></include>
     <com.tencent.smtt.sdk.WebView
         android:id="@+id/webview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+
         />
 
 </RelativeLayout>

@@ -32,21 +32,24 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.HOME"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity android:name="com.gddiyi.aom.view.VideoActivity" />
 
         <service android:name="com.gddiyi.aom.service.DownLoadService" />
+
 <receiver android:name=".view.WifyFragment$MyWifyBrocastReceiver"/>
         <!--<activity-->
             <!--android:name=".view.MainActivity"-->
             <!--android:hardwareAccelerated="true"-->
             <!--android:screenOrientation="landscape">-->
         <!--</activity>-->
-        <receiver android:name=".broadcast.BootBroadcastReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
+        <!--<receiver android:name=".broadcast.BootBroadcastReceiver" >-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.BOOT_COMPLETED" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
     </application>
 </manifest>

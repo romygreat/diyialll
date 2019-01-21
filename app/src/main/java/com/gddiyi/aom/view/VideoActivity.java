@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.gddiyi.aom.constant.VSConstances;
 import com.gddiyi.aom.presenter.VideoPresenter;
@@ -132,7 +133,9 @@ public class VideoActivity extends Activity  {
 
             @Override
             public void onPlayerError(ExoPlaybackException error) {
-
+                Log.i(TAG, "onPlayerError: ");
+                Toast.makeText(VideoActivity.this,"播放异常，请后台人员检查网络有视频",Toast.LENGTH_LONG).show();
+                VideoActivity.this.finish();
             }
 
             @Override
@@ -184,7 +187,6 @@ public class VideoActivity extends Activity  {
 
     public String getPlayVideoUrl(int index) {
         Log.i(TAG, "getPlayVideoUrl: index" + index);
-
         String url = null;
         try {
             JSONObject jsonObject = new JSONObject(playAllVideoPath);
