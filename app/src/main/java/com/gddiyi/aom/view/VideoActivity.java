@@ -55,16 +55,12 @@ public class VideoActivity extends Activity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        fullScreen();
         mVideoPresenter = new VideoPresenter();
-
         Log.i(TAG, "onCreate:videoCount "+videoPlayCount);
         playAllVideoPath= mVideoPresenter.readJsonFile();
         initExoPlayer();
 
-//        mVideoPresenter.createFile("");
     }
 
     private void initExoPlayer() {
@@ -104,9 +100,9 @@ public class VideoActivity extends Activity  {
 
                 if (playbackState == VSConstances.PLAYVIDEOFINISH) {
 //                    if (currentplay == videoPlayCount) {
-//                        currentplay = 0;
-//                        playVideostart(getPlayVideoUrl(currentplay));
-//                    }
+////                        currentplay = 0;
+////                        playVideostart(getPlayVideoUrl(currentplay));
+////                    }
                     currentplay++;
                     playVideostart(getPlayVideoUrl(currentplay));
                     Log.i(TAG, "onPlayerStateChanged:ok== " + getPlayVideoUrl(currentplay));
@@ -159,6 +155,7 @@ public class VideoActivity extends Activity  {
     private void playVideostart(String testUrl) {
         Log.i(TAG, "initExoPlayer: " + testUrl);
         String videourl = VSConstances.SDdir + testUrl;
+
         mp4Uri = Uri.parse(videourl);
         dataSourceFactory = new DefaultDataSourceFactory(
                 this, Util.getUserAgent(this, "exoPlayerTest"));
@@ -191,12 +188,12 @@ public class VideoActivity extends Activity  {
         try {
             JSONObject jsonObject = new JSONObject(playAllVideoPath);
             localPathArray = (org.json.JSONArray) jsonObject.get(VSConstances.LOCALPATH);
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
         try {
             url = (String) localPathArray.get(index);
+
             while (!url.contains("mp4")) {
                 url = (String) localPathArray.get(index++);
                 currentplay++;
@@ -218,5 +215,13 @@ public class VideoActivity extends Activity  {
         }
         return true;
     }
+    private void fullScreen() {
+        // 隐藏标题
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+    }
+
 }
 

@@ -150,12 +150,11 @@ public class VideoPresenter {
         JsonObject jsonObject = new JsonObject();
         JsonArray jsonArrayLocalPath = new JsonArray();
         JsonArray jsonArrayNetPath = new JsonArray();
-//        jsonArray.add();
+
         Log.i("test", "save2LocalFile: " + sparseArray.getCount());
         for (int i = 0; i < sparseArray.getCount(); i++) {
             jsonArrayLocalPath.add(sparseArray.get(i).getLocalPath());
             jsonArrayNetPath.add(sparseArray.get(i).getNetVideoPath());
-            Log.i("testi", "save2LocalFile: " + i);
         }
         jsonObject.add("localPath", jsonArrayLocalPath);
         jsonObject.add("netPath", jsonArrayNetPath);
@@ -254,7 +253,7 @@ public class VideoPresenter {
             org.json.JSONArray localjsonFile = (org.json.JSONArray) jsonObject1.get(VSConstances.LOCALPATH);
             Log.i(TAG, "deleteSDVideo:tmpPathName " + tmpPathName.length);
             for (int i = 0; i < tmpPathName.length; i++) {
-                Log.i(TAG, "deleteSDVideo: " + i);
+
                 boolean isNeedDeleteVideo = true;
                 for (int j = 0; j < localjsonFile.length(); j++) {
                     if (tmpPathName[i].equals(localjsonFile.get(j))) {

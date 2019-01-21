@@ -51,7 +51,6 @@ public class FirstBootActivity extends FragmentActivity {
         registerMyBroadCast();
     }
 
-
     private void registerMyBroadCast() {
         mSharedPreferences = getSharedPreferences(getString(R.string.diyi), MODE_PRIVATE);
         MyBroadCastReciver myWifyBrocastReceiver = new MyBroadCastReciver();

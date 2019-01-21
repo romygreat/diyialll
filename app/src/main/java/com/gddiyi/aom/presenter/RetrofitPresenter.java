@@ -110,6 +110,7 @@ public class RetrofitPresenter {
         snResultJavaBean.enqueue(getCallBackResponsebody());
     }
     public  String  postJsonString(RequestJsonVideo postVideoDataDto){
+        Log.i(TAG, "postJsonString: jsonVideo");
         String jsonString=  getInstanceGson().toJson(postVideoDataDto);
         return jsonString;
     }

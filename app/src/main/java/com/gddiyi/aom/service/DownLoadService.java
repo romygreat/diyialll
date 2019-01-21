@@ -68,7 +68,7 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
         try {
             final String json;
 
-            String url = VSConstances.MAIN_URL;
+           // String url = VSConstances.MAIN_URL;
             Log.i(TAG, "onHandleIntent: ");
             mPrensenter = new RetrofitPresenter();
             //response sn
@@ -172,7 +172,7 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
             requestJsonVideo.setSort(sortBean);
             mPrensenter.setCallbackVideo(this);
             String url = VSConstances.MAIN_URL;
-            url=VSConstances.REQUEST_DOMAINURL;
+            url=VSConstances.POST_VIDEO_PATH;
             mPrensenter.retrofitPostVideo(url, mPrensenter.postJsonString(requestJsonVideo));
         } catch (Exception e) {
             e.printStackTrace();
@@ -205,7 +205,8 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
             File file = mVideoPrensenter.createFile(VSConstances.JSONFILEPATH);
             Log.i(TAG, "noticefyDownLoadReady:for " + sparseArray.get(17).getVideoName());
             for (int i = 0; i < sparseArray.getCount(); i++) {
-                DownloadUtil.get().download(sparseArray.get(i).getNetVideoPath(), "ad", new DownloadUtil.OnDownloadListener() {
+                DownloadUtil.get().download(sparseArray.get(i).getNetVideoPath(), VSConstances.AD,
+                        new DownloadUtil.OnDownloadListener() {
                     @Override
                     public void onDownloadSuccess() {
                         Log.i(TAG, "onDownloadSuccess: " + downloadSuccess++);

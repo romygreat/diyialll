@@ -27,9 +27,13 @@ public class VSConstances {
  public static final int NA =1000 ;
  public static final int CONNECTED_SUCEESS=1001;
  public static final int FIRSTBOOT_ACTIVITY=1002;
- public static  final String MAIN_URL="http://om.gddiyi.com/";
+ public static  final String MAIN_URL=
+//         "https://www.baidu.com/";
+         "http://om.gddiyi.com/";
+
  public static final String  URL_SN="http://service.gddiyi.com/device/Verify/checkDevice/";
  public static final String REQUEST_DOMAINURL = "http://service.gddiyi.com/qiniu/Upload/getDomain/";
  public static final String TEST_SN = "sn88888888";
-
+ public static final String AD="ad";
+ public static final String POST_VIDEO_PATH="http://service.gddiyi.com/advert/Ad/playAd/";
 }
