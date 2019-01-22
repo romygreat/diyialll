@@ -1,5 +1,6 @@
 package com.gddiyi.aom.view;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -93,7 +94,8 @@ public class WifyFragment extends Fragment implements
                         wifyList = new String[wifiListAdapter.size()];
                         for (ScanResult scanResult : wifiListAdapter) {
                             Log.i(TAG, "handleMessage SSID" + scanResult.SSID);
-                            wifyList[l++] = scanResult.SSID;
+                            if (!"".equals(scanResult.SSID))
+                            {wifyList[l++] = scanResult.SSID;}
                         }
                         l=0;
                         if (wifyList != null) {
@@ -132,7 +134,7 @@ public class WifyFragment extends Fragment implements
         wac.mHandler.sendEmptyMessageDelayed(UPDATE_WIFY,2100);
         listView.setOnItemClickListener(this);
         listView.setAdapter(adapter);
-        textView.setText("刷新");
+        textView.setText(getString(R.string.fresh));
         return myView;
     }
 
@@ -142,6 +144,7 @@ public class WifyFragment extends Fragment implements
 
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (buttonView.isChecked()) {
@@ -150,7 +153,7 @@ public class WifyFragment extends Fragment implements
             connectedTextView.setVisibility(View.VISIBLE);
             textView.setClickable(true);
             availableWifyTextView.setVisibility(View.VISIBLE);
-            textView.setText("刷新");
+            textView.setText(getString(R.string.fresh));
             wac.mHandler.sendEmptyMessageDelayed(UPDATE_WIFY,2000);
             //有时候2秒时间加载的wify已连接显示为无，需要再一次刷新
             wac.mHandler.sendEmptyMessageDelayed(UPDATE_WIFY,6000);
@@ -161,7 +164,7 @@ public class WifyFragment extends Fragment implements
             listView.setVisibility(View.INVISIBLE);
             connectedTextView.setVisibility(View.INVISIBLE);
             listView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            textView.setText("请打开wify开关");
+            textView.setText(getString(R.string.openorclosewify));
             connectedTextView.setText(getString(R.string.connectedwify));
             availableWifyTextView.setVisibility(View.INVISIBLE);
             Log.i(TAG, "onCheckedChanged: not check");
@@ -182,7 +185,6 @@ public class WifyFragment extends Fragment implements
         }else {
             printMytips("请打开wify按钮");
         }
-
     }
 
     public class MyWifyBrocastReceiver extends BroadcastReceiver {
@@ -225,6 +227,9 @@ public class WifyFragment extends Fragment implements
                     catch (Exception e){
                       printMytips("请检查网络或密码错误");
                     }
+                }else
+                {
+                    wac.mHandler.sendEmptyMessage(VSConstances.CONNECTED_SUCEESS);
                 }
             }
         });

@@ -61,7 +61,7 @@ import lombok.core.Main;
 /**
  * 程序入口启动类进入onreate()
  */
-public class MainActivity extends BaseActivity implements View.OnTouchListener, JavaScriptinterface.noticefyCharge {
+public class MainActivity extends BaseActivity implements View.OnTouchListener, JavaScriptinterface.NoticefyPay {
     private WebView mWebview;
     String TAG = "MYTest";
     private int mTime;
@@ -74,6 +74,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
     private TimerTask task;
     private int currentTime = 0;
     ScheduledExecutorService executorService;
+
 
     //优化代码
     LinearLayout linearLayout;
@@ -98,12 +99,12 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case 1:
-                        File downloadFile = new File(Environment.getExternalStorageDirectory(), VSConstances.AD);
-                        if (downloadFile.exists()) {
-                            Intent intent = new Intent(MainActivity.this, VideoActivity.class);
-                            startActivity(intent);
-                        }
-                        Log.i(TAG, "handleMessage: dwonloadfile not exit");
+//                        File downloadFile = new File(Environment.getExternalStorageDirectory(), VSConstances.AD);
+//                        if (downloadFile.exists()) {
+//                            Intent intent = new Intent(MainActivity.this, VideoActivity.class);
+//                            startActivity(intent);
+//                        }
+//                        Log.i(TAG, "handleMessage: dwonloadfile not exit");
                         break;
                     case 2:
                         startDownloadService();
@@ -111,7 +112,6 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
                     default:
                         break;
                 }
-
             }
         };
         requestPermission();
@@ -191,21 +191,34 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
     }
 
 
-    @Override
-    public void noticefyCharge() {
-        Log.i(TAG, "noticefyCharge: ");
-        if (LedAndChargeManager.setLedColor(LedAndChargeManager.BLUE_OPEN)) {
-            Toast.makeText(MainActivity.this, "open", Toast.LENGTH_LONG).show();
-        }
 
+    @Override
+    public boolean readyPay() {
+        //一、准备支付阶段，取消定时功能，使用stoptimer
+        //二、同时使用一个boolean,变量为touch=false,触摸屏幕失效
+        Log.i(TAG, "readyPay: ");
+        touch=false;
+        stopTimer();
+        Log.i(TAG, "readyPay: stopTimer");
+        //继续监听页面支付情况
+        return true;
     }
 
     @Override
-    public void noticefyUnCharge() {
-        Log.i(TAG, "noticefyCharge: ");
-        if (LedAndChargeManager.setLedColor(LedAndChargeManager.BLUE_CLOSE)) {
-            Toast.makeText(MainActivity.this, "close", Toast.LENGTH_LONG).show();
+    public boolean finishPay(int time) {
+        Log.i(TAG, "finishPay:传进来time "+time);
+        boolean b=  super.finishPay(time);
+        //一、完成支付，无论是否为0，此时应该重新打开计时功能
+        //二、同时将touch变量设置为一个boolean=true
+        //三、将时间time保存，开启充电功能后，开启线程定时，定时取消充电功能
+        Log.i(TAG, "finishPay: time"+time);
+        if (time>0){
+            LedAndChargeManager.switchCharge(LedAndChargeManager.SWITCH_ON);
+            Log.i(TAG, "finishPay: red "+LedAndChargeManager.setLedColor(LedAndChargeManager.RED_OPEN));
         }
+        touch=true;
+        startTimer();
+        return b;
     }
 
     class MyTask extends TimerTask {
@@ -239,6 +252,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        Log.i(TAG, "onTouch: ");
         mCount++;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -264,22 +278,30 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
          * 这个方法是说，delay/1000秒后执行task,然后进过period/1000秒再次执行task，
          * 这个用于循环任务，执行无数次，当然，你可以用timer.cancel();取消计时器的执行。
          */
+        if (touch){
         initTimer();
         try {
-            timer.schedule(task, 1000 * 20, 10000);
+            timer.schedule(task, 1000 * 20, 60*1000);
         } catch (IllegalStateException e) {
             e.printStackTrace();
             initTimer();
             timer.schedule(task, 1000 * 50, Long.MAX_VALUE);
         }
         Log.i(TAG, "startTimer: onTouch");
+
+        }
+
     }
 
     private void stopTimer() {
-        if (timer != null) {
-            timer.cancel();
+        if (touch) {
+            if (timer != null) {
+
+                timer.cancel();
+            }
+
+            currentTime = 0;
         }
-        currentTime = 0;
     }
 
     private void initTimer() {
@@ -302,8 +324,9 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
             mWebview.setVisibility(View.INVISIBLE);
             ActivityCompat.requestPermissions(this,
                     PERMISSIONS_STORAGE, 10);
+            mHandler.sendEmptyMessageDelayed(2,0);
         } else {
-            mHandler.sendEmptyMessageDelayed(2, 1000 * 5);
+            mHandler.sendEmptyMessageDelayed(2, 1000 * 20);
         }
     }
 
@@ -312,8 +335,8 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         mWebview.setVisibility(View.VISIBLE);
         launcherMainActvity();
-        //延迟5秒启动DownLoadService
-        mHandler.sendEmptyMessageDelayed(2, 1000 * 5);
+        //延迟60秒启动DownLoadService
+        mHandler.sendEmptyMessageDelayed(2, 1000 * 60);
         finish();
     }
 

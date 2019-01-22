@@ -15,11 +15,11 @@ public class JavaScriptinterface {
 
     Context mContext;
     String TAG = getClass().getSimpleName();
-    noticefyCharge mNoticefyCharge;
+    NoticefyPay mNoticefyPay;
 
     public JavaScriptinterface(Context c) {
         mContext = c;
-        mNoticefyCharge = (noticefyCharge)c;
+        mNoticefyPay = (NoticefyPay) c;
     }
 
     /**
@@ -50,29 +50,33 @@ public class JavaScriptinterface {
     }
 
     @JavascriptInterface
-    public boolean switchCharger(int charge) {
-        Log.i(TAG, "switchCharge: true"+charge);
-        Toast.makeText(mContext,"ischarge"+charge,Toast.LENGTH_LONG).show();
-        boolean isCharge = false;
-        isCharge = LedAndChargeManager.switchCharge(charge);
-        if (mNoticefyCharge==null){
-            Log.i(TAG, "switchCharger: mNOticefyChargeis null");
-        }
-        if (isCharge) {
-            if (mNoticefyCharge != null) {
-                mNoticefyCharge.noticefyCharge();
-            }
+    public boolean readyPay() {
+        Log.i(TAG, "readyPay: ");
+        if (mNoticefyPay != null) {
+            Toast.makeText(mContext,"readyPay",Toast.LENGTH_LONG);
+            mNoticefyPay.readyPay();
+            return true;
         } else {
-            if (mNoticefyCharge != null) {
-                mNoticefyCharge.noticefyUnCharge();
-
-            }
+            return true;
         }
-        return isCharge;
     }
 
-    public interface noticefyCharge {
-        void noticefyCharge();
-        void noticefyUnCharge();
+    @JavascriptInterface
+    public boolean finishPay(int time) {
+        Log.i(TAG, "finishPay: time"+time);
+        // time=0,支付不成功,time>0支付成功
+        if (mNoticefyPay != null)
+        {
+          boolean returnResult=  mNoticefyPay.finishPay(time);
+          return returnResult;
+        }
+        return false;
+    }
+
+    public interface NoticefyPay {
+        boolean readyPay();
+
+        boolean finishPay(int time);
+
     }
 }

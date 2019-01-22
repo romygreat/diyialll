@@ -11,6 +11,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -18,41 +20,39 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
+import android.widget.Switch;
 import android.widget.Toast;
 
+import com.gddiyi.aom.constant.VSConstances;
 import com.gddiyi.aom.jsinterface.JavaScriptinterface;
 import com.gddiyi.aom.service.DownLoadService;
 import com.hdy.hdylights.LedAndChargeManager;
 
-public class BaseActivity extends Activity implements JavaScriptinterface.noticefyCharge {
+public class BaseActivity extends Activity implements JavaScriptinterface.NoticefyPay {
     public static String[] PERMISSIONS_STORAGE = {
             "android.permission.READ_EXTERNAL_STORAGE",
             "android.permission.WRITE_EXTERNAL_STORAGE",
             "android.permission.READ_PHONE_STATE"
     };
+    Handler mBaseHandler;
+   public boolean touch=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fullScreen();
         hideBottomUIMenu();
+        mBaseHandler=new Handler(getMainLooper()){
+            @Override
+            public void handleMessage(Message msg) {
+                touch=true;
+               LedAndChargeManager.switchCharge(LedAndChargeManager.SWITCH_OFF);
+                Log.i(TAG, "finishPay: red== "+LedAndChargeManager.setLedColor(LedAndChargeManager.RED_CLOSE));
+            }
+        };
     }
 
     String TAG = "BaseActivity";
-    @Override
-    public void noticefyCharge() {
-        Log.i(TAG, "noticefyCharge: ");
-        if (LedAndChargeManager.setLedColor(LedAndChargeManager.BLUE_OPEN)) {
-            Toast.makeText(this, "open", Toast.LENGTH_LONG).show();
-        }
-    }
 
-    @Override
-    public void noticefyUnCharge() {
-        Log.i(TAG, "noticefyUnCharge: ");
-        if (LedAndChargeManager.setLedColor(LedAndChargeManager.BLUE_CLOSE)) {
-            Toast.makeText(this, "close", Toast.LENGTH_LONG).show();
-        }
-    }
 
     protected void hideBottomUIMenu() {
         //隐藏虚拟按键，并且全屏
@@ -141,4 +141,19 @@ public class BaseActivity extends Activity implements JavaScriptinterface.notice
         startService(downLoadIntent);
     }
 
+    @Override
+    public boolean readyPay() {
+        return true;
+    }
+    @Override
+    public boolean finishPay(int time) {
+        boolean b=LedAndChargeManager.switchCharge(LedAndChargeManager.SWITCH_ON);
+        //一、同时将touch变量设置为一个boolean=true
+        touch=true;
+        //二、完成支付，无论是否为0，此时应该重新打开计时功能
+        //三、将时间time保存，开启充电功能后，开启线程定时，定时取消充电功能
+        mBaseHandler.sendEmptyMessageDelayed(VSConstances.PAY2CHARGE,time*1000);
+
+        return b;
+    }
 }

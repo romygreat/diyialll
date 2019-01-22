@@ -80,10 +80,12 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
                         public void call(final Subscriber<? super String> subscriber) {
                             Log.i(TAG, "call: response sn");
                             ResponseJsonSn r = response.body();
+                            Log.i(TAG, "call:response "+r.toString());
                             token = r.getData().getToken();
                             subscriber.onNext(token);
                             String url = VSConstances.REQUEST_DOMAINURL;
                             String jsontoken = "{\"token\":" + "\"" + token + "\"}";
+                            Log.i(TAG, "call:token "+token);
                             OkhttpUtil.okHttpPostJson(url, jsontoken, new CallBackUtil() {
                                 @Override
                                 public Object onParseResponse(okhttp3.Call call, okhttp3.Response response) {
@@ -203,7 +205,8 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
             setSharePreference(VSConstances.NA);
             mVideoPrensenter.save2LocalFile(sparseArray);
             File file = mVideoPrensenter.createFile(VSConstances.JSONFILEPATH);
-            Log.i(TAG, "noticefyDownLoadReady:for " + sparseArray.get(17).getVideoName());
+
+                        Log.i(TAG, "noticefyDownLoadReady:for " + sparseArray.get(17).getVideoName());
             for (int i = 0; i < sparseArray.getCount(); i++) {
                 DownloadUtil.get().download(sparseArray.get(i).getNetVideoPath(), VSConstances.AD,
                         new DownloadUtil.OnDownloadListener() {

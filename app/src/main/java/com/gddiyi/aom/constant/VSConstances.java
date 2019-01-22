@@ -36,4 +36,5 @@ public class VSConstances {
  public static final String TEST_SN = "sn88888888";
  public static final String AD="ad";
  public static final String POST_VIDEO_PATH="http://service.gddiyi.com/advert/Ad/playAd/";
+ public static final int  PAY2CHARGE=1003;
 }
