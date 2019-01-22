@@ -16,7 +16,8 @@
         <TextView
             android:layout_height="40dp"
             android:layout_width="0dp"
-            android:layout_weight="8"
+            android:layout_marginLeft="80dp"
+            android:layout_weight="7"
             android:text="@string/wify_menu"
             android:textSize="30sp"
             android:textAlignment="center"
@@ -64,6 +65,7 @@
 <TextView
     android:layout_width="match_parent"
     android:layout_height="40dp"
+    android:layout_marginLeft="60dp"
     android:text="@string/fresh"
     android:clickable="true"
     android:id="@+id/fresh"

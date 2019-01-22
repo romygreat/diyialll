@@ -64,7 +64,7 @@ public class JavaScriptinterface {
     @JavascriptInterface
     public boolean finishPay(int time) {
         Log.i(TAG, "finishPay: time"+time);
-        // time=0,支付不成功,time>0支付成功
+        // time=0,支付不成功,time=1支付成功
         if (mNoticefyPay != null)
         {
           boolean returnResult=  mNoticefyPay.finishPay(time);

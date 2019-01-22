@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -111,6 +112,12 @@ public class FirstBootActivity extends FragmentActivity {
     private void startMyMainActivity() {
         Intent intentMain = new Intent(FirstBootActivity.this, MainActivity.class);
         startActivity(intentMain);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+         super.onBackPressed();
     }
 }
 

@@ -84,6 +84,7 @@ public class WifyFragment extends Fragment implements
         mContext.registerReceiver(myWifyBrocastReceiver, intentFilter);
 
         wac.mHandler = new Handler(mContext.getMainLooper()) {
+            String connectedWIfy;
             @Override
             public void handleMessage(Message msg) {
                 Log.i(TAG, "handleMessage: " + msg.obj);
@@ -101,15 +102,21 @@ public class WifyFragment extends Fragment implements
                         if (wifyList != null) {
                             adapter = new ArrayAdapter(mContext, android.R.layout.simple_list_item_1, wifyList);
                             listView.setAdapter(adapter);
-                            String connectedWIfy=mWifiManager.getConnectionInfo().getSSID();
+                            connectedWIfy=mWifiManager.getConnectionInfo().getSSID();
+                            connectedWIfy=  connectedWIfy.substring(1,connectedWIfy.length()-1);
+                            Log.i(TAG, "handleMessage:connect "+connectedWIfy);
                             if (connectedWIfy!=null && hasWifyConnected()){
                             connectedTextView.setText(getString(R.string.connected)+"       "+connectedWIfy);}
                         }
                         break;
 
                     case VSConstances.CONNECTED_SUCEESS:
-                        Intent intent=new Intent(mContext,MainActivity.class);
-                        startActivity(intent);
+                      String SSID1= mSharedPreferences.getString(getString(R.string.SSID),"..");
+                        Log.i(TAG, "handleMessage: "+SSID1);
+                        if (connectedWIfy.equals(SSID1))
+                        { Intent intent=new Intent(mContext,MainActivity.class);
+                        startActivity(intent);}
+
                         break;
                     default:break;
                 }
@@ -268,4 +275,5 @@ public class WifyFragment extends Fragment implements
             editor.putString(getString(R.string.SSID),SSID);}
         editor.commit();//提交修改
     }
+
 }

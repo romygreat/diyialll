@@ -2,10 +2,13 @@ package com.gddiyi.aom.view;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -15,16 +18,20 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.gddiyi.aom.R;
 import com.gddiyi.aom.constant.VSConstances;
 import com.gddiyi.aom.jsinterface.JavaScriptinterface;
+import com.gddiyi.aom.presenter.WifiAutoConnectManager;
 import com.gddiyi.aom.service.DownLoadService;
 import com.hdy.hdylights.LedAndChargeManager;
 
@@ -35,7 +42,9 @@ public class BaseActivity extends Activity implements JavaScriptinterface.Notice
             "android.permission.READ_PHONE_STATE"
     };
     Handler mBaseHandler;
+
    public boolean touch=true;
+    public  int  BACKPRESS_TIME=10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,13 +55,13 @@ public class BaseActivity extends Activity implements JavaScriptinterface.Notice
             public void handleMessage(Message msg) {
                 touch=true;
                LedAndChargeManager.switchCharge(LedAndChargeManager.SWITCH_OFF);
+                Log.i(TAG, "handleMessage: "+LedAndChargeManager.switchCharge(LedAndChargeManager.SWITCH_OFF));
                 Log.i(TAG, "finishPay: red== "+LedAndChargeManager.setLedColor(LedAndChargeManager.RED_CLOSE));
             }
         };
     }
 
     String TAG = "BaseActivity";
-
 
     protected void hideBottomUIMenu() {
         //隐藏虚拟按键，并且全屏
@@ -147,13 +156,26 @@ public class BaseActivity extends Activity implements JavaScriptinterface.Notice
     }
     @Override
     public boolean finishPay(int time) {
-        boolean b=LedAndChargeManager.switchCharge(LedAndChargeManager.SWITCH_ON);
+//        boolean b=LedAndChargeManager.switchCharge(LedAndChargeManager.SWITCH_ON);
+//        Log.i(TAG, "finishPay:bb "+b);
         //一、同时将touch变量设置为一个boolean=true
         touch=true;
         //二、完成支付，无论是否为0，此时应该重新打开计时功能
         //三、将时间time保存，开启充电功能后，开启线程定时，定时取消充电功能
-        mBaseHandler.sendEmptyMessageDelayed(VSConstances.PAY2CHARGE,time*1000);
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.diyi), Context.MODE_PRIVATE);
+        int chageTime=sharedPreferences.getInt(getString(R.string.chargeTime),1);
+        Log.i(TAG, "finishPay: "+chageTime);
+        mBaseHandler.sendEmptyMessageDelayed(VSConstances.PAY2CHARGE,chageTime*VSConstances.TIME_UNIT_MIN);
+        return true;
+    }
 
-        return b;
+    @Override
+    public void onBackPressed() {
+        BACKPRESS_TIME++;
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.diyi), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String SSID=getString(R.string.SSID);
+        editor.putString(SSID,"..");
+        editor.commit();//提交修改
     }
 }

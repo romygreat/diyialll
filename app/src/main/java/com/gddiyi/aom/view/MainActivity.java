@@ -2,8 +2,10 @@ package com.gddiyi.aom.view;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -18,6 +20,7 @@ import android.os.Message;
 import android.os.PersistableBundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.InputType;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +28,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -99,12 +103,12 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case 1:
-//                        File downloadFile = new File(Environment.getExternalStorageDirectory(), VSConstances.AD);
-//                        if (downloadFile.exists()) {
-//                            Intent intent = new Intent(MainActivity.this, VideoActivity.class);
-//                            startActivity(intent);
-//                        }
-//                        Log.i(TAG, "handleMessage: dwonloadfile not exit");
+                        File downloadFile = new File(Environment.getExternalStorageDirectory(), VSConstances.AD);
+                        if (downloadFile.exists()) {
+                            Intent intent = new Intent(MainActivity.this, VideoActivity.class);
+                            startActivity(intent);
+                        }
+                        Log.i(TAG, "handleMessage: dwonloadfile not exit");
                         break;
                     case 2:
                         startDownloadService();
@@ -117,7 +121,6 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
         requestPermission();
 
     }
-
 
     private void Diyi_setWebSettings() {
         mWebview.setWebViewClient(new WebViewClient() {
@@ -213,7 +216,8 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
         //三、将时间time保存，开启充电功能后，开启线程定时，定时取消充电功能
         Log.i(TAG, "finishPay: time"+time);
         if (time>0){
-            LedAndChargeManager.switchCharge(LedAndChargeManager.SWITCH_ON);
+            Log.i(TAG, "finishPay:charge "+LedAndChargeManager.switchCharge(LedAndChargeManager.SWITCH_ON));
+
             Log.i(TAG, "finishPay: red "+LedAndChargeManager.setLedColor(LedAndChargeManager.RED_OPEN));
         }
         touch=true;
@@ -252,6 +256,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        BACKPRESS_TIME=0;
         Log.i(TAG, "onTouch: ");
         mCount++;
         switch (event.getAction()) {
@@ -281,11 +286,11 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
         if (touch){
         initTimer();
         try {
-            timer.schedule(task, 1000 * 20, 60*1000);
+            timer.schedule(task, VSConstances.TIME_UNIT_MIN, VSConstances.TIME_UNIT_MIN);
         } catch (IllegalStateException e) {
             e.printStackTrace();
             initTimer();
-            timer.schedule(task, 1000 * 50, Long.MAX_VALUE);
+            timer.schedule(task, VSConstances.TIME_UNIT_MIN, Long.MAX_VALUE);
         }
         Log.i(TAG, "startTimer: onTouch");
 
@@ -326,7 +331,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
                     PERMISSIONS_STORAGE, 10);
             mHandler.sendEmptyMessageDelayed(2,0);
         } else {
-            mHandler.sendEmptyMessageDelayed(2, 1000 * 20);
+            mHandler.sendEmptyMessageDelayed(2, 1000 * 5);
         }
     }
 
@@ -334,10 +339,10 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         mWebview.setVisibility(View.VISIBLE);
-        launcherMainActvity();
+//        launcherMainActvity();
         //延迟60秒启动DownLoadService
-        mHandler.sendEmptyMessageDelayed(2, 1000 * 60);
-        finish();
+        mHandler.sendEmptyMessageDelayed(2, VSConstances.TIME_UNIT_MIN);
+//        finish();
     }
 
     @Override
@@ -357,7 +362,35 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
         Glide.with(MainActivity.this).load(R.mipmap.loading_circle).asGif().into(imageView);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.i(TAG, "onBackPressed:backtimepress "+BACKPRESS_TIME);
+      if (BACKPRESS_TIME>10){
+          setWify();
+      }
+    }
+    public void setWify() {
+        final EditText inputedit=new EditText(this);
+        AlertDialog.Builder alertdialog=new AlertDialog.Builder(this);
+        alertdialog.setTitle("您需要设置wify密码权限");
+        alertdialog.setView(inputedit);
+        inputedit.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        alertdialog.setNegativeButton("取消",null);
+        alertdialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String editTextString = inputedit.getText().toString();
+                Log.i(TAG, "onClick: "+editTextString);
+                if ("gddiyi".equals(editTextString)){
+                    Intent intent=new Intent(MainActivity.this,FirstBootActivity.class);
+                    startActivity(intent);
+                    MainActivity.this.finish();
+                }
+            }
+        });
+        alertdialog.show();
+    }
 }
 
 

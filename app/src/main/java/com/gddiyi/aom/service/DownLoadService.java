@@ -67,7 +67,6 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
         sharedPreferences = getSharedPreferences(getString(R.string.diyi), Context.MODE_PRIVATE);
         try {
             final String json;
-
            // String url = VSConstances.MAIN_URL;
             Log.i(TAG, "onHandleIntent: ");
             mPrensenter = new RetrofitPresenter();
@@ -81,6 +80,11 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
                             Log.i(TAG, "call: response sn");
                             ResponseJsonSn r = response.body();
                             Log.i(TAG, "call:response "+r.toString());
+                            int chargeTime=Integer.parseInt(r.getData().getShop_set().getCharge_time());
+                            Log.i(TAG, "call:chargeTime "+r.getData().getShop_set().getCharge_time());
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putInt(getString(R.string.chargeTime),chargeTime);
+                            editor.commit();
                             token = r.getData().getToken();
                             subscriber.onNext(token);
                             String url = VSConstances.REQUEST_DOMAINURL;

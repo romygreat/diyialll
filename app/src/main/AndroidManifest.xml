@@ -27,7 +27,7 @@
 
         >
         <activity
-            android:name="com.gddiyi.aom.view.MainActivity"
+            android:name="com.gddiyi.aom.view.FirstBootActivity"
             android:hardwareAccelerated="true"
             android:screenOrientation="landscape">
             <intent-filter>
@@ -44,11 +44,11 @@
         <service android:name="com.gddiyi.aom.service.DownLoadService" />
 
 <receiver android:name=".view.WifyFragment$MyWifyBrocastReceiver"/>
-        <!--<activity-->
-            <!--android:name=".view.MainActivity"-->
-            <!--android:hardwareAccelerated="true"-->
-            <!--android:screenOrientation="landscape">-->
-        <!--</activity>-->
+        <activity
+            android:name=".view.MainActivity"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="landscape">
+        </activity>
         <!--<receiver android:name=".broadcast.BootBroadcastReceiver" >-->
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.BOOT_COMPLETED" />-->

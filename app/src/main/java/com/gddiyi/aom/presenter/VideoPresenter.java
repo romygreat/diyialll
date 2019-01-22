@@ -114,7 +114,6 @@ public class VideoPresenter {
 
                 @Override
                 public void onDownloading(int progress) {
-
                 }
 
                 @Override
@@ -187,11 +186,9 @@ public class VideoPresenter {
             tmpPathName = new String[localPathArray1.length()];
 
             notsavePathAName = sparseArray.getAllLocalVideoPath();
-//            org.json.JSONArray localPathArray1 = (org.json.JSONArray) jsonObject1.get("localPath");
             tmpPathName = new String[localPathArray1.length()];
             for (int i = 0; i < localPathArray1.length(); i++) {
                 tmpPathName[i] = (String) localPathArray1.get(i);
-                Log.i(TAG, "checkUpdate: " + tmpPathName[i]);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -202,7 +199,6 @@ public class VideoPresenter {
 //        if (isCheckUpdate)return isCheckUpdate;
 ////        else
         {
-
             try {
                     ArrayList<Integer> arrayList=new ArrayList<>();
                 String[] fileNames = getALlSDadVideoNames();
@@ -268,7 +264,7 @@ public class VideoPresenter {
                     file.delete();
                     isNeedDeleteVideo = true;
                 }
-                Log.i(TAG, "deleteSDVideo: " + isNeedDeleteVideo);
+
             }
         } catch (Exception e) {
             e.printStackTrace();
