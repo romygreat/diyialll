@@ -72,6 +72,10 @@ public class JavaScriptinterface {
         }
         return false;
     }
+    @JavascriptInterface
+    void openWifySetting(){
+        ((MainActivity) mContext).setWify();
+    }
 
     public interface NoticefyPay {
         boolean readyPay();

@@ -47,7 +47,9 @@
         <activity
             android:name=".view.MainActivity"
             android:hardwareAccelerated="true"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:launchMode="singleInstance"
+            >
         </activity>
         <!--<receiver android:name=".broadcast.BootBroadcastReceiver" >-->
             <!--<intent-filter>-->

@@ -114,9 +114,14 @@ public class WifyFragment extends Fragment implements
                       String SSID1= mSharedPreferences.getString(getString(R.string.SSID),"..");
                         Log.i(TAG, "handleMessage: "+SSID1);
                         if (connectedWIfy.equals(SSID1))
-                        { Intent intent=new Intent(mContext,MainActivity.class);
-                        startActivity(intent);}
+                        {   printMytips("即将进入主界面");
+                            sendEmptyMessageDelayed(1005,1000);
 
+                        }
+                        break;
+                    case 1005:
+                    { Intent intent=new Intent(mContext,MainActivity.class);
+                        startActivity(intent);}
                         break;
                     default:break;
                 }
@@ -225,11 +230,12 @@ public class WifyFragment extends Fragment implements
                 String editTextString = inputedit.getText().toString();
                 String SSID=wifyList[wifyPosition];
                 //轻量级数据存储
-                setSharePreference(SSID);
+
                 if (!editTextString.equals("")) {
                     try{
                         wac.connect(SSID, editTextString,
                                 "myAdmin".equals("")? WifiAutoConnectManager.WifiCipherType.WIFICIPHER_NOPASS: WifiAutoConnectManager.WifiCipherType.WIFICIPHER_WPA);
+                        setSharePreference(SSID);
                     }
                     catch (Exception e){
                       printMytips("请检查网络或密码错误");

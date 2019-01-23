@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
@@ -383,9 +384,14 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
                 String editTextString = inputedit.getText().toString();
                 Log.i(TAG, "onClick: "+editTextString);
                 if ("gddiyi".equals(editTextString)){
+                    SharedPreferences  mSharedPreferences = getSharedPreferences(getString(R.string.diyi), Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = mSharedPreferences.edit();
+                    editor.putString(getString(R.string.SSID),"..");
+                    editor.commit();
+                    //提交修改
                     Intent intent=new Intent(MainActivity.this,FirstBootActivity.class);
                     startActivity(intent);
-                    MainActivity.this.finish();
+
                 }
             }
         });
