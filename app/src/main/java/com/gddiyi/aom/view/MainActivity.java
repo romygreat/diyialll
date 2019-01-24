@@ -131,6 +131,45 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
     }
 
     private void Diyi_setWebSettings() {
+
+        mWebview.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView webView, final int i) {
+                super.onProgressChanged(webView, i);
+
+            }
+
+        });
+
+
+        WebSettings settings = mWebview.getSettings();
+        settings.setLoadWithOverviewMode(true);
+
+        //注册javascript接口
+        javaScriptinterface = new JavaScriptinterface(this);
+        settings.setJavaScriptEnabled(true);
+        mWebview.addJavascriptInterface(javaScriptinterface,
+                "android");
+
+        settings.setUseWideViewPort(true);
+        settings.setJavaScriptCanOpenWindowsAutomatically(true);
+        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        settings.setGeolocationEnabled(true);
+        settings.setDomStorageEnabled(true);
+        settings.setDatabaseEnabled(true);
+
+        //白屏调优
+        mWebview.requestFocus();
+        settings.setAppCacheEnabled(false);
+
+//        String appCachePath = getApplicationContext().getCacheDir().getPath() + "/webcache";
+//        settings.setAppCachePath(appCachePath);
+//        settings.setDatabasePath(appCachePath);
+
+//        mWebview.clearCache(true);
+//        mWebview.clearHistory();
+
+
         mWebview.setWebViewClient(new WebViewClient() {
             String TAG = "guangago";
 
@@ -158,9 +197,9 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
 
             @Override
             public void onReceivedSslError(WebView webView, SslErrorHandler sslErrorHandler, SslError sslError) {
-
+                mWebview.setVisibility(View.INVISIBLE);
                 webviewError.setVisibility(View.VISIBLE);
-                Log.i(TAG, "onReceivedSslError: sslError"+sslError.toString());
+                Log.i(TAG, "onReceivedSslError: sslError" + sslError.toString());
             }
 
             @Override
@@ -171,45 +210,10 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
                 webviewError.setVisibility(View.INVISIBLE);
                 mWebview.setVisibility(View.VISIBLE);
 
-
             }
         });
 
-        mWebview.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public void onProgressChanged(WebView webView, final int i) {
-                super.onProgressChanged(webView, i);
 
-            }
-        });
-
-        WebSettings settings = mWebview.getSettings();
-        settings.setLoadWithOverviewMode(true);
-
-        //注册javascript接口
-        javaScriptinterface = new JavaScriptinterface(this);
-        settings.setJavaScriptEnabled(true);
-        mWebview.addJavascriptInterface(javaScriptinterface,
-                "android");
-
-        settings.setUseWideViewPort(true);
-        settings.setJavaScriptCanOpenWindowsAutomatically(true);
-        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        settings.setGeolocationEnabled(true);
-        settings.setDomStorageEnabled(true);
-        settings.setDatabaseEnabled(true);
-
-        //白屏调优
-        mWebview.requestFocus();
-        settings.setAppCacheEnabled(true);
-
-        String appCachePath = getApplicationContext().getCacheDir().getPath() + "/webcache";
-        settings.setAppCachePath(appCachePath);
-        settings.setDatabasePath(appCachePath);
-
-        mWebview.clearCache(true);
-        mWebview.clearHistory();
-        vedioURL = "file:///sdcard/ad/5cb2264ae3dd42a17248c22dbe942e26.mp4";
         mWebview.loadUrl(VSConstances.MAIN_URL);
         mWebview.setVisibility(View.INVISIBLE);
 
@@ -419,8 +423,9 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
                     Intent intent = new Intent(MainActivity.this, FirstBootActivity.class);
                     intent.putExtra(getString(R.string.removeWify), "removeWify");
                     startActivity(intent);
+
                     //退出wify修改wify密码
-                    MainActivity.this.finish();
+                    // 不退出本activity,否则会wify跳转activity加载会很慢
 
                 }
             }
