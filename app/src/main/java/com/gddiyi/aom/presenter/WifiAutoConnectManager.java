@@ -169,6 +169,7 @@ public class WifiAutoConnectManager {
                 int netID = wifiManager.addNetwork(wifiConfig);
                 boolean enabled = wifiManager.enableNetwork(netID, true);
 //                sendMsg("enableNetwork status enable=" + enabled);
+
                 boolean connected = wifiManager.reconnect();
 //                sendMsg("enableNetwork connected=" + connected);
           if (connected){
@@ -203,5 +204,23 @@ public class WifiAutoConnectManager {
         }
 
         return true;
+    }
+    public void removeWifiBySsid(WifiManager wifiManager) {
+        String  TAG="removeWify";
+        List<WifiConfiguration> wifiConfigs = wifiManager.getConfiguredNetworks();
+        for (WifiConfiguration wifiConfig : wifiConfigs) {
+            String ssid = wifiConfig.SSID;
+            Log.d(TAG, "removeWifiBySsid ssid=" + ssid);
+            if (ssid.equals("\"" + getConnectedWify() + "\"")) {
+                Log.d(TAG, "removeWifiBySsid success, SSID = " + wifiConfig.SSID + " netId = " + String.valueOf(wifiConfig.networkId));
+                wifiManager.removeNetwork(wifiConfig.networkId);
+                wifiManager.saveConfiguration();
+            }
+        }
+    }
+    public String getConnectedWify(){
+        String   connectedWIfy=wifiManager.getConnectionInfo().getSSID();
+        connectedWIfy=  connectedWIfy.substring(1,connectedWIfy.length()-1);
+        return connectedWIfy;
     }
 }

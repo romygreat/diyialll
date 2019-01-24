@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.gddiyi.aom.R;
@@ -42,19 +43,25 @@ public class FirstBootActivity extends FragmentActivity {
     SharedPreferences mSharedPreferences;
     WifyFragment fragment;
     WifiManager mWifiManager;
+    String  removewify;
+    MyBroadCastReciver myWifyBrocastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bootlayout);
         requestPermission();
+
+//       if (!TextUtils.isEmpty(removewify))
+       {
+        Log.i(TAG, "onCreate: removewify=="+removewify);}
         getWifyFragment();
         registerMyBroadCast();
     }
 
     private void registerMyBroadCast() {
         mSharedPreferences = getSharedPreferences(getString(R.string.diyi), MODE_PRIVATE);
-        MyBroadCastReciver myWifyBrocastReceiver = new MyBroadCastReciver();
+         myWifyBrocastReceiver = new MyBroadCastReciver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
@@ -118,6 +125,12 @@ public class FirstBootActivity extends FragmentActivity {
     public void onBackPressed() {
 
          super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(myWifyBrocastReceiver);
     }
 }
 

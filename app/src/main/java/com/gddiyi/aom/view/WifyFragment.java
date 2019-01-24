@@ -23,6 +23,7 @@ import android.support.annotation.Nullable;
 
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,73 +63,94 @@ public class WifyFragment extends Fragment implements
     WifiAutoConnectManager wac;
     WifiInfo wifiInfo;
     TextView textView;
-    TextView connectedTextView,availableWifyTextView;
+    TextView connectedTextView, availableWifyTextView;
     String[] wifyList;
     ArrayAdapter<String> adapter;
     SharedPreferences mSharedPreferences;
-    int l=0;
+    String removeWify;
+    MyWifyBrocastReceiver myWifyBrocastReceiver;
+    int l = 0;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
-        mSharedPreferences=mContext.getSharedPreferences(getString(R.string.diyi),Context.MODE_PRIVATE);
+        FirstBootActivity firstBootActivity = (FirstBootActivity) context;
+        removeWify = firstBootActivity.removewify;
+        mSharedPreferences = mContext.getSharedPreferences(getString(R.string.diyi), Context.MODE_PRIVATE);
         mWifiManager = (WifiManager) mContext.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wac = new WifiAutoConnectManager(mWifiManager);
         wifiInfo = mWifiManager.getConnectionInfo();
         if (mWifiManager.isWifiEnabled()) {
             mWifiManager.setWifiEnabled(true);
         }
-        MyWifyBrocastReceiver myWifyBrocastReceiver = new MyWifyBrocastReceiver();
+        myWifyBrocastReceiver = new MyWifyBrocastReceiver();
         IntentFilter intentFilter = new IntentFilter();
         mContext.registerReceiver(myWifyBrocastReceiver, intentFilter);
 
         wac.mHandler = new Handler(mContext.getMainLooper()) {
             String connectedWIfy;
+
             @Override
             public void handleMessage(Message msg) {
                 Log.i(TAG, "handleMessage: " + msg.obj);
-                Log.i(TAG, "handleMessage: what"+msg.what);
-                switch (msg.what){
+                Log.i(TAG, "handleMessage: what" + msg.what);
+                switch (msg.what) {
                     case UPDATE_WIFY:
                         wifiListAdapter = (ArrayList<ScanResult>) mWifiManager.getScanResults();
                         wifyList = new String[wifiListAdapter.size()];
                         for (ScanResult scanResult : wifiListAdapter) {
                             Log.i(TAG, "handleMessage SSID" + scanResult.SSID);
-                            if (!"".equals(scanResult.SSID))
-                            {wifyList[l++] = scanResult.SSID;}
+                            if (!"".equals(scanResult.SSID)) {
+                                wifyList[l++] = scanResult.SSID;
+                            }
                         }
-                        l=0;
+                        l = 0;
                         if (wifyList != null) {
                             adapter = new ArrayAdapter(mContext, android.R.layout.simple_list_item_1, wifyList);
                             listView.setAdapter(adapter);
-                            connectedWIfy=mWifiManager.getConnectionInfo().getSSID();
-                            connectedWIfy=  connectedWIfy.substring(1,connectedWIfy.length()-1);
-                            Log.i(TAG, "handleMessage:connect "+connectedWIfy);
-                            if (connectedWIfy!=null && hasWifyConnected()){
-                            connectedTextView.setText(getString(R.string.connected)+"       "+connectedWIfy);}
+                            connectedWIfy = wac.getConnectedWify();
+                            Log.i(TAG, "handleMessage:connect " + connectedWIfy);
+                            if (connectedWIfy != null && hasWifyConnected()) {
+
+                                if (mContext != null) {
+
+                                    connectedTextView.setText(getString(R.string.connected) + "       " + connectedWIfy);
+                                } else {
+                                    wac.mHandler.sendEmptyMessage(1005);
+                                }
+                            }
                         }
                         break;
 
                     case VSConstances.CONNECTED_SUCEESS:
-                      String SSID1= mSharedPreferences.getString(getString(R.string.SSID),"..");
-                        Log.i(TAG, "handleMessage: "+SSID1);
-                        if (connectedWIfy.equals(SSID1))
-                        {   printMytips("即将进入主界面");
-                            sendEmptyMessageDelayed(1005,1000);
-
+                        String SSID1 = mSharedPreferences.getString(getString(R.string.SSID), "..");
+                        Log.i(TAG, "handleMessage: " + SSID1);
+                        if (connectedWIfy.equals(SSID1)) {
+                            printMytips("即将进入主界面");
+                            sendEmptyMessageDelayed(1005, 1000);
                         }
                         break;
-                    case 1005:
-                    { Intent intent=new Intent(mContext,MainActivity.class);
-                        startActivity(intent);}
+                    case 1005: {
+                        Intent intent = new Intent(mContext, MainActivity.class);
+                        mContext.startActivity(intent);
+                    }
+                    ((FirstBootActivity) mContext).finish();
+                    break;
+                    default:
                         break;
-                    default:break;
                 }
 
             }
         };
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        wac.mHandler.sendEmptyMessageDelayed(UPDATE_WIFY, 2100);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -137,16 +159,16 @@ public class WifyFragment extends Fragment implements
         radioButton = myView.findViewById(R.id.openOrClose);
         radioButton.setOnCheckedChangeListener(this);
         textView = myView.findViewById(R.id.fresh);
-        connectedTextView=myView.findViewById(R.id.connected);
-        availableWifyTextView=myView.findViewById(R.id.availableWify);
+        connectedTextView = myView.findViewById(R.id.connected);
+        availableWifyTextView = myView.findViewById(R.id.availableWify);
         textView.setOnClickListener(this);
         radioButton.setChecked(true);
         mWifiManager.startScan();
         //if (mWifiManager.isWifiEnabled())
-        wac.mHandler.sendEmptyMessageDelayed(UPDATE_WIFY,2100);
         listView.setOnItemClickListener(this);
         listView.setAdapter(adapter);
         textView.setText(getString(R.string.fresh));
+
         return myView;
     }
 
@@ -166,9 +188,9 @@ public class WifyFragment extends Fragment implements
             textView.setClickable(true);
             availableWifyTextView.setVisibility(View.VISIBLE);
             textView.setText(getString(R.string.fresh));
-            wac.mHandler.sendEmptyMessageDelayed(UPDATE_WIFY,2000);
+            wac.mHandler.sendEmptyMessageDelayed(UPDATE_WIFY, 2000);
             //有时候2秒时间加载的wify已连接显示为无，需要再一次刷新
-            wac.mHandler.sendEmptyMessageDelayed(UPDATE_WIFY,6000);
+            wac.mHandler.sendEmptyMessageDelayed(UPDATE_WIFY, 6000);
             Log.i(TAG, "onCheckedChanged:is check ");
         } else {
             mWifiManager.setWifiEnabled(false);
@@ -182,19 +204,20 @@ public class WifyFragment extends Fragment implements
             Log.i(TAG, "onCheckedChanged: not check");
         }
     }
+
     @Override
     public void onClick(View v) {
         mWifiManager.startScan();
-        wac.mHandler.sendEmptyMessageDelayed(UPDATE_WIFY,3000);
-        Toast.makeText(mContext.getApplicationContext(),getString(R.string.freshTip),Toast.LENGTH_LONG).show();
+        wac.mHandler.sendEmptyMessageDelayed(UPDATE_WIFY, 3000);
+        Toast.makeText(mContext.getApplicationContext(), getString(R.string.freshTip), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.i(TAG, "onItemClick: position" + position);
-        if (mWifiManager.isWifiEnabled()){
+        if (mWifiManager.isWifiEnabled()) {
             inputPassWord(position);
-        }else {
+        } else {
             printMytips("请打开wify按钮");
         }
     }
@@ -216,33 +239,43 @@ public class WifyFragment extends Fragment implements
 
         }
     }
+
     public void inputPassWord(final int wifyPosition) {
-        final EditText inputedit=new EditText(mContext);
-        AlertDialog.Builder alertdialog=new AlertDialog.Builder(mContext);
-        alertdialog.setTitle("请输入wify密码");
+        final EditText inputedit = new EditText(mContext);
+        AlertDialog.Builder alertdialog = new AlertDialog.Builder(mContext);
+        alertdialog.setTitle(getString(R.string.wifytitle));
         alertdialog.setView(inputedit);
         alertdialog.setIcon(R.drawable.wify);
         inputedit.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        alertdialog.setNegativeButton("取消",null);
-        alertdialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+
+        alertdialog.setNegativeButton(getString(R.string.cancel), null);
+        alertdialog.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String editTextString = inputedit.getText().toString();
-                String SSID=wifyList[wifyPosition];
+                String SSID = wifyList[wifyPosition];
                 //轻量级数据存储
-
-                if (!editTextString.equals("")) {
-                    try{
+                Log.i(TAG, "onClick: SSID=="+SSID);
+                if (!TextUtils.isEmpty(editTextString)) {
+                    try {
                         wac.connect(SSID, editTextString,
-                                "myAdmin".equals("")? WifiAutoConnectManager.WifiCipherType.WIFICIPHER_NOPASS: WifiAutoConnectManager.WifiCipherType.WIFICIPHER_WPA);
+                                "myAdmin".equals("") ? WifiAutoConnectManager.
+                                        WifiCipherType.WIFICIPHER_NOPASS : WifiAutoConnectManager.WifiCipherType.WIFICIPHER_WPA);
                         setSharePreference(SSID);
+                        Log.i(TAG, "onClick: editString==" + editTextString);
+                    } catch (Exception e) {
+                        printMytips("请检查网络或密码错误");
                     }
-                    catch (Exception e){
-                      printMytips("请检查网络或密码错误");
-                    }
-                }else
+                } else
+
                 {
-                    wac.mHandler.sendEmptyMessage(VSConstances.CONNECTED_SUCEESS);
+                    Log.i(TAG, "onClick: SSID"+SSID);
+                    wac.connect(SSID, "gddiyi2018",
+                            "myAdmin".equals("") ? WifiAutoConnectManager.
+                                    WifiCipherType.WIFICIPHER_NOPASS : WifiAutoConnectManager.WifiCipherType.WIFICIPHER_WPA);
+
+                    Intent intent = new Intent(mContext, MainActivity.class);
+                    mContext.startActivity(intent);
                 }
             }
         });
@@ -251,35 +284,45 @@ public class WifyFragment extends Fragment implements
 
     public void printMytips(String str) {
         try {
-            if(mContext!=null){
-                Toast.makeText(mContext.getApplicationContext(), str, Toast.LENGTH_SHORT).show();}
-        }catch (NullPointerException e){
+            if (mContext != null) {
+                Toast.makeText(mContext.getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+            }
+        } catch (NullPointerException e) {
             e.printStackTrace();
             Log.i(TAG, "printMytips: ");
         }
     }
- public boolean hasWifyConnected(){
-     ConnectivityManager connectivity = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-     NetworkInfo netInfo = connectivity.getActiveNetworkInfo();
-     if(netInfo != null && netInfo.isAvailable()){
-         if (netInfo.getType() == ConnectivityManager.TYPE_WIFI) {
-             //WiFi网络
-             return true;
-         } else if (netInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
 
-         } else {
-             //网络错误
-         }
-     }else{
-         //网络错误
-     }
-     return false;
- }
+    public boolean hasWifyConnected() {
+        ConnectivityManager connectivity = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = connectivity.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isAvailable()) {
+            if (netInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                //WiFi网络
+                return true;
+            } else if (netInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+
+            } else {
+                //网络错误
+            }
+        } else {
+            //网络错误
+        }
+        return false;
+    }
+
     public void setSharePreference(String SSID) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
-        if (SSID!=null){
-            editor.putString(getString(R.string.SSID),SSID);}
+        if (SSID != null) {
+            editor.putString(getString(R.string.SSID), SSID);
+        }
         editor.commit();//提交修改
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mContext.unregisterReceiver(myWifyBrocastReceiver);
+
+    }
 }

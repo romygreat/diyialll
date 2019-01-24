@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -32,6 +33,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -39,6 +41,7 @@ import com.gddiyi.aom.R;
 import com.gddiyi.aom.constant.VSConstances;
 import com.gddiyi.aom.jsinterface.JavaScriptinterface;
 import com.gddiyi.aom.netutils.ADFilterUtil;
+import com.gddiyi.aom.presenter.WifiAutoConnectManager;
 import com.gddiyi.aom.service.DownLoadService;
 import com.hdy.hdylights.LedAndChargeManager;
 import com.tencent.smtt.export.external.TbsCoreSettings;
@@ -47,6 +50,7 @@ import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
 import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
 import com.tencent.smtt.sdk.QbSdk;
+import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
@@ -81,6 +85,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
     ScheduledExecutorService executorService;
 
 
+
     //优化代码
     LinearLayout linearLayout;
     ImageView imageView;
@@ -97,6 +102,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
         mWebview = findViewById(R.id.webview);
         initView();
         mWebview.setOnTouchListener(this);
+
         Diyi_setWebSettings();
 //        initTimer();
         mHandler = new Handler(getMainLooper()) {
@@ -112,7 +118,8 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
                         Log.i(TAG, "handleMessage: dwonloadfile not exit");
                         break;
                     case 2:
-                        startDownloadService();
+                        startDownloadService();break;
+
 
                     default:
                         break;
@@ -125,6 +132,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
 
     private void Diyi_setWebSettings() {
         mWebview.setWebViewClient(new WebViewClient() {
+            String TAG="guangago";
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView webView, WebResourceRequest webResourceRequest, Bundle bundle) {
                 Log.i(TAG, "shouldInterceptRequest: " + webResourceRequest.getUrl());
@@ -158,10 +166,21 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
                 super.onPageFinished(webView, s);
                 Log.i(TAG, "onPageFinished: okhttp url==" + s);
                 linearLayout.setVisibility(View.GONE);
+                webviewError.setVisibility(View.INVISIBLE);
+                mWebview.setVisibility(View.VISIBLE);
+
+
 
             }
         });
 
+        mWebview.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView webView, final int  i) {
+                super.onProgressChanged(webView, i);
+
+            }
+        });
 
         WebSettings settings = mWebview.getSettings();
         settings.setLoadWithOverviewMode(true);
@@ -179,7 +198,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
         settings.setDomStorageEnabled(true);
         settings.setDatabaseEnabled(true);
 
-        //白屏调优代码
+        //白屏调优
         mWebview.requestFocus();
         settings.setAppCacheEnabled(true);
 
@@ -191,6 +210,8 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
         mWebview.clearHistory();
         vedioURL = "file:///sdcard/ad/5cb2264ae3dd42a17248c22dbe942e26.mp4";
         mWebview.loadUrl(VSConstances.MAIN_URL);
+        mWebview.setVisibility(View.INVISIBLE);
+
 
     }
 
@@ -253,6 +274,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
     protected void onResume() {
         super.onResume();
         startTimer();
+        Log.i(TAG, "onResume: ");
     }
 
     @Override
@@ -273,7 +295,6 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
             default:
                 break;
         }
-
         return false;
     }
 
@@ -356,6 +377,8 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
         linearLayout = (LinearLayout) findViewById(R.id.web_started);
         imageView = (ImageView) findViewById(R.id.started_gif);
         webviewError = (LinearLayout) findViewById(R.id.webview_error);
+
+
         loadReady();
     }
 
@@ -383,14 +406,20 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
             public void onClick(DialogInterface dialogInterface, int i) {
                 String editTextString = inputedit.getText().toString();
                 Log.i(TAG, "onClick: "+editTextString);
-                if ("gddiyi".equals(editTextString)){
+                if (editTextString.isEmpty()){
                     SharedPreferences  mSharedPreferences = getSharedPreferences(getString(R.string.diyi), Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = mSharedPreferences.edit();
                     editor.putString(getString(R.string.SSID),"..");
                     editor.commit();
                     //提交修改
+                   WifiManager  mWifiManager = (WifiManager) MainActivity.this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                   WifiAutoConnectManager wac= new WifiAutoConnectManager(mWifiManager);
+                   wac.removeWifiBySsid(mWifiManager);
                     Intent intent=new Intent(MainActivity.this,FirstBootActivity.class);
+                    intent.putExtra(getString(R.string.removeWify),"removeWify");
                     startActivity(intent);
+                    //退出wify修改wify密码
+                    MainActivity.this.finish();
 
                 }
             }

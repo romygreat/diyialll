@@ -10,4 +10,8 @@
     <string name="SSID">SSID</string>
     <string name="openorclosewify">请打开wify开关</string>
     <string name="chargeTime">chargeTime</string>
+    <string name="removeWify">removeWify</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确认</string>
+    <string name="wifytitle">请输入wify密码</string>
 </resources>
