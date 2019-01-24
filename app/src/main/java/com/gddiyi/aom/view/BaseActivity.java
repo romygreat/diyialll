@@ -177,5 +177,6 @@ public class BaseActivity extends Activity implements JavaScriptinterface.Notice
         String SSID=getString(R.string.SSID);
         editor.putString(SSID,"..");
         editor.commit();//提交修改
+        super.onBackPressed();
     }
 }

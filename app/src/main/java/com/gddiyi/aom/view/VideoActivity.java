@@ -51,7 +51,6 @@ public class VideoActivity extends Activity  {
     int videoPlayCount;
     org.json.JSONArray localPathArray = null;
     String playAllVideoPath;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +95,7 @@ public class VideoActivity extends Activity  {
             @Override
             public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
                 // playbackState 播放视频完成的状态
-                Log.i(TAG, "onPlayerStateChanged: playWhenReady" + playWhenReady + "==playbackState==" + playbackState);
+                Log.i(TAG,  playWhenReady + "==playbackState==" + playbackState);
 
                 if (playbackState == VSConstances.PLAYVIDEOFINISH) {
 //                    if (currentplay == videoPlayCount) {

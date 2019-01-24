@@ -112,11 +112,18 @@ public class WifyFragment extends Fragment implements
                             connectedWIfy = wac.getConnectedWify();
                             Log.i(TAG, "handleMessage:connect " + connectedWIfy);
                             if (connectedWIfy != null && hasWifyConnected()) {
+                                 //这里存在比较多的if判断语句，目的不让报错
+                                if (mContext != null && (connectedTextView!=null)
+                                        && WifyFragment.this.isAdded() &&(WifyFragment.this.isVisible())) {
+                                    try {
+                                        connectedTextView.setText(getString(R.string.connected) + "       " + connectedWIfy);
+                                    } catch (Exception e) {
+                                    } finally {
 
-                                if (mContext != null) {
+                                    }
 
-                                    connectedTextView.setText(getString(R.string.connected) + "       " + connectedWIfy);
                                 } else {
+
                                     wac.mHandler.sendEmptyMessage(1005);
                                 }
                             }
@@ -128,14 +135,16 @@ public class WifyFragment extends Fragment implements
                         Log.i(TAG, "handleMessage: " + SSID1);
                         if (connectedWIfy.equals(SSID1)) {
                             printMytips("即将进入主界面");
-                            sendEmptyMessageDelayed(1005, 1000);
+                            sendEmptyMessageDelayed(1005, 1500);
                         }
                         break;
                     case 1005: {
                         Intent intent = new Intent(mContext, MainActivity.class);
                         mContext.startActivity(intent);
+                        ((FirstBootActivity) mContext).finish();
+                        WifyFragment.this.onDestroy();
                     }
-                    ((FirstBootActivity) mContext).finish();
+
                     break;
                     default:
                         break;
@@ -255,7 +264,7 @@ public class WifyFragment extends Fragment implements
                 String editTextString = inputedit.getText().toString();
                 String SSID = wifyList[wifyPosition];
                 //轻量级数据存储
-                Log.i(TAG, "onClick: SSID=="+SSID);
+                Log.i(TAG, "onClick: SSID==" + SSID);
                 if (!TextUtils.isEmpty(editTextString)) {
                     try {
                         wac.connect(SSID, editTextString,
@@ -269,7 +278,7 @@ public class WifyFragment extends Fragment implements
                 } else
 
                 {
-                    Log.i(TAG, "onClick: SSID"+SSID);
+                    Log.i(TAG, "onClick: SSID" + SSID);
                     wac.connect(SSID, "gddiyi2018",
                             "myAdmin".equals("") ? WifiAutoConnectManager.
                                     WifiCipherType.WIFICIPHER_NOPASS : WifiAutoConnectManager.WifiCipherType.WIFICIPHER_WPA);
