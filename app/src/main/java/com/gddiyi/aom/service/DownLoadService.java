@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.gddiyi.aom.R;
 import com.gddiyi.aom.constant.VSConstances;
+import com.gddiyi.aom.model.MyThreadPool;
 import com.gddiyi.aom.model.PlayData;
 import com.gddiyi.aom.model.VideoPlayAll;
 import com.gddiyi.aom.model.dto.RequestJsonSn;
@@ -207,7 +208,12 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
         setSharePreference(sparseArray.getCount());
         if (isFirstBoot) {
             setSharePreference(VSConstances.NA);
-            mVideoPrensenter.save2LocalFile(sparseArray);
+            MyThreadPool.getExeCutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    mVideoPrensenter.save2LocalFile(sparseArray);
+                }
+            });
             File file = mVideoPrensenter.createFile(VSConstances.JSONFILEPATH);
 
                         Log.i(TAG, "noticefyDownLoadReady:for " + sparseArray.get(17).getVideoName());
@@ -252,7 +258,12 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
     @Override
     public void noticefyUpdate(final VideoPlayAll<PlayData> sparseArray, final ArrayList list) {
         Log.i(TAG, "noticefyDownLoadReady:getCount "+sparseArray.getCount());
-        mVideoPrensenter.save2LocalFile(sparseArray);
+        MyThreadPool.getExeCutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                mVideoPrensenter.save2LocalFile(sparseArray);
+            }
+        });
         setSharePreference(sparseArray.getCount());
         mVideoPrensenter.deleteSDadVideo();
         for (int  i = 0; i < list.size(); i++) {
@@ -268,7 +279,6 @@ public class DownLoadService extends IntentService implements Callback<ResponseJ
                        updateSuccess=0;
                    }
                 }
-
                 @Override
                 public void onDownloading(int progress) {
 
