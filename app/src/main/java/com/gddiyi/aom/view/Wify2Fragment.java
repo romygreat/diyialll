@@ -42,10 +42,9 @@ import com.gddiyi.aom.wifypresenter.WifyPresenterImpl;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WifyFragment extends Fragment implements
+public class Wify2Fragment extends Fragment implements
         CompoundButton.OnCheckedChangeListener, View.OnClickListener, AdapterView.OnItemClickListener {
     private static final int UPDATE_WIFY = 666;
-    private static final int SCAN_WIFY=667;
     Context mContext;
     ListView listView;
     Switch radioButton;
@@ -67,18 +66,24 @@ public class WifyFragment extends Fragment implements
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+        FirstBootActivity firstBootActivity = (FirstBootActivity) context;
+//        removeWify = firstBootActivity.removewify;
         mSharedPreferences = mContext.getSharedPreferences(getString(R.string.diyi), Context.MODE_PRIVATE);
         mWifiManager = (WifiManager) mContext.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wac = new WifiAutoConnectManager(mWifiManager);
         wifiInfo = mWifiManager.getConnectionInfo();
-        wac.removeWifiBySsid(mWifiManager);
-
+        if (mWifiManager.isWifiEnabled()) {
+            mWifiManager.setWifiEnabled(true);
+        }
+        myWifyBrocastReceiver = new MyWifyBrocastReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        mContext.registerReceiver(myWifyBrocastReceiver, intentFilter);
 
         wac.mHandler = new Handler(mContext.getMainLooper()) {
             String connectedWIfy;
             @Override
             public void handleMessage(Message msg) {
-
+                Log.i(TAG, "handleMessage: " + msg.obj);
                 Log.i(TAG, "handleMessage: what" + msg.what);
                 switch (msg.what) {
                     case UPDATE_WIFY:
@@ -98,9 +103,9 @@ public class WifyFragment extends Fragment implements
 
                             Log.i(TAG, "handleMessage:connect " + connectedWIfy);
                             if (connectedWIfy != null && hasWifyConnected()) {
-                                 //这里存在比较多的if判断语句，目的不让报错
+                                //这里存在比较多的if判断语句，目的不让报错
                                 if (mContext != null && (connectedTextView!=null)
-                                        && WifyFragment.this.isAdded() &&(WifyFragment.this.isVisible())) {
+                                        && Wify2Fragment.this.isAdded() &&(Wify2Fragment.this.isVisible())) {
                                     try {
                                         connectedTextView.setText(getString(R.string.connected) + "       " + connectedWIfy);
                                     } catch (Exception e) {
@@ -117,25 +122,22 @@ public class WifyFragment extends Fragment implements
                         break;
 
                     case VSConstances.CONNECTED_SUCEESS:
+                        String SSID1 = mSharedPreferences.getString(getString(R.string.SSID), "..");
+                        Log.i(TAG, "handleMessage: " + SSID1);
+                        if (connectedWIfy.equals(SSID1)) {
                             printMytips("即将进入主界面");
                             sendEmptyMessageDelayed(1005, 1500);
-
+                        }
                         break;
-                    case 1005:
-                        //进入主界面
-                         {
+                    case 1005: {
                         Intent intent = new Intent(mContext, MainActivity.class);
                         mContext.startActivity(intent);
                         intent.putExtra("reload","reload");
                         ((FirstBootActivity) mContext).finish();
+
                     }
                     case 1006:
                         printMytips("请检查网络或密码错误");
-                    break;
-                    case SCAN_WIFY:
-
-                        mWifiManager.startScan();
-                        sendEmptyMessageDelayed(UPDATE_WIFY,4000);
                         break;
                     default:
                         break;
@@ -143,19 +145,12 @@ public class WifyFragment extends Fragment implements
 
             }
         };
-        if (mWifiManager.isWifiEnabled()) {
-            mWifiManager.setWifiEnabled(true);
-
-
-        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        printMytips("正在扫描wify，请稍后");
-        wac.mHandler.sendEmptyMessageDelayed(SCAN_WIFY,2000);
-
+        wac.mHandler.sendEmptyMessageDelayed(UPDATE_WIFY, 2100);
     }
 
     @Nullable
@@ -196,7 +191,7 @@ public class WifyFragment extends Fragment implements
             availableWifyTextView.setVisibility(View.VISIBLE);
             textView.setText(getString(R.string.fresh));
             //有时候2秒时间加载的wify已连接显示为无，需要再一次刷新
-            wac.mHandler.sendEmptyMessageDelayed(SCAN_WIFY, 100);
+            wac.mHandler.sendEmptyMessageDelayed(UPDATE_WIFY, 6000);
             Log.i(TAG, "onCheckedChanged:is check ");
         } else {
             mWifiManager.setWifiEnabled(false);
@@ -329,7 +324,7 @@ public class WifyFragment extends Fragment implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-//        mContext.unregisterReceiver(myWifyBrocastReceiver);
+        mContext.unregisterReceiver(myWifyBrocastReceiver);
     }
 
 }

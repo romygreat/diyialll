@@ -216,6 +216,7 @@ public class WifiAutoConnectManager {
             if (ssid.equals("\"" + getConnectedWify() + "\"")) {
                 Log.d(TAG, "removeWifiBySsid success, SSID = " + wifiConfig.SSID + " netId = " + String.valueOf(wifiConfig.networkId));
                 wifiManager.removeNetwork(wifiConfig.networkId);
+//                wifiManager.disableNetwork(wifiConfig.networkId);
                 wifiManager.saveConfiguration();
             }
         }

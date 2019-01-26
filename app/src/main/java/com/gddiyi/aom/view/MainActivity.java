@@ -100,6 +100,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
         if (!isNetworkAvailable()){
             Intent intent=new Intent(this,FirstBootActivity.class);
             startActivity(intent);
+            intent.putExtra("noNetWork","noNetWork");
             this.finish();
         }
         super.onCreate(savedInstanceState);
@@ -225,7 +226,6 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
 
 
     }
-
 
     @Override
     public boolean readyPay() {
@@ -419,14 +419,16 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
                 String editTextString = inputedit.getText().toString();
                 Log.i(TAG, "onClick: " + editTextString);
                 if (editTextString.isEmpty()) {
+                    //重新设置SSID到数据库
                     SharedPreferences mSharedPreferences = getSharedPreferences(getString(R.string.diyi), Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = mSharedPreferences.edit();
                     editor.putString(getString(R.string.SSID), "..");
                     editor.commit();
                     //提交修改
-//                    WifiManager mWifiManager = (WifiManager) MainActivity.this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-//                    WifiAutoConnectManager wac = new WifiAutoConnectManager(mWifiManager);
-//                    wac.removeWifiBySsid(mWifiManager);
+                    WifiManager mWifiManager = (WifiManager) MainActivity.this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                    WifiAutoConnectManager wac = new WifiAutoConnectManager(mWifiManager);
+                    wac.removeWifiBySsid(mWifiManager);
+
                     Intent intent = new Intent(MainActivity.this, FirstBootActivity.class);
                     intent.putExtra(getString(R.string.removeWify), "removeWify");
                     startActivity(intent);

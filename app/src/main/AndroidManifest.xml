@@ -41,13 +41,11 @@
             />
 
         <service android:name="com.gddiyi.aom.service.DownLoadService" />
-
 <receiver android:name=".view.WifyFragment$MyWifyBrocastReceiver"/>
         <activity
             android:name=".view.FirstBootActivity"
             android:hardwareAccelerated="true"
             android:screenOrientation="landscape"
-            android:launchMode="singleInstance"
             >
         </activity>
         <!--<receiver android:name=".broadcast.BootBroadcastReceiver" >-->

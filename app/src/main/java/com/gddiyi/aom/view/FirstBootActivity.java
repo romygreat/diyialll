@@ -18,6 +18,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.gddiyi.aom.R;
 import com.gddiyi.aom.constant.VSConstances;
@@ -26,7 +27,7 @@ import com.gddiyi.aom.constant.VSConstances;
  * @author romygreat
  * @date 20180119
  */
-public class FirstBootActivity extends BaseActivity {
+public class FirstBootActivity extends FragmentActivity {
     private static String[] PERMISSIONS_STORAGE = {
             "android.permission.READ_EXTERNAL_STORAGE",
             "android.permission.WRITE_EXTERNAL_STORAGE",
@@ -53,7 +54,6 @@ public class FirstBootActivity extends BaseActivity {
         requestPermission();
         VSConstances.SET_FROM_WIFY=true;
 
-//       if (!TextUtils.isEmpty(removewify))
        {
         Log.i(TAG, "onCreate: removewify=="+removewify);}
         getWifyFragment();
@@ -61,14 +61,14 @@ public class FirstBootActivity extends BaseActivity {
     }
 
     private void registerMyBroadCast() {
-        mSharedPreferences = getSharedPreferences(getString(R.string.diyi), MODE_PRIVATE);
-         myWifyBrocastReceiver = new MyBroadCastReciver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(myWifyBrocastReceiver, filter);
-        mWifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+//        mSharedPreferences = getSharedPreferences(getString(R.string.diyi), MODE_PRIVATE);
+//         myWifyBrocastReceiver = new MyBroadCastReciver();
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+//        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+//        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+//        registerReceiver(myWifyBrocastReceiver, filter);
+//        mWifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
     }
 
     public void requestPermission() {
@@ -117,6 +117,8 @@ public class FirstBootActivity extends BaseActivity {
 
     }
 
+
+
     private void startMyMainActivity() {
         Intent intentMain = new Intent(FirstBootActivity.this, MainActivity.class);
         startActivity(intentMain);
@@ -131,7 +133,7 @@ public class FirstBootActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(myWifyBrocastReceiver);
+//        unregisterReceiver(myWifyBrocastReceiver);
     }
 }
 
