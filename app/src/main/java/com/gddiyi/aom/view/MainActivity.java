@@ -97,37 +97,44 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mWebview = findViewById(R.id.webview);
-        initView();
-        mWebview.setOnTouchListener(this);
+        if (!isNetworkAvailable()){
+            Log.i(TAG, "onCreate: act");
+            Intent intent=new Intent(this,FirstBootActivity.class);
+            startActivity(intent);
+            Toast.makeText(getApplicationContext(),"请检查网络",Toast.LENGTH_LONG).show();
+        }else {
+            setContentView(R.layout.activity_main);
+            Log.i(TAG, "onCreate: ");
+            mWebview = findViewById(R.id.webview);
+            initView();
+            mWebview.setOnTouchListener(this);
 
-        Diyi_setWebSettings();
+            Diyi_setWebSettings();
 //        initTimer();
-        mHandler = new Handler(getMainLooper()) {
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what) {
-                    case 1:
-                        File downloadFile = new File(Environment.getExternalStorageDirectory(), VSConstances.AD);
-                        if (downloadFile.exists()) {
-                            Intent intent = new Intent(MainActivity.this, VideoActivity.class);
-                            startActivity(intent);
-                        }
-                        Log.i(TAG, "handleMessage: dwonloadfile not exit");
-                        break;
-                    case 2:
-                        startDownloadService();
-                        break;
+            mHandler = new Handler(getMainLooper()) {
+                @Override
+                public void handleMessage(Message msg) {
+                    switch (msg.what) {
+                        case 1:
+                            File downloadFile = new File(Environment.getExternalStorageDirectory(), VSConstances.AD);
+                            if (downloadFile.exists()) {
+                                Intent intent = new Intent(MainActivity.this, VideoActivity.class);
+                                startActivity(intent);
+                            }
+                            Log.i(TAG, "handleMessage: dwonloadfile not exit");
+                            break;
+                        case 2:
+                            startDownloadService();
+                            break;
 
 
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
                 }
-            }
-        };
-        requestPermission();
-
+            };
+            requestPermission();
+        }
     }
 
     private void Diyi_setWebSettings() {

@@ -27,7 +27,7 @@
 
         >
         <activity
-            android:name="com.gddiyi.aom.view.FirstBootActivity"
+            android:name="com.gddiyi.aom.view.MainActivity"
             android:hardwareAccelerated="true"
             android:screenOrientation="landscape">
             <intent-filter>
@@ -45,7 +45,7 @@
 
 <receiver android:name=".view.WifyFragment$MyWifyBrocastReceiver"/>
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.FirstBootActivity"
             android:hardwareAccelerated="true"
             android:screenOrientation="landscape"
             android:launchMode="singleInstance"

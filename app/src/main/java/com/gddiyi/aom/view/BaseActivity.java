@@ -48,6 +48,7 @@ public class BaseActivity extends Activity implements JavaScriptinterface.Notice
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         fullScreen();
         hideBottomUIMenu();
         mBaseHandler=new Handler(getMainLooper()){
@@ -107,6 +108,7 @@ public class BaseActivity extends Activity implements JavaScriptinterface.Notice
     @Override
     protected void onStart() {
         super.onStart();
+        hideBottomUIMenu();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_POWER_DISCONNECTED);
         intentFilter.addAction(Intent.ACTION_POWER_CONNECTED);
