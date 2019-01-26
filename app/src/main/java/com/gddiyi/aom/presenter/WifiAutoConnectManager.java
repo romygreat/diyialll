@@ -173,7 +173,9 @@ public class WifiAutoConnectManager {
                 boolean connected = wifiManager.reconnect();
 //                sendMsg("enableNetwork connected=" + connected);
           if (connected){
-              mHandler.sendEmptyMessageDelayed(VSConstances.CONNECTED_SUCEESS,1000);
+              mHandler.sendEmptyMessageDelayed(VSConstances.CONNECTED_SUCEESS,3000);
+          }else{
+              mHandler.sendEmptyMessageDelayed(10006,100);
           }
             } catch (Exception e) {
                 // TODO: handle exception

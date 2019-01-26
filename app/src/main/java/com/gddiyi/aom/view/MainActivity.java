@@ -97,9 +97,15 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
     //使用fragment不能全屏问题
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (!isNetworkAvailable()){
+            Intent intent=new Intent(this,FirstBootActivity.class);
+            startActivity(intent);
+            this.finish();
+        }
         super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
             Log.i(TAG, "onCreate: ");
+
             mWebview = findViewById(R.id.webview);
             initView();
             mWebview.setOnTouchListener(this);
@@ -141,7 +147,6 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
             }
 
         });
-
 
         WebSettings settings = mWebview.getSettings();
         settings.setLoadWithOverviewMode(true);
@@ -419,9 +424,9 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
                     editor.putString(getString(R.string.SSID), "..");
                     editor.commit();
                     //提交修改
-                    WifiManager mWifiManager = (WifiManager) MainActivity.this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-                    WifiAutoConnectManager wac = new WifiAutoConnectManager(mWifiManager);
-                    wac.removeWifiBySsid(mWifiManager);
+//                    WifiManager mWifiManager = (WifiManager) MainActivity.this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+//                    WifiAutoConnectManager wac = new WifiAutoConnectManager(mWifiManager);
+//                    wac.removeWifiBySsid(mWifiManager);
                     Intent intent = new Intent(MainActivity.this, FirstBootActivity.class);
                     intent.putExtra(getString(R.string.removeWify), "removeWify");
                     startActivity(intent);

@@ -95,7 +95,9 @@ public class BaseActivity extends FragmentActivity implements JavaScriptinterfac
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(chargeBroadCast);
+        //if (chargeBroadCast!=null)
+//        {  unregisterReceiver(chargeBroadCast);
+//        }
     }
 
 

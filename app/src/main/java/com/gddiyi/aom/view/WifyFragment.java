@@ -90,7 +90,6 @@ public class WifyFragment extends Fragment implements
 
         wac.mHandler = new Handler(mContext.getMainLooper()) {
             String connectedWIfy;
-
             @Override
             public void handleMessage(Message msg) {
                 Log.i(TAG, "handleMessage: " + msg.obj);
@@ -143,9 +142,10 @@ public class WifyFragment extends Fragment implements
                         mContext.startActivity(intent);
                         intent.putExtra("reload","reload");
                         ((FirstBootActivity) mContext).finish();
-                        WifyFragment.this.onDestroy();
+                        //WifyFragment.this.onDestroy();
                     }
-
+                    case 1006:
+                        printMytips("请检查网络或密码错误");
                     break;
                     default:
                         break;
@@ -273,19 +273,21 @@ public class WifyFragment extends Fragment implements
                                         WifiCipherType.WIFICIPHER_NOPASS : WifiAutoConnectManager.WifiCipherType.WIFICIPHER_WPA);
                         setSharePreference(SSID);
                         Log.i(TAG, "onClick: editString==" + editTextString);
+                        printMytips("正准备连接网络，请耐心等待");
                     } catch (Exception e) {
                         printMytips("请检查网络或密码错误");
                     }
                 } else
 
                 {
-                    Log.i(TAG, "onClick: SSID" + SSID);
-                    wac.connect(SSID, "gddiyi2018",
-                            "myAdmin".equals("") ? WifiAutoConnectManager.
-                                    WifiCipherType.WIFICIPHER_NOPASS : WifiAutoConnectManager.WifiCipherType.WIFICIPHER_WPA);
-
-                    Intent intent = new Intent(mContext, MainActivity.class);
-                    mContext.startActivity(intent);
+//                    Log.i(TAG, "onClick: SSID" + SSID);
+//                    wac.connect(SSID, "gddiyi2018",
+//                            "myAdmin".equals("") ? WifiAutoConnectManager.
+//                                    WifiCipherType.WIFICIPHER_NOPASS : WifiAutoConnectManager.WifiCipherType.WIFICIPHER_WPA);
+//
+//                    Intent intent = new Intent(mContext, MainActivity.class);
+//                    mContext.startActivity(intent);
+                    printMytips("密码错误，请重新连接");
                 }
             }
         });
@@ -328,7 +330,6 @@ public class WifyFragment extends Fragment implements
         }
         editor.commit();//提交修改
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
