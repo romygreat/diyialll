@@ -106,34 +106,34 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
         super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
             Log.i(TAG, "onCreate: ");
+        mHandler = new Handler(getMainLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case 1:
+                        File downloadFile = new File(Environment.getExternalStorageDirectory(), VSConstances.AD);
+                        if (downloadFile.exists()) {
+                            Intent intent = new Intent(MainActivity.this, VideoActivity.class);
+                            startActivity(intent);
+                        }
+                        Log.i(TAG, "handleMessage: dwonloadfile not exit");
+                        break;
+                    case 2:
+                        startDownloadService();
+                        break;
 
+
+                    default:
+                        break;
+                }
+            }
+        };
             mWebview = findViewById(R.id.webview);
             initView();
             mWebview.setOnTouchListener(this);
             Diyi_setWebSettings();
 //        initTimer();
-            mHandler = new Handler(getMainLooper()) {
-                @Override
-                public void handleMessage(Message msg) {
-                    switch (msg.what) {
-                        case 1:
-                            File downloadFile = new File(Environment.getExternalStorageDirectory(), VSConstances.AD);
-                            if (downloadFile.exists()) {
-                                Intent intent = new Intent(MainActivity.this, VideoActivity.class);
-                                startActivity(intent);
-                            }
-                            Log.i(TAG, "handleMessage: dwonloadfile not exit");
-                            break;
-                        case 2:
-                            startDownloadService();
-                            break;
 
-
-                        default:
-                            break;
-                    }
-                }
-            };
             requestPermission();
 
     }

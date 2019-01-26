@@ -114,7 +114,6 @@ public class Wify2Fragment extends Fragment implements
                                     }
 
                                 } else {
-
                                     wac.mHandler.sendEmptyMessage(1005);
                                 }
                             }
