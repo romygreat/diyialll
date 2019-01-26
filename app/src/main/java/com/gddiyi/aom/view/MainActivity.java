@@ -83,6 +83,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
     private TimerTask task;
     private int currentTime = 0;
     ScheduledExecutorService executorService;
+    int reload=1;
 
 
     //优化代码
@@ -97,18 +98,11 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!isNetworkAvailable()){
-            Log.i(TAG, "onCreate: act");
-            Intent intent=new Intent(this,FirstBootActivity.class);
-            startActivity(intent);
-            Toast.makeText(getApplicationContext(),"请检查网络",Toast.LENGTH_LONG).show();
-        }else {
             setContentView(R.layout.activity_main);
             Log.i(TAG, "onCreate: ");
             mWebview = findViewById(R.id.webview);
             initView();
             mWebview.setOnTouchListener(this);
-
             Diyi_setWebSettings();
 //        initTimer();
             mHandler = new Handler(getMainLooper()) {
@@ -134,7 +128,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
                 }
             };
             requestPermission();
-        }
+
     }
 
     private void Diyi_setWebSettings() {
@@ -167,14 +161,14 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
 
         //白屏调优
         mWebview.requestFocus();
-        settings.setAppCacheEnabled(false);
+        settings.setAppCacheEnabled(true);
 
-//        String appCachePath = getApplicationContext().getCacheDir().getPath() + "/webcache";
-//        settings.setAppCachePath(appCachePath);
-//        settings.setDatabasePath(appCachePath);
+        String appCachePath = getApplicationContext().getCacheDir().getPath() + "/webcache";
+        settings.setAppCachePath(appCachePath);
+        settings.setDatabasePath(appCachePath);
 
-//        mWebview.clearCache(true);
-//        mWebview.clearHistory();
+        mWebview.clearCache(true);
+        mWebview.clearHistory();
 
 
         mWebview.setWebViewClient(new WebViewClient() {
@@ -278,16 +272,18 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
     @Override
     protected void onStart() {
         super.onStart();
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         startTimer();
-        Log.i(TAG, "onResume: ");
+        Log.i(TAG, "onResume: "+VSConstances.SET_FROM_WIFY);
+        if (VSConstances.SET_FROM_WIFY){
+            mWebview.reload();
+            VSConstances.SET_FROM_WIFY=false;
+        }
     }
-
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         BACKPRESS_TIME = 0;
@@ -301,7 +297,6 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
             case MotionEvent.ACTION_UP:
                 //抬起时启动定时
                 startTimer();
-
                 break;
             default:
                 break;

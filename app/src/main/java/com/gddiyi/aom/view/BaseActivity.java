@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.util.Log;
@@ -35,16 +36,16 @@ import com.gddiyi.aom.presenter.WifiAutoConnectManager;
 import com.gddiyi.aom.service.DownLoadService;
 import com.hdy.hdylights.LedAndChargeManager;
 
-public class BaseActivity extends Activity implements JavaScriptinterface.NoticefyPay {
+public class BaseActivity extends FragmentActivity implements JavaScriptinterface.NoticefyPay {
     public static String[] PERMISSIONS_STORAGE = {
             "android.permission.READ_EXTERNAL_STORAGE",
             "android.permission.WRITE_EXTERNAL_STORAGE",
             "android.permission.READ_PHONE_STATE"
     };
     Handler mBaseHandler;
-
    public boolean touch=true;
     public  int  BACKPRESS_TIME=10;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

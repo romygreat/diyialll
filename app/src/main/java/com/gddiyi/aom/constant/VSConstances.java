@@ -38,5 +38,5 @@ public class VSConstances {
  public static final String POST_VIDEO_PATH="http://service.gddiyi.com/advert/Ad/playAd/";
  public static final int  PAY2CHARGE=1003;
  public static final int  TIME_UNIT_MIN=1000*60;
-
+ public static  boolean SET_FROM_WIFY=false;
 }

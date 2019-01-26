@@ -26,7 +26,7 @@ import com.gddiyi.aom.constant.VSConstances;
  * @author romygreat
  * @date 20180119
  */
-public class FirstBootActivity extends FragmentActivity {
+public class FirstBootActivity extends BaseActivity {
     private static String[] PERMISSIONS_STORAGE = {
             "android.permission.READ_EXTERNAL_STORAGE",
             "android.permission.WRITE_EXTERNAL_STORAGE",
@@ -51,6 +51,7 @@ public class FirstBootActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bootlayout);
         requestPermission();
+        VSConstances.SET_FROM_WIFY=true;
 
 //       if (!TextUtils.isEmpty(removewify))
        {

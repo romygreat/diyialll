@@ -141,6 +141,7 @@ public class WifyFragment extends Fragment implements
                     case 1005: {
                         Intent intent = new Intent(mContext, MainActivity.class);
                         mContext.startActivity(intent);
+                        intent.putExtra("reload","reload");
                         ((FirstBootActivity) mContext).finish();
                         WifyFragment.this.onDestroy();
                     }
