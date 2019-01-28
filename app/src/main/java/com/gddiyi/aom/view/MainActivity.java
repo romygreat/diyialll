@@ -1,74 +1,61 @@
 package com.gddiyi.aom.view;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.net.http.SslError;
 import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.os.PersistableBundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.webkit.JavascriptInterface;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gddiyi.aom.R;
 import com.gddiyi.aom.constant.VSConstances;
 import com.gddiyi.aom.jsinterface.JavaScriptinterface;
-import com.gddiyi.aom.netutils.ADFilterUtil;
 import com.gddiyi.aom.presenter.WifiAutoConnectManager;
-import com.gddiyi.aom.service.DownLoadService;
 import com.hdy.hdylights.LedAndChargeManager;
-import com.tencent.smtt.export.external.TbsCoreSettings;
-import com.tencent.smtt.export.external.interfaces.SslError;
-import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
-import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
-import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
-import com.tencent.smtt.sdk.QbSdk;
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
-import lombok.core.Main;
+//import com.tencent.smtt.export.external.interfaces.SslError;
+//import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
+//import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
+//import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
+//import com.tencent.smtt.sdk.WebChromeClient;
+//import com.tencent.smtt.sdk.WebSettings;
+//import com.tencent.smtt.sdk.WebView;
+//import com.tencent.smtt.sdk.WebViewClient;
 
 
 /**
+ *
  * 程序入口启动类进入onreate()
+ *
  */
 public class MainActivity extends BaseActivity implements View.OnTouchListener, JavaScriptinterface.NoticefyPay {
     private WebView mWebview;
@@ -180,19 +167,19 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
         mWebview.setWebViewClient(new WebViewClient() {
             String TAG = "guangago";
 
-            @Override
-            public WebResourceResponse shouldInterceptRequest(WebView webView, WebResourceRequest webResourceRequest, Bundle bundle) {
-                Log.i(TAG, "shouldInterceptRequest: " + webResourceRequest.getUrl());
-                if (webResourceRequest.getUrl().toString().contains("om.gddiyi.com"))
-
-                {
-                    if (ADFilterUtil.booleanhasAd(MainActivity.this, webResourceRequest.getUrl().toString()))
-                        return super.shouldInterceptRequest(webView, webResourceRequest, bundle);
-                    else return super.shouldInterceptRequest(null, null, null);
-                } else {
-                    return super.shouldInterceptRequest(null, null, null);
-                }
-            }
+//            @Override
+//            public WebResourceResponse shouldInterceptRequest(WebView webView, WebResourceRequest webResourceRequest, Bundle bundle) {
+////                Log.i(TAG, "shouldInterceptRequest: " + webResourceRequest.getUrl());
+////                if (webResourceRequest.getUrl().toString().contains("om.gddiyi.com"))
+////
+////                {
+////                    if (ADFilterUtil.booleanhasAd(MainActivity.this, webResourceRequest.getUrl().toString()))
+////                        return super.shouldInterceptRequest(webView, webResourceRequest, bundle);
+////                    else return super.shouldInterceptRequest(null, null, null);
+////                } else {
+////                    return super.shouldInterceptRequest(null, null, null);
+////                }
+//            }
 
             //当开始载入页面的时候调用
 
