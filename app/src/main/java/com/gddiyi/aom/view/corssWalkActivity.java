@@ -9,6 +9,7 @@ import org.xwalk.core.XWalkActivity;
 import org.xwalk.core.XWalkPreferences;
 import org.xwalk.core.XWalkView;
 
+//这是crosswalk版本
 public class corssWalkActivity extends XWalkActivity {
     private XWalkView xWalkWebView;
     @Override
