@@ -112,7 +112,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
                 }
             }
         };
-            mWebview = findViewById(R.id.webview);
+            mWebview = findViewById(R.id.webView);
             initView();
             mWebview.setOnTouchListener(this);
             Diyi_setWebSettings();

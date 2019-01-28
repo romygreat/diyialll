@@ -16,7 +16,7 @@
 
         <!--/>-->
     <org.xwalk.core.XWalkView
-        android:id="@+id/mWebView"
+        android:id="@+id/webView"
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
