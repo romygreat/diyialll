@@ -20,8 +20,11 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-
+import android.webkit.SslErrorHandler;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -39,10 +42,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;
 
-import org.xwalk.core.XWalkSettings;
-import org.xwalk.core.XWalkView;
-
-
+//import com.tencent.smtt.export.external.interfaces.SslError;
+//import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
+//import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
+//import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
+//import com.tencent.smtt.sdk.WebChromeClient;
+//import com.tencent.smtt.sdk.WebSettings;
+//import com.tencent.smtt.sdk.WebView;
+//import com.tencent.smtt.sdk.WebViewClient;
 
 
 /**
@@ -51,7 +58,7 @@ import org.xwalk.core.XWalkView;
  *
  */
 public class MainActivity extends BaseActivity implements View.OnTouchListener, JavaScriptinterface.NoticefyPay {
-
+    private WebView mWebview;
     String TAG = "MYTest";
     private int mTime;
     private JavaScriptinterface javaScriptinterface;
@@ -71,10 +78,10 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
     ImageView imageView;
     LinearLayout webviewError;
     View main;
-    private XWalkView  mWebview;
+
     @Override
     protected void onXWalkReady() {
-        mWebview.load("http://om.gddiyi.com/", null);
+
     }
 
     //this project is X5 frameWork is OK
@@ -107,6 +114,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
                         startDownloadService();
                         break;
 
+
                     default:
                         break;
                 }
@@ -124,7 +132,16 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
 
     private void Diyi_setWebSettings() {
 
-        XWalkSettings  settings = mWebview.getSettings();
+        mWebview.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView webView, final int i) {
+                super.onProgressChanged(webView, i);
+
+            }
+
+        });
+
+        WebSettings settings = mWebview.getSettings();
         settings.setLoadWithOverviewMode(true);
 
         //注册javascript接口
@@ -136,11 +153,65 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
         settings.setUseWideViewPort(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        settings.setGeolocationEnabled(true);
         settings.setDomStorageEnabled(true);
         settings.setDatabaseEnabled(true);
 
         //白屏调优
         mWebview.requestFocus();
+        settings.setAppCacheEnabled(true);
+
+        String appCachePath = getApplicationContext().getCacheDir().getPath() + "/webcache";
+        settings.setAppCachePath(appCachePath);
+        settings.setDatabasePath(appCachePath);
+
+        mWebview.clearCache(true);
+        mWebview.clearHistory();
+
+
+        mWebview.setWebViewClient(new WebViewClient() {
+            String TAG = "guangago";
+
+//            @Override
+//            public WebResourceResponse shouldInterceptRequest(WebView webView, WebResourceRequest webResourceRequest, Bundle bundle) {
+////                Log.i(TAG, "shouldInterceptRequest: " + webResourceRequest.getUrl());
+////                if (webResourceRequest.getUrl().toString().contains("om.gddiyi.com"))
+////
+////                {
+////                    if (ADFilterUtil.booleanhasAd(MainActivity.this, webResourceRequest.getUrl().toString()))
+////                        return super.shouldInterceptRequest(webView, webResourceRequest, bundle);
+////                    else return super.shouldInterceptRequest(null, null, null);
+////                } else {
+////                    return super.shouldInterceptRequest(null, null, null);
+////                }
+//            }
+
+            //当开始载入页面的时候调用
+
+            @Override
+            public void onPageStarted(WebView webView, String s, Bitmap bitmap) {
+                super.onPageStarted(webView, s, bitmap);
+                loadReady();
+            }
+
+            @Override
+            public void onReceivedSslError(WebView webView, SslErrorHandler sslErrorHandler, SslError sslError) {
+                mWebview.setVisibility(View.INVISIBLE);
+                webviewError.setVisibility(View.VISIBLE);
+                Log.i(TAG, "onReceivedSslError: sslError" + sslError.toString());
+            }
+
+            @Override
+            public void onPageFinished(WebView webView, String s) {
+                super.onPageFinished(webView, s);
+                Log.i(TAG, "onPageFinished: okhttp url==" + s);
+                linearLayout.setVisibility(View.GONE);
+                webviewError.setVisibility(View.INVISIBLE);
+                mWebview.setVisibility(View.VISIBLE);
+
+            }
+        });
+
 
         mWebview.loadUrl(VSConstances.MAIN_URL);
         mWebview.setVisibility(View.INVISIBLE);
@@ -206,8 +277,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
         startTimer();
         Log.i(TAG, "onResume: "+VSConstances.SET_FROM_WIFY);
         if (VSConstances.SET_FROM_WIFY){
-            mWebview.reload(0);
-            //注意重载模式
+            mWebview.reload();
             VSConstances.SET_FROM_WIFY=false;
         }
     }

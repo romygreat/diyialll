@@ -36,7 +36,9 @@ import com.gddiyi.aom.presenter.WifiAutoConnectManager;
 import com.gddiyi.aom.service.DownLoadService;
 import com.hdy.hdylights.LedAndChargeManager;
 
-public class BaseActivity extends FragmentActivity implements JavaScriptinterface.NoticefyPay {
+import org.xwalk.core.XWalkActivity;
+
+public abstract class  BaseActivity extends XWalkActivity implements JavaScriptinterface.NoticefyPay {
     public static String[] PERMISSIONS_STORAGE = {
             "android.permission.READ_EXTERNAL_STORAGE",
             "android.permission.WRITE_EXTERNAL_STORAGE",
