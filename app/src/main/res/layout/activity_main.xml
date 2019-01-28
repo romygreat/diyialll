@@ -9,18 +9,16 @@
     >
     <include layout="@layout/webview_started"></include>
     <include layout="@layout/webview_error"></include>
-    <!--<WebView-->
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+
+        />
+    <!--<com.tencent.smtt.sdk.WebView-->
         <!--android:id="@+id/webview"-->
         <!--android:layout_width="fill_parent"-->
         <!--android:layout_height="fill_parent"-->
 
         <!--/>-->
-    <org.xwalk.core.XWalkView
-        android:id="@+id/webView"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="#000000"
-        />
-
 </RelativeLayout>
