@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.http.SslError;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,11 +19,6 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.webkit.SslErrorHandler;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,22 +28,21 @@ import com.bumptech.glide.Glide;
 import com.gddiyi.aom.R;
 import com.gddiyi.aom.constant.VSConstances;
 import com.gddiyi.aom.jsinterface.JavaScriptinterface;
+import com.gddiyi.aom.netutils.ADFilterUtil;
 import com.gddiyi.aom.presenter.WifiAutoConnectManager;
 import com.hdy.hdylights.LedAndChargeManager;
+import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
+import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
+import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 
 import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;
-
-//import com.tencent.smtt.export.external.interfaces.SslError;
-//import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
-//import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
-//import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
-//import com.tencent.smtt.sdk.WebChromeClient;
-//import com.tencent.smtt.sdk.WebSettings;
-//import com.tencent.smtt.sdk.WebView;
-//import com.tencent.smtt.sdk.WebViewClient;
 
 
 /**
@@ -118,14 +111,14 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
             mWebview = findViewById(R.id.webview);
             initView();
             mWebview.setOnTouchListener(this);
-            Diyi_setWebSettings();
+          setWebSettings();
 //        initTimer();
 
             requestPermission();
 
     }
 
-    private void Diyi_setWebSettings() {
+    private void setWebSettings() {
 
         mWebview.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -167,19 +160,20 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
         mWebview.setWebViewClient(new WebViewClient() {
             String TAG = "guangago";
 
-//            @Override
-//            public WebResourceResponse shouldInterceptRequest(WebView webView, WebResourceRequest webResourceRequest, Bundle bundle) {
-////                Log.i(TAG, "shouldInterceptRequest: " + webResourceRequest.getUrl());
-////                if (webResourceRequest.getUrl().toString().contains("om.gddiyi.com"))
-////
-////                {
-////                    if (ADFilterUtil.booleanhasAd(MainActivity.this, webResourceRequest.getUrl().toString()))
-////                        return super.shouldInterceptRequest(webView, webResourceRequest, bundle);
-////                    else return super.shouldInterceptRequest(null, null, null);
-////                } else {
-////                    return super.shouldInterceptRequest(null, null, null);
-////                }
-//            }
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView webView, WebResourceRequest webResourceRequest, Bundle bundle) {
+//                Log.i(TAG, "shouldInterceptRequest: " + webResourceRequest.getUrl());
+//                if (webResourceRequest.getUrl().toString().contains("om.gddiyi.com"))
+//
+//                {
+//                    if (ADFilterUtil.booleanhasAd(MainActivity.this, webResourceRequest.getUrl().toString()))
+//                        return super.shouldInterceptRequest(webView, webResourceRequest, bundle);
+//                    else return super.shouldInterceptRequest(null, null, null);
+//                } else {
+//                    return super.shouldInterceptRequest(null, null, null);
+//                }
+                return super.shouldInterceptRequest(webView,webResourceRequest, bundle);
+            }
 
             //当开始载入页面的时候调用
 
@@ -190,7 +184,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
             }
 
             @Override
-            public void onReceivedSslError(WebView webView, SslErrorHandler sslErrorHandler, SslError sslError) {
+            public void onReceivedSslError(WebView webView, SslErrorHandler sslErrorHandler, com.tencent.smtt.export.external.interfaces.SslError sslError) {
                 mWebview.setVisibility(View.INVISIBLE);
                 webviewError.setVisibility(View.VISIBLE);
                 Log.i(TAG, "onReceivedSslError: sslError" + sslError.toString());
@@ -342,7 +336,6 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
         stopTimer();
 //        ActivityStack.getInstance().push(this);
     }
-
 
     public void requestPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
