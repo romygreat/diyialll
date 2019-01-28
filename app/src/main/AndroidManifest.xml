@@ -27,7 +27,7 @@
         android:theme="@style/AppTheme"
         >
         <activity
-            android:name="com.gddiyi.aom.view.MainActivity"
+            android:name="com.gddiyi.aom.view.corssWalkActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="landscape">
             <intent-filter>
