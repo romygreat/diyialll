@@ -264,7 +264,6 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
     protected void onResume() {
         super.onResume();
         startTimer();
-        Log.i(TAG, "onResume: "+VSConstances.SET_FROM_WIFY);
         if (VSConstances.SET_FROM_WIFY){
             mWebview.reload();
             VSConstances.SET_FROM_WIFY=false;
