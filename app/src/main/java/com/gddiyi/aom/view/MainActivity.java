@@ -87,17 +87,6 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
             intent.putExtra("noNetWork","noNetWork");
             this.finish();
         }
-        QbSdk.initX5Environment(getApplicationContext(), new QbSdk.PreInitCallback() {
-            @Override
-            public void onCoreInitFinished() {
-                Log.i(TAG, "onCoreInitFinished:onCoreInitFinished() ");
-            }
-
-            @Override
-            public void onViewInitFinished(boolean b) {
-                Log.i(TAG, "onViewInitFinished: neihe=="+b);
-            }
-        });
         super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
             Log.i(TAG, "onCreate: ");

@@ -40,7 +40,6 @@
         <activity android:name="com.gddiyi.aom.view.VideoActivity"
             android:launchMode="singleInstance"
             />
-
         <service android:name="com.gddiyi.aom.service.DownLoadService" />
 <receiver android:name=".view.WifyFragment$MyWifyBrocastReceiver"/>
         <activity
