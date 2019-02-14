@@ -36,6 +36,12 @@ import com.gddiyi.aom.presenter.WifiAutoConnectManager;
 import com.gddiyi.aom.service.DownLoadService;
 import com.hdy.hdylights.LedAndChargeManager;
 
+/**
+ * baseActivity to fullScreen and hide the Actionbar
+ *  query  whether  the network is available
+ *  startService to download  ad Video
+ *
+ */
 public class BaseActivity extends FragmentActivity implements JavaScriptinterface.NoticefyPay {
     public static String[] PERMISSIONS_STORAGE = {
             "android.permission.READ_EXTERNAL_STORAGE",

@@ -38,6 +38,12 @@ import org.json.JSONException;
 //需要导入的包不能搞错
 import org.json.JSONObject;
 
+/**
+ * play video view ,in this activity
+ * we use the EXOPlayer frameWork
+ * play ad
+ *
+ */
 public class VideoActivity extends Activity  {
     private String testUrl = null;
     SimpleExoPlayer mPlayer;

@@ -108,7 +108,6 @@ public class FirstBootActivity extends FragmentActivity {
                             startMyMainActivity();
                         }
                     }
-
                 } else {
                     Log.e("diyi", "无网络连接");
                 }

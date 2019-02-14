@@ -21,7 +21,8 @@ import com.hdy.hdylights.LedAndChargeManager;
 /**
  * @author romygreat
  * @date 20180119
- *
+ * this ChargeActivity is used for test
+ * should be deleted when this app publish
  */
 public class ChargeActvity extends Activity {
     String TAG="chargeOnclick";

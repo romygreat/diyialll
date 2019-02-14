@@ -1,6 +1,7 @@
 package com.gddiyi.aom.view;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,6 +18,7 @@ import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,6 +37,7 @@ import com.hdy.hdylights.LedAndChargeManager;
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
 import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
+import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
@@ -83,6 +87,17 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
             intent.putExtra("noNetWork","noNetWork");
             this.finish();
         }
+        QbSdk.initX5Environment(getApplicationContext(), new QbSdk.PreInitCallback() {
+            @Override
+            public void onCoreInitFinished() {
+                Log.i(TAG, "onCoreInitFinished:onCoreInitFinished() ");
+            }
+
+            @Override
+            public void onViewInitFinished(boolean b) {
+                Log.i(TAG, "onViewInitFinished: neihe=="+b);
+            }
+        });
         super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
             Log.i(TAG, "onCreate: ");
@@ -101,8 +116,6 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
                     case 2:
                         startDownloadService();
                         break;
-
-
                     default:
                         break;
                 }
@@ -117,7 +130,6 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
             requestPermission();
 
     }
-
     private void setWebSettings() {
 
         mWebview.setWebChromeClient(new WebChromeClient() {
