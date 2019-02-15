@@ -83,7 +83,7 @@ public class CrossWalkActivity extends BaseActivity  implements View.OnTouchList
                         Log.i(TAG, "handleMessage: dwonloadfile not exit");
                         break;
                     case 2:
-                        // startDownloadService();
+                         startDownloadService();
                         break;
 
 

@@ -1,0 +1,4 @@
+#Thu Feb 14 15:26:29 CST 2019
+base.0=E\:\\GITproject\\diyi-aom\\X5WebDemo\\build\\intermediates\\transforms\\dexMerger\\debug\\10
+path.0=classes.dex
+renamed.0=classes.dex

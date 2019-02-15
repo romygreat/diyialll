@@ -1,0 +1,207 @@
+-- Merging decision tree log ---
+manifest
+ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:2:1-62:12
+INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:2:1-62:12
+INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:2:1-62:12
+INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:2:1-62:12
+MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\appcompat-v7-28.0.0.aar\4fb01b535978942bf07900f2cc43e0a4\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\support-fragment-28.0.0.aar\33d61bb84ef44ab43f06aaea58fc600f\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-28.0.0.aar\f92da7136edfcfc5ce33b213dc5cc71b\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\support-core-ui-28.0.0.aar\a26dfbcb3a9b0601d08fcf664475e552\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\support-core-utils-28.0.0.aar\7a0638f3c2f3891d0ba5a642b920800f\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-28.0.0.aar\2561e7439fb7b1f6033291d8cd80bbae\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:loader:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\loader-28.0.0.aar\124354de1546b41e1e3672ef01aa58b5\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:viewpager:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\viewpager-28.0.0.aar\3d4392e107675f67587b7dc752be4346\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:coordinatorlayout:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\coordinatorlayout-28.0.0.aar\123eba8255326d357b078c27bf122e09\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:drawerlayout:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\drawerlayout-28.0.0.aar\ef5a4502b38b840b71b9ecce19204886\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:slidingpanelayout:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\slidingpanelayout-28.0.0.aar\ddec14680d281c8c3f8d2ce32ba0f9f6\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:customview:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\customview-28.0.0.aar\44e921d52f4fa0d82a3f448557019c8f\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\swiperefreshlayout-28.0.0.aar\9ba71dc071588d8d87bb026a58067943\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\asynclayoutinflater-28.0.0.aar\bd8c94cb3a7417412bc8d497229ded44\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\acf3d36a8419aba2968e1658df669131\AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\versionedparcelable-28.0.0.aar\216d9fa26f3f2502daf69274bef5af49\AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:cursoradapter:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\cursoradapter-28.0.0.aar\1eee178b8ae698889888c3f110a2ca6e\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:runtime:1.1.1] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\5b8137509bff214607381a4db4a19101\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:documentfile:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\documentfile-28.0.0.aar\bdebf091359a591d5f4df231a3ee3dc1\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-28.0.0.aar\9ae003195320912caab0c656f3215f1a\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:print:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\print-28.0.0.aar\2db15ec5672cbc666006952c08bfb508\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\viewmodel-1.1.1.aar\bbc3c9fdf0cfefb1226ff213e9bfe33b\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata:1.1.1] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\livedata-1.1.1.aar\8551093da5e9a63072cdfc94a8cc3f03\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\livedata-core-1.1.1.aar\68faa2482e4fbbb9791b851ae42a0582\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.1] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\da4934ad0c2b0415007fb5995d762d36\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:interpolator:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\interpolator-28.0.0.aar\253b1f0ba793ea6a69c44cf9ddf917f1\AndroidManifest.xml:17:1-22:12
+INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:2:1-62:12
+INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:2:1-62:12
+INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:2:1-62:12
+	package
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:3:5-44
+		INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml
+		INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml
+	android:versionName
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:5:5-30
+		INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml
+		INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:2:11-69
+	android:versionCode
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:4:5-28
+		INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml
+		INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:9:5-79
+	android:name
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:9:22-76
+uses-permission#android.permission.INTERNET
+ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:10:5-67
+	android:name
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:10:22-64
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:11:5-81
+	android:name
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:11:22-78
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:12:5-76
+	android:name
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:12:22-73
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:14:5-75
+	android:name
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:14:22-72
+uses-permission#android.permission.READ_SETTINGS
+ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:15:5-72
+	android:name
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:15:22-69
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:19:5-80
+	android:name
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:19:22-77
+uses-permission#android.permission.GET_TASKS
+ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:22:5-68
+	android:name
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:22:22-65
+application
+ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:24:5-60:19
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\acf3d36a8419aba2968e1658df669131\AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\acf3d36a8419aba2968e1658df669131\AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\versionedparcelable-28.0.0.aar\216d9fa26f3f2502daf69274bef5af49\AndroidManifest.xml:22:5-23:19
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\versionedparcelable-28.0.0.aar\216d9fa26f3f2502daf69274bef5af49\AndroidManifest.xml:22:5-23:19
+	android:appComponentFactory
+		ADDED from [com.android.support:support-compat:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\acf3d36a8419aba2968e1658df669131\AndroidManifest.xml:22:18-91
+	android:label
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:29:9-41
+	android:hardwareAccelerated
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:27:9-43
+	android:icon
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:28:9-45
+	android:allowBackup
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:26:9-35
+	android:theme
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:30:9-40
+	android:name
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:25:9-38
+activity#com.example.test_webview_demo.FullScreenActivity
+ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:33:9-37:20
+	android:label
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:36:13-45
+	android:configChanges
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:35:13-74
+	android:name
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:34:13-47
+activity#com.example.test_webview_demo.FilechooserActivity
+ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:39:9-43:20
+	android:label
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:42:13-45
+	android:configChanges
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:41:13-74
+	android:name
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:40:13-48
+activity#com.example.test_webview_demo.BrowserActivity
+ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:44:9-48:20
+	android:label
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:47:13-45
+	android:configChanges
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:46:13-74
+	android:name
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:45:13-44
+activity#com.example.test_webview_demo.TestActivity
+ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:50:9-58:20
+	android:configChanges
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:52:13-74
+	android:name
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:51:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:53:13-57:29
+action#android.intent.action.MAIN
+ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:54:17-69
+	android:name
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:54:25-66
+category#android.intent.category.LAUNCHER
+ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:56:17-77
+	android:name
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml:56:27-74
+uses-sdk
+INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml
+INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml
+MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\appcompat-v7-28.0.0.aar\4fb01b535978942bf07900f2cc43e0a4\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\appcompat-v7-28.0.0.aar\4fb01b535978942bf07900f2cc43e0a4\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\support-fragment-28.0.0.aar\33d61bb84ef44ab43f06aaea58fc600f\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\support-fragment-28.0.0.aar\33d61bb84ef44ab43f06aaea58fc600f\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-28.0.0.aar\f92da7136edfcfc5ce33b213dc5cc71b\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-28.0.0.aar\f92da7136edfcfc5ce33b213dc5cc71b\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\support-core-ui-28.0.0.aar\a26dfbcb3a9b0601d08fcf664475e552\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\support-core-ui-28.0.0.aar\a26dfbcb3a9b0601d08fcf664475e552\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\support-core-utils-28.0.0.aar\7a0638f3c2f3891d0ba5a642b920800f\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\support-core-utils-28.0.0.aar\7a0638f3c2f3891d0ba5a642b920800f\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-28.0.0.aar\2561e7439fb7b1f6033291d8cd80bbae\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-28.0.0.aar\2561e7439fb7b1f6033291d8cd80bbae\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\loader-28.0.0.aar\124354de1546b41e1e3672ef01aa58b5\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\loader-28.0.0.aar\124354de1546b41e1e3672ef01aa58b5\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\viewpager-28.0.0.aar\3d4392e107675f67587b7dc752be4346\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\viewpager-28.0.0.aar\3d4392e107675f67587b7dc752be4346\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\coordinatorlayout-28.0.0.aar\123eba8255326d357b078c27bf122e09\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\coordinatorlayout-28.0.0.aar\123eba8255326d357b078c27bf122e09\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\drawerlayout-28.0.0.aar\ef5a4502b38b840b71b9ecce19204886\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\drawerlayout-28.0.0.aar\ef5a4502b38b840b71b9ecce19204886\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\slidingpanelayout-28.0.0.aar\ddec14680d281c8c3f8d2ce32ba0f9f6\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\slidingpanelayout-28.0.0.aar\ddec14680d281c8c3f8d2ce32ba0f9f6\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\customview-28.0.0.aar\44e921d52f4fa0d82a3f448557019c8f\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\customview-28.0.0.aar\44e921d52f4fa0d82a3f448557019c8f\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\swiperefreshlayout-28.0.0.aar\9ba71dc071588d8d87bb026a58067943\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\swiperefreshlayout-28.0.0.aar\9ba71dc071588d8d87bb026a58067943\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\asynclayoutinflater-28.0.0.aar\bd8c94cb3a7417412bc8d497229ded44\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\asynclayoutinflater-28.0.0.aar\bd8c94cb3a7417412bc8d497229ded44\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\acf3d36a8419aba2968e1658df669131\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\support-compat-28.0.0.aar\acf3d36a8419aba2968e1658df669131\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\versionedparcelable-28.0.0.aar\216d9fa26f3f2502daf69274bef5af49\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\versionedparcelable-28.0.0.aar\216d9fa26f3f2502daf69274bef5af49\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\cursoradapter-28.0.0.aar\1eee178b8ae698889888c3f110a2ca6e\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\cursoradapter-28.0.0.aar\1eee178b8ae698889888c3f110a2ca6e\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\5b8137509bff214607381a4db4a19101\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\5b8137509bff214607381a4db4a19101\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\documentfile-28.0.0.aar\bdebf091359a591d5f4df231a3ee3dc1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\documentfile-28.0.0.aar\bdebf091359a591d5f4df231a3ee3dc1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-28.0.0.aar\9ae003195320912caab0c656f3215f1a\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-28.0.0.aar\9ae003195320912caab0c656f3215f1a\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\print-28.0.0.aar\2db15ec5672cbc666006952c08bfb508\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\print-28.0.0.aar\2db15ec5672cbc666006952c08bfb508\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\viewmodel-1.1.1.aar\bbc3c9fdf0cfefb1226ff213e9bfe33b\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\viewmodel-1.1.1.aar\bbc3c9fdf0cfefb1226ff213e9bfe33b\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\livedata-1.1.1.aar\8551093da5e9a63072cdfc94a8cc3f03\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\livedata-1.1.1.aar\8551093da5e9a63072cdfc94a8cc3f03\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\livedata-core-1.1.1.aar\68faa2482e4fbbb9791b851ae42a0582\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\livedata-core-1.1.1.aar\68faa2482e4fbbb9791b851ae42a0582\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\da4934ad0c2b0415007fb5995d762d36\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\runtime-1.1.1.aar\da4934ad0c2b0415007fb5995d762d36\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\interpolator-28.0.0.aar\253b1f0ba793ea6a69c44cf9ddf917f1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] C:\Users\diyi\.gradle\caches\transforms-1\files-1.1\interpolator-28.0.0.aar\253b1f0ba793ea6a69c44cf9ddf917f1\AndroidManifest.xml:20:5-44
+INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml
+INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml
+		INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml
+		ADDED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml
+		INJECTED from E:\GITproject\diyi-aom\X5WebDemo\src\main\AndroidManifest.xml
