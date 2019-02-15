@@ -35,6 +35,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;
 
+import static android.os.Looper.getMainLooper;
+
 
 //这是crosswalk版本
 /**
