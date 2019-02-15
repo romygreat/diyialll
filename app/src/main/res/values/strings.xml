@@ -15,4 +15,6 @@
     <string name="confirm">确认</string>
     <string name="wifytitle">请输入wify密码</string>
     <string name="password">passWord</string>
+    <string name="falsePassword">correctPassword</string>
+    <string name="noNetWork">noNetWork</string>
 </resources>

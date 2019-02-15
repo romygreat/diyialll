@@ -1,6 +1,7 @@
 package com.gddiyi.aom.presenter;
 
 
+import android.net.NetworkInfo;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiConfiguration.AuthAlgorithm;
 import android.net.wifi.WifiConfiguration.KeyMgmt;
@@ -143,6 +144,7 @@ public class WifiAutoConnectManager {
             try {
                 // 打开wifi
                 openWifi();
+
                 sendMsg("opened",0);
                 //这里需要提前打开wify
                 Thread.sleep(200);
@@ -164,6 +166,7 @@ public class WifiAutoConnectManager {
 
                 if (tempConfig != null) {
                     wifiManager.removeNetwork(tempConfig.networkId);
+
                 }
 
                 int netID = wifiManager.addNetwork(wifiConfig);
@@ -172,10 +175,15 @@ public class WifiAutoConnectManager {
 
                 boolean connected = wifiManager.reconnect();
 //                sendMsg("enableNetwork connected=" + connected);
+
           if (connected){
+              Log.i(TAG, "run:connected== "+connected);
               mHandler.sendEmptyMessageDelayed(VSConstances.CONNECTED_SUCEESS,3000);
-          }else{
-              mHandler.sendEmptyMessageDelayed(10006,100);
+          }
+          else{
+              connected=wifiManager.reconnect();
+              if (!connected)
+              { mHandler.sendEmptyMessageDelayed(1006,100);}
           }
             } catch (Exception e) {
                 // TODO: handle exception

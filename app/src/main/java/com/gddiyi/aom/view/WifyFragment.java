@@ -124,11 +124,14 @@ public class WifyFragment extends Fragment implements
                     case 1005:
                         //进入主界面
                          {
-                        Intent intent = new Intent(mContext, MainActivity.class);
+                        Intent intent = new Intent(mContext, CrossWalkActivity.class);
                         mContext.startActivity(intent);
                         intent.putExtra("reload","reload");
+                        //默认密码默认错误
+                        intent.putExtra(getString(R.string.falsePassword),"false");
                         ((FirstBootActivity) mContext).finish();
                     }
+                    break;
                     case 1006:
                         printMytips("请检查网络或密码错误");
                     break;
@@ -277,8 +280,8 @@ public class WifyFragment extends Fragment implements
 
                         printMytips("正在检查网络");
                     }
-                } else
-
+                }
+                else
                 {
                     printMytips("密码错误，请重新连接");
                 }

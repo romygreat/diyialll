@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gddiyi.aom.R;
@@ -107,15 +108,20 @@ public class CrossWalkActivity extends BaseActivity  implements View.OnTouchList
         Log.i(TAG, "onCreate: order");
         if (!isNetworkAvailable()){
             Intent intent=new Intent(this,FirstBootActivity.class);
+//            Intent intent1=getIntent();
+//            String  correctPassword=  intent1.getStringExtra(getString(R.string.falsePassword));
+//            if (!Boolean.parseBoolean(correctPassword)){
+//                Log.i(TAG, "onCreate:boolean "+Boolean.parseBoolean(correctPassword));
+//                intent.putExtra(getString(R.string.falsePassword),"true");
+//
+//            }
             startActivity(intent);
-            intent.putExtra("noNetWork","noNetWork");
             this.finish();
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.crosswalk);
         mWebView=(XWalkView)findViewById(R.id.xwalkWebView);
         initView();
-
 
         // turn on debugging
 //        XWalkPreferences.setValue(XWalkPreferences.REMOTE_DEBUGGING, true);
@@ -190,6 +196,8 @@ public class CrossWalkActivity extends BaseActivity  implements View.OnTouchList
                     Intent intent = new Intent(CrossWalkActivity.this, FirstBootActivity.class);
                     intent.putExtra(getString(R.string.removeWify), "removeWify");
                     startActivity(intent);
+                    //退出主页面
+//                    CrossWalkActivity.this.finish();
 
                     //退出wify修改wify密码
                     // 不退出本activity,否则会wify跳转activity加载会很慢
@@ -247,12 +255,16 @@ public class CrossWalkActivity extends BaseActivity  implements View.OnTouchList
     @Override
     protected void onResume() {
         super.onResume();
+        if (!isNetworkAvailable()){
+            Toast.makeText(this,"迪溢科技提醒您,请检查网络",Toast.LENGTH_LONG).show();
+        }
         startTimer();
         Log.i(TAG, "onResume: "+VSConstances.SET_FROM_WIFY);
-        if (VSConstances.SET_FROM_WIFY){
-//            mWebview.reload();
-            VSConstances.SET_FROM_WIFY=false;
-        }
+//        if (VSConstances.SET_FROM_WIFY){
+//            if (mWebView.)
+//           mWebView.reload(0);
+//            VSConstances.SET_FROM_WIFY=false;
+//        }
     }
     @Override
     public boolean onTouch(View v, MotionEvent event) {

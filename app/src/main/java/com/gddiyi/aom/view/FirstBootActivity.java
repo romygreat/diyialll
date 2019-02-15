@@ -53,9 +53,12 @@ public class FirstBootActivity extends FragmentActivity {
         setContentView(R.layout.bootlayout);
         requestPermission();
         VSConstances.SET_FROM_WIFY=true;
+//        Intent intent=getIntent();
+//        if (Boolean.parseBoolean(intent.getStringExtra(getString(R.string.falsePassword)))){
+//            Log.i(TAG, "onCreate: intent"+intent.getStringExtra(getString(R.string.falsePassword)));
+//            Toast.makeText(this,"请选择wify,并输入相应的密码",Toast.LENGTH_LONG).show();
+//        }
 
-       {
-        Log.i(TAG, "onCreate: removewify=="+removewify);}
         getWifyFragment();
         registerMyBroadCast();
     }

@@ -215,6 +215,7 @@ public class VideoActivity extends Activity  {
         return true;
     }
     private void fullScreen() {
+
         // 隐藏标题
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
