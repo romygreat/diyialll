@@ -15,6 +15,7 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.widget.Button;
 import android.widget.EditText;
@@ -65,7 +66,7 @@ public class CrossWalkActivity extends BaseActivity  implements View.OnTouchList
     ImageView imageView;
     LinearLayout webviewError;
     View main;
-
+    XWalkSettings settings;
 
     @Override
     protected void onXWalkReady() {
@@ -117,14 +118,14 @@ public class CrossWalkActivity extends BaseActivity  implements View.OnTouchList
 }
     private void setWebSettings() {
 
-        XWalkSettings settings = mWebView.getSettings();
+         settings = mWebView.getSettings();
 
         //注册javascript接口
         settings.setJavaScriptEnabled(true);
 
-        javaScriptinterface = new JavaScriptinterface(this);
+      //  javaScriptinterface = new JavaScriptinterface(this);
 
-        mWebView.addJavascriptInterface(javaScriptinterface,
+        mWebView.addJavascriptInterface(CrossWalkActivity.this,
                 "android");
 
         settings.setDomStorageEnabled(true);
@@ -132,7 +133,11 @@ public class CrossWalkActivity extends BaseActivity  implements View.OnTouchList
 
     }
 
-
+    @org.xwalk.core.JavascriptInterface
+    public String getSn() {
+        Log.i(TAG, "getSn: Yes");
+        return "sn99999999";
+    }
 
 
     public void setWify() {
