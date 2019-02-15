@@ -67,6 +67,7 @@ public class CrossWalkActivity extends BaseActivity  implements View.OnTouchList
 
     @Override
     protected void onXWalkReady() {
+        Log.i(TAG, "onXWalkReady: order");
         mWebView.setOnTouchListener(this);
         setWebSettings();
         mWebView.load("http://om.gddiyi.com/", null);
@@ -96,6 +97,7 @@ public class CrossWalkActivity extends BaseActivity  implements View.OnTouchList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG, "onCreate: order");
         if (!isNetworkAvailable()){
             Intent intent=new Intent(this,FirstBootActivity.class);
             startActivity(intent);

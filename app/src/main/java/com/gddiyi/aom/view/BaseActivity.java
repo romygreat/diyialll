@@ -182,12 +182,12 @@ public abstract class  BaseActivity extends XWalkActivity implements JavaScripti
 
     @Override
     public void onBackPressed() {
-        BACKPRESS_TIME++;
-        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.diyi), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        String SSID=getString(R.string.SSID);
-        editor.putString(SSID,"..");
-        editor.commit();//提交修改
+//        BACKPRESS_TIME++;
+//        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.diyi), Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        String SSID=getString(R.string.SSID);
+//        editor.putString(SSID,"..");
+//        editor.commit();//提交修改
         super.onBackPressed();
     }
 }
