@@ -43,6 +43,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;
 
+import static android.os.Looper.getMainLooper;
+
 //import com.tencent.smtt.export.external.interfaces.SslError;
 //import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 //import com.tencent.smtt.export.external.interfaces.WebResourceRequest;

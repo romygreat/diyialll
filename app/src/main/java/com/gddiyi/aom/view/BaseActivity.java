@@ -64,7 +64,11 @@ public abstract class  BaseActivity extends XWalkActivity implements JavaScripti
             }
         };
     }
+    @Override
+    protected void onXWalkReady() {
+        //super.onXWalkReady();
 
+    }
     String TAG = "BaseActivity";
 
     protected void hideBottomUIMenu() {
