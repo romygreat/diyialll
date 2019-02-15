@@ -7,6 +7,7 @@ import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
 
+import com.gddiyi.aom.view.CrossWalkActivity;
 import com.gddiyi.aom.view.MainActivity;
 import com.hdy.hdylights.LedAndChargeManager;
 
@@ -25,31 +26,33 @@ public class JavaScriptinterface {
     /**
      * 与js交互时用到的方法，在js里直接调用的
      */
+    @org.xwalk.core.JavascriptInterface
     @JavascriptInterface
     public void showToast(String s) {
 
     }
 
+    @org.xwalk.core.JavascriptInterface
     @JavascriptInterface
     public String JScall1(String string) {
         Log.i(TAG, "JScall1: " + string);
         return "java JSCALL";
     }
 
-    @JavascriptInterface
+    @org.xwalk.core.JavascriptInterface
     public void intentMain() {
         Intent intent = new Intent(mContext, MainActivity.class);
         mContext.startActivity(intent);
         Log.i(TAG, "showToast: jscall");
     }
 
-    @JavascriptInterface
+    @org.xwalk.core.JavascriptInterface
     public String getSn() {
         Log.i(TAG, "getSn: Yes");
         return "sn99999999";
     }
 
-    @JavascriptInterface
+    @org.xwalk.core.JavascriptInterface
     public boolean readyPay() {
         Log.i(TAG, "readyPay: ");
         if (mNoticefyPay != null) {
@@ -61,7 +64,7 @@ public class JavaScriptinterface {
         }
     }
 
-    @JavascriptInterface
+    @org.xwalk.core.JavascriptInterface
     public boolean finishPay(int time) {
         Log.i(TAG, "finishPay: time"+time);
         // time=0,支付不成功,time=1支付成功
@@ -72,9 +75,9 @@ public class JavaScriptinterface {
         }
         return false;
     }
-    @JavascriptInterface
+    @org.xwalk.core.JavascriptInterface
     void openWifySetting(){
-        ((MainActivity) mContext).setWify();
+        ((CrossWalkActivity) mContext).setWify();
     }
 
     public interface NoticefyPay {

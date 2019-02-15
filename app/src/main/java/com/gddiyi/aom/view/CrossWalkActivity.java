@@ -17,17 +17,21 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.gddiyi.aom.R;
 import com.gddiyi.aom.constant.VSConstances;
 import com.gddiyi.aom.jsinterface.JavaScriptinterface;
 import com.gddiyi.aom.presenter.WifiAutoConnectManager;
 import com.hdy.hdylights.LedAndChargeManager;
 
+import org.xwalk.core.XWalkActivity;
+import org.xwalk.core.XWalkResourceClient;
 import org.xwalk.core.XWalkSettings;
 import org.xwalk.core.XWalkView;
 
@@ -110,6 +114,7 @@ public class CrossWalkActivity extends BaseActivity  implements View.OnTouchList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.crosswalk);
         mWebView=(XWalkView)findViewById(R.id.xwalkWebView);
+        initView();
 
 
         // turn on debugging
@@ -123,23 +128,42 @@ public class CrossWalkActivity extends BaseActivity  implements View.OnTouchList
         //注册javascript接口
         settings.setJavaScriptEnabled(true);
 
-      //  javaScriptinterface = new JavaScriptinterface(this);
+        javaScriptinterface = new JavaScriptinterface(this);
 
-        mWebView.addJavascriptInterface(CrossWalkActivity.this,
+        mWebView.addJavascriptInterface(javaScriptinterface,
                 "android");
 
         settings.setDomStorageEnabled(true);
         settings.setDatabaseEnabled(true);
+        mWebView.setVisibility(View.INVISIBLE);
+      XWalkResourceClient xWalkResourceClient=new XWalkResourceClient(mWebView){
+          @Override
+          public void onLoadStarted(XWalkView view, String url) {
+              super.onLoadStarted(view, url);
+              loadReady();
+          }
 
+          @Override
+          public void onLoadFinished(XWalkView view, String url) {
+              mWebView.setVisibility(View.VISIBLE);
+              super.onLoadFinished(view, url);
+              linearLayout.setVisibility(View.INVISIBLE);
+              webviewError.setVisibility(View.INVISIBLE);
+          }
+      };
+      mWebView.setResourceClient(xWalkResourceClient);
     }
-
-    @org.xwalk.core.JavascriptInterface
-    public String getSn() {
-        Log.i(TAG, "getSn: Yes");
-        return "sn99999999";
+    public void loadReady() {
+        Glide.with(CrossWalkActivity.this).load(R.mipmap.loading_circle).asGif().into(imageView);
     }
+    private void initView() {
+        linearLayout = (LinearLayout) findViewById(R.id.web_started);
+        imageView = (ImageView) findViewById(R.id.started_gif);
+        webviewError = (LinearLayout) findViewById(R.id.webview_error);
 
 
+        loadReady();
+    }
     public void setWify() {
         final EditText inputedit = new EditText(this);
         AlertDialog.Builder alertdialog = new AlertDialog.Builder(this);
