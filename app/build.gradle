@@ -46,14 +46,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.0.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
-
     implementation 'io.reactivex:rxjava:1.1.0'
     implementation 'javax.annotation:javax.annotation-api:1.2'
     implementation 'org.projectlombok:lombok:1.14.8'
-   
-
     implementation(name: 'hdylights-release-v1.0', ext: 'aar')
     implementation 'com.github.bumptech.glide:glide:3.7.0'
-//    implementation project(path:':wify')
-//    implementation 'org.xwalk:xwalk_core_library:23.53.589.4'
+    //    implementation project(path:':wify')
+    //    implementation 'org.xwalk:xwalk_core_library:23.53.589.4'
+   // implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1310_43612_sharewithdownload_withoutGame_obfs_20180706_163319.jar')
 }
