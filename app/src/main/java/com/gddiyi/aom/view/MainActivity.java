@@ -79,6 +79,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
     //this project is X5 frameWork is OK
     //正常加载x5内核
     //使用fragment不能全屏问题
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (!isNetworkAvailable()){

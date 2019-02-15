@@ -39,6 +39,7 @@ public class X5WebView extends WebView {
 	}
 
 	private void initWebViewSettings() {
+	   
 		WebSettings webSetting = this.getSettings();
 		webSetting.setJavaScriptEnabled(true);
 		webSetting.setJavaScriptCanOpenWindowsAutomatically(true);

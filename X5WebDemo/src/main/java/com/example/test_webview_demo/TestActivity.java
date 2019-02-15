@@ -12,7 +12,7 @@ public class TestActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.x5view);
         mWebView=findViewById(R.id.webview);
-        mWebView.loadUrl("http://om.gddiyi.com/");
+        mWebView.loadUrl("https://baidu.com/");
 
     }
 }
