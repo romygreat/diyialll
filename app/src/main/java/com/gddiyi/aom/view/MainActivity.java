@@ -10,10 +10,12 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
@@ -293,6 +295,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
         BACKPRESS_TIME = 0;
         Log.i(TAG, "onTouch: ");
         mCount++;
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 //有按下动作时取消定时

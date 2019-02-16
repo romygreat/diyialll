@@ -7,10 +7,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.text.InputType;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -260,6 +262,7 @@ public class CrossWalkActivity extends BaseActivity  implements View.OnTouchList
         }
         startTimer();
         Log.i(TAG, "onResume: "+VSConstances.SET_FROM_WIFY);
+
 //        if (VSConstances.SET_FROM_WIFY){
 //            if (mWebView.)
 //           mWebView.reload(0);
@@ -271,6 +274,8 @@ public class CrossWalkActivity extends BaseActivity  implements View.OnTouchList
         BACKPRESS_TIME = 0;
         Log.i(TAG, "onTouch: ");
         mCount++;
+
+        Log.i(TAG, "onTouch: "+Build.SERIAL);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 //有按下动作时取消定时
@@ -303,7 +308,6 @@ public class CrossWalkActivity extends BaseActivity  implements View.OnTouchList
                 timer.schedule(task, VSConstances.TIME_UNIT_MIN, Long.MAX_VALUE);
             }
             Log.i(TAG, "startTimer: onTouch");
-
         }
 
     }

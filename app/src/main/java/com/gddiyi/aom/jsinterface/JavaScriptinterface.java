@@ -2,6 +2,7 @@ package com.gddiyi.aom.jsinterface;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
@@ -10,6 +11,8 @@ import android.widget.Toast;
 import com.gddiyi.aom.view.CrossWalkActivity;
 import com.gddiyi.aom.view.MainActivity;
 import com.hdy.hdylights.LedAndChargeManager;
+
+import java.lang.reflect.Method;
 
 
 public class JavaScriptinterface {
@@ -49,7 +52,8 @@ public class JavaScriptinterface {
     @org.xwalk.core.JavascriptInterface
     public String getSn() {
         Log.i(TAG, "getSn: Yes");
-        return "sn99999999";
+        return getSerialNumber();
+//        return "sn88888888";
     }
 
     @org.xwalk.core.JavascriptInterface
@@ -86,4 +90,6 @@ public class JavaScriptinterface {
         boolean finishPay(int time);
 
     }
+    public  String getSerialNumber(){
+      return Build.SERIAL;}
 }
