@@ -20,7 +20,6 @@ android {
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "x86", "mips","arm64-v8a"
         }
-
     }
     buildTypes {
         release {

@@ -126,13 +126,12 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
             @Override
             public void onProgressChanged(WebView webView, final int i) {
                 super.onProgressChanged(webView, i);
-
             }
 
         });
 
         WebSettings settings = mWebview.getSettings();
-        settings.setLoadWithOverviewMode(true);
+//        settings.setLoadWithOverviewMode(true);
 
         //注册javascript接口
         javaScriptinterface = new JavaScriptinterface(this);
@@ -142,21 +141,21 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
 
         settings.setUseWideViewPort(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
-        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        settings.setGeolocationEnabled(true);
+//        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+//        settings.setGeolocationEnabled(true);
         settings.setDomStorageEnabled(true);
         settings.setDatabaseEnabled(true);
 
         //白屏调优
-        mWebview.requestFocus();
-        settings.setAppCacheEnabled(true);
+//        mWebview.requestFocus();
+//        settings.setAppCacheEnabled(true);
 
-        String appCachePath = getApplicationContext().getCacheDir().getPath() + "/webcache";
-        settings.setAppCachePath(appCachePath);
-        settings.setDatabasePath(appCachePath);
-
-        mWebview.clearCache(true);
-        mWebview.clearHistory();
+//        String appCachePath = getApplicationContext().getCacheDir().getPath() + "/webcache";
+//        settings.setAppCachePath(appCachePath);
+//        settings.setDatabasePath(appCachePath);
+//
+//        mWebview.clearCache(true);
+//        mWebview.clearHistory();
 
 
         mWebview.setWebViewClient(new WebViewClient() {
@@ -196,7 +195,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener, 
             public void onPageFinished(WebView webView, String s) {
                 super.onPageFinished(webView, s);
                 Log.i(TAG, "onPageFinished: okhttp url==" + s);
-                linearLayout.setVisibility(View.GONE);
+                linearLayout.setVisibility(View.INVISIBLE);
                 webviewError.setVisibility(View.INVISIBLE);
                 mWebview.setVisibility(View.VISIBLE);
 
