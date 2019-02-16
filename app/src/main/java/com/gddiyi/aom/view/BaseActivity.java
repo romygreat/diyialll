@@ -51,7 +51,8 @@ public abstract class  BaseActivity extends XWalkActivity implements JavaScripti
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         fullScreen();
         hideBottomUIMenu();
         mBaseHandler=new Handler(getMainLooper()){
@@ -63,6 +64,7 @@ public abstract class  BaseActivity extends XWalkActivity implements JavaScripti
                 Log.i(TAG, "finishPay: red== "+LedAndChargeManager.setLedColor(LedAndChargeManager.RED_CLOSE));
             }
         };
+
     }
     @Override
     protected void onXWalkReady() {
@@ -121,6 +123,7 @@ public abstract class  BaseActivity extends XWalkActivity implements JavaScripti
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_POWER_DISCONNECTED);
         intentFilter.addAction(Intent.ACTION_POWER_CONNECTED);
+        //需要unregister
         registerReceiver(chargeBroadCast, intentFilter);
     }
 
