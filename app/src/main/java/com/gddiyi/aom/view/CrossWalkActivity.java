@@ -42,6 +42,7 @@ import org.xwalk.core.XWalkSettings;
 import org.xwalk.core.XWalkView;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;
@@ -78,28 +79,30 @@ public class CrossWalkActivity extends BaseActivity implements View.OnTouchListe
     LinearLayout webviewError;
     View main;
     XWalkSettings settings;
-    boolean xwalkWebviewReady=false;
+    boolean xwalkWebviewReady = false;
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (xwalkWebviewReady){
-        mWebView.onDestroy();}
+        if (xwalkWebviewReady) {
+            mWebView.onDestroy();
+        }
 //        if(hideSystemKeyReceiver!=null){
 ////        unregisterReceiver(hideSystemKeyReceiver);
 //        }
     }
 
     HideSystemKeyReceiver hideSystemKeyReceiver = new HideSystemKeyReceiver();
+
     @Override
     protected void onXWalkReady() {
         Log.i(TAG, "onXWalkReady: order");
-        if (mWebView!=null){
+        if (mWebView != null) {
             //api 可能not ready
-        mWebView.setOnTouchListener(this);
+            mWebView.setOnTouchListener(this);
 
         }
-        xwalkWebviewReady=true;
+        xwalkWebviewReady = true;
         setWebSettings();
         mWebView.load("http://om.gddiyi.com/", null);
         mHandler = new Handler(getMainLooper()) {
@@ -137,7 +140,7 @@ public class CrossWalkActivity extends BaseActivity implements View.OnTouchListe
     protected void onStart() {
         super.onStart();
         //注册广播
-      //  brocastBottom();
+        //  brocastBottom();
     }
 
     public void brocastBottom() {
@@ -397,4 +400,20 @@ public class CrossWalkActivity extends BaseActivity implements View.OnTouchListe
             // TODO Auto-generated method stub
         }
     }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        // TODO Auto-generated method stub
+        super.onWindowFocusChanged(hasFocus);
+        try {
+            String staus = "statusbar";
+            Object service = getSystemService(staus);
+            Class<?> statusbarManager = Class.forName("android.app.StatusBarManager");
+            Method test = statusbarManager.getMethod("collapse");
+            test.invoke(service);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
 }

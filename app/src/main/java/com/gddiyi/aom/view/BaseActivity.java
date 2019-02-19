@@ -21,6 +21,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -192,5 +193,11 @@ public abstract class  BaseActivity extends XWalkActivity implements JavaScripti
 //        editor.putString(SSID,"..");
 //        editor.commit();//提交修改
         super.onBackPressed();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Log.i(TAG, "onKeyDown:keyCode =="+keyCode+"\nkeyEvent=="+event.getCharacters());
+        return super.onKeyDown(keyCode, event);
     }
 }
